@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {DesignCommonDirective} from "../design-common/design-common.directive";
-import {CdkDrag, CdkDragHandle} from "@angular/cdk/drag-drop";
+import {CdkDragHandle} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-design-label',
@@ -10,8 +10,7 @@ import {CdkDrag, CdkDragHandle} from "@angular/cdk/drag-drop";
     CdkDragHandle
   ],
   templateUrl: './design-label.component.html',
-  styleUrl: './design-label.component.scss',
-  hostDirectives: [CdkDrag]
+  styleUrl: './design-label.component.scss'
 })
 export class DesignLabelComponent {
 

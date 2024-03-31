@@ -1,12 +1,18 @@
 import {Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2} from '@angular/core';
+import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
+import {DesignCommonService} from "./design-common.service";
 
 @Directive({
   selector: '[appDesignCommon]',
   standalone: true,
+  hostDirectives: [{
+    directive: CdkDrag,
+    outputs: ['cdkDragEnded']
+  }]
 })
 export class DesignCommonDirective implements OnInit {
 
-  private currentlyResizing = false;
+  public currentlyResizing = false;
   private currentX: number = 0;
   private currentY: number = 0;
   private reverseX = false;
@@ -23,21 +29,23 @@ export class DesignCommonDirective implements OnInit {
   @HostBinding('style.width.px')
   protected width = 100;
   @HostBinding('style.top.px')
-  protected top = 0;
+  public top = 0;
   @HostBinding('style.left.px')
-  protected left = 0;
+  public left = 0;
   private resizerBottomRight?: HTMLDivElement;
   private resizerBottomLeft?: HTMLDivElement;
   private resizerTopRight?: HTMLDivElement;
   private resizerTopLeft?: HTMLDivElement;
 
-  constructor(private _elementRef: ElementRef,
-              private _renderer : Renderer2) {}
+  constructor(public _elementRef: ElementRef,
+              private _renderer : Renderer2,
+              private designCommonService: DesignCommonService) {}
 
   public ngOnInit() {
     this.initResizers();
     this._elementRef.nativeElement.style.display = "block";
     this._elementRef.nativeElement.classList.add("app-design-common");
+    this.designCommonService.registerNew(this);
   }
 
   private initResizers() {
@@ -91,12 +99,13 @@ export class DesignCommonDirective implements OnInit {
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizerTopLeft);
   }
 
-  @HostListener('document:mousedown', ['$event'])
-  public onClick(event: MouseEvent): void {
-    this.setSelected(!!this._elementRef.nativeElement.contains(event.target));
+  @HostListener('cdkDragEnded', ['$event'])
+  public onDragEnd(event: CdkDragEnd) {
+    this.top = this.top + event.distance.y;
+    this.left = this.left + event.distance.x;
+    event.source.reset();
   }
 
-  @HostListener('document:mousemove', ['$event'])
   public onMouseMove(event: MouseEvent): void {
     if (!this.currentlyResizing) {
       return;
@@ -125,7 +134,6 @@ export class DesignCommonDirective implements OnInit {
     }
   }
 
-  @HostListener('document:mouseup', ['$event'])
   public onMouseUp(event: MouseEvent): void {
     if (!this.currentlyResizing) {
       return;
@@ -134,7 +142,7 @@ export class DesignCommonDirective implements OnInit {
     this.setSelected(true);
   }
 
-  private setSelected(isSelected: boolean) {
+  public setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
     if (isSelected) {
       this._elementRef.nativeElement.style.outline = "1px solid blue";
