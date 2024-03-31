@@ -1,0 +1,44 @@
+:host {
+  position: relative;
+  display: block;
+  width: max-content;
+  padding: 10px;
+  margin: 0;
+
+  &.selected {
+    outline: 1px solid blue;
+  }
+
+  #resizerBottomLeft,
+  #resizerBottomRight,
+  #resizerTopLeft,
+  #resizerTopRight {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: blue;
+    border-radius: 50%;
+    cursor: nw-resize;
+  }
+
+  #resizerBottomLeft {
+    bottom: -3px;
+    left: -3px;
+  }
+
+  #resizerBottomRight {
+    bottom: -3px;
+    right: -3px;
+  }
+
+  #resizerTopLeft {
+    top: -3px;
+    left: -3px;
+  }
+
+  #resizerTopRight {
+    top: -3px;
+    right: -3px;
+  }
+
+}
