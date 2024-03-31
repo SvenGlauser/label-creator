@@ -1,16 +1,17 @@
 import {Component} from '@angular/core';
-import {DesignCommonComponent} from "../design-common/design-common.component";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
+import {DesignCommonDirective} from "../design-common/design-common.directive";
+import {CdkDrag, CdkDragHandle} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-design-label',
   standalone: true,
   imports: [
-    DesignCommonComponent
+    DesignCommonDirective,
+    CdkDragHandle
   ],
   templateUrl: './design-label.component.html',
-  styleUrl: './design-label.component.scss'
+  styleUrl: './design-label.component.scss',
+  hostDirectives: [CdkDrag]
 })
 export class DesignLabelComponent {
 
