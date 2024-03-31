@@ -2,11 +2,17 @@
   position: relative;
   display: block;
   width: max-content;
-  padding: 10px;
-  margin: 0;
 
   &.selected {
     outline: 1px solid blue;
+  }
+
+  #content {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    margin: 0;
   }
 
   #resizerBottomLeft,
@@ -18,27 +24,30 @@
     height: 6px;
     background-color: blue;
     border-radius: 50%;
-    cursor: nw-resize;
   }
 
   #resizerBottomLeft {
     bottom: -3px;
     left: -3px;
+    cursor: sw-resize;
   }
 
   #resizerBottomRight {
     bottom: -3px;
     right: -3px;
+    cursor: se-resize;
   }
 
   #resizerTopLeft {
     top: -3px;
     left: -3px;
+    cursor: ne-resize;
   }
 
   #resizerTopRight {
     top: -3px;
     right: -3px;
+    cursor: ne-resize;
   }
 
 }

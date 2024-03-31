@@ -1,28 +1,20 @@
 import {Component, ElementRef, HostBinding, HostListener, ViewChild} from '@angular/core';
 import {NgIf} from "@angular/common";
+import {CdkDrag, CdkDragHandle, CdkDragMove} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-design-common',
   standalone: true,
   imports: [
-    NgIf
+    NgIf,
+    CdkDrag,
+    CdkDragHandle
   ],
   templateUrl: './design-common.component.html',
-  styleUrl: './design-common.component.scss'
+  styleUrl: './design-common.component.scss',
+  hostDirectives: [CdkDrag],
 })
 export class DesignCommonComponent {
-
-  @HostBinding('class.selected')
-  protected isSelected: boolean = false;
-
-  @HostBinding('style.height.px')
-  protected height = 100;
-  @HostBinding('style.width.px')
-  protected width = 100;
-  @HostBinding('style.top.px')
-  protected top = 100;
-  @HostBinding('style.left.px')
-  protected left = 100;
 
   private currentlyResizing = false;
   private currentX: number = 0;
@@ -34,9 +26,20 @@ export class DesignCommonComponent {
   private MAX_WIDTH = 250;
   private MAX_HEIGHT = 250;
 
+  @HostBinding('class.selected')
+  protected isSelected: boolean = false;
+  @HostBinding('style.height.px')
+  protected height = 100;
+  @HostBinding('style.width.px')
+  protected width = 100;
+  @HostBinding('style.top.px')
+  protected top = 0;
+  @HostBinding('style.left.px')
+  protected left = 0;
+
   constructor(private _elementRef: ElementRef) {}
 
-  @HostListener('document:click', ['$event'])
+  @HostListener('document:mousedown', ['$event'])
   public onClick(event: MouseEvent): void {
     this.isSelected = !!this._elementRef.nativeElement.contains(event.target);
   }
