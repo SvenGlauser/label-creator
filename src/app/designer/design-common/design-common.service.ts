@@ -1,12 +1,46 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {DesignCommonDirective} from "./design-common.directive";
+import {Design} from "../design";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DesignCommonService {
 
-  private listOfDesignCommons: DesignCommonDirective[] = []
+  private listOfDesign: Design[] = [{
+    name: "1",
+    top: 100,
+    left: 100,
+    width: 100,
+    height: 100,
+    type: 'label',
+    content: 'testeste',
+    textAlign: 'left',
+    align: 'left',
+    linkedDirective: undefined
+  },{
+    name: "2",
+    top: 100,
+    left: 100,
+    width: 100,
+    height: 100,
+    type: 'label',
+    content: 'testsetest',
+    textAlign: 'left',
+    align: 'left',
+    linkedDirective: undefined
+  },{
+    name: "3",
+    top: 100,
+    left: 100,
+    width: 100,
+    height: 100,
+    type: 'label',
+    content: 'Testsetest',
+    textAlign: 'left',
+    align: 'left',
+    linkedDirective: undefined
+  }]
   private current?: DesignCommonDirective;
   private _renderer: Renderer2;
 
@@ -22,15 +56,12 @@ export class DesignCommonService {
     this.unsubscribeKeyDown = this._renderer.listen(document, "keydown", (event) => this.onKeydown(event));
   }
 
-  public registerNew(designCommonDirective: DesignCommonDirective): void {
-    this.listOfDesignCommons.push(designCommonDirective);
+  public getAll(): Design[] {
+    return this.listOfDesign;
   }
 
-  public unregister(designCommonDirective: DesignCommonDirective): void {
-    const index = this.listOfDesignCommons.indexOf(designCommonDirective);
-    if (index > -1) { // only splice array when item is found
-      this.listOfDesignCommons = this.listOfDesignCommons.splice(index, 1); // 2nd parameter means remove one item only
-    }
+  public registerNew(designCommonDirective: DesignCommonDirective, name: string): void {
+    this.listOfDesign.find(design => design.name == name)!.linkedDirective = designCommonDirective;
   }
 
   private onMouseMove(event: MouseEvent): void {
@@ -49,12 +80,12 @@ export class DesignCommonService {
   }
 
   private onMouseDown(event: MouseEvent): void {
-    this.listOfDesignCommons.forEach(designCommon => {
-      if (designCommon._elementRef.nativeElement.contains(event.target)) {
-        designCommon.changeSelection(true);
-        this.current = designCommon;
+    this.listOfDesign.forEach(designCommon => {
+      if (designCommon.linkedDirective?._elementRef.nativeElement.contains(event.target)) {
+        this.current = designCommon.linkedDirective;
+        this.current.changeSelection(true);
       } else {
-        designCommon.changeSelection(false);
+        designCommon.linkedDirective!.changeSelection(false);
       }
     });
     this.unsubscribeMouseMove = this._renderer.listen(document, "mousemove", (event) => this.onMouseMove(event));
@@ -80,6 +111,14 @@ export class DesignCommonService {
           break;
         }
       }
+    }
+  }
+
+  public update(newDesign: Design): void {
+    let index = this.listOfDesign.findIndex(design => design.name == newDesign.name);
+
+    if (index !== -1) {
+      this.listOfDesign[index] = newDesign;
     }
   }
 }

@@ -1,6 +1,17 @@
-import {Directive, ElementRef, HostBinding, HostListener, Input, OnInit, Renderer2} from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  Renderer2
+} from '@angular/core';
 import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
 import {DesignCommonService} from "./design-common.service";
+import {Design} from "../design";
 
 @Directive({
   selector: '[appDesignCommon]',
@@ -27,6 +38,21 @@ export class DesignCommonDirective implements OnInit {
   private resizerTopRight?: HTMLDivElement;
   private resizerTopLeft?: HTMLDivElement;
 
+  private registered = false;
+
+  private _design?: Design;
+  public get design(): Design | undefined {
+    return this._design;
+  }
+  @Input() set design(value: Design) {
+    this._design = value;
+    if (!this.registered) {
+      this.designCommonService.registerNew(this, this.design!.name);
+    }
+  }
+  @Output()
+  public designChange = new EventEmitter<Design>();
+
   @HostBinding('style.height.px')
   private height = 100;
   @HostBinding('style.width.px')
@@ -44,7 +70,6 @@ export class DesignCommonDirective implements OnInit {
     this.initResizers();
     this._elementRef.nativeElement.style.display = "block";
     this._elementRef.nativeElement.classList.add("app-design-common");
-    this.designCommonService.registerNew(this);
   }
 
   @HostListener('cdkDragEnded', ['$event'])
@@ -139,11 +164,23 @@ export class DesignCommonDirective implements OnInit {
       }
       this.currentY = event.y;
     }
+
+    this.updateDesign();
+  }
+
+  private updateDesign(): void {
+    this.design!.top = this.top;
+    this.design!.left = this.left;
+    this.design!.height = this.height;
+    this.design!.width = this.width;
+    this.designChange.emit(this.design);
   }
 
   public moveBy(changeX: number, changeY: number): void {
     this.top = this.top + changeY;
     this.left = this.left + changeX;
+
+    this.updateDesign();
   }
 
   public stopResizing(event: MouseEvent): void {

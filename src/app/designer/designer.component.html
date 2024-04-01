@@ -1,16 +1,3 @@
 <div id="designer-zone">
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
-  <app-design-label></app-design-label>
+  <app-design-label [design]="design" (designChange)="this.designService.update($event)" *ngFor="let design of this.designService.getAll()"></app-design-label>
 </div>
