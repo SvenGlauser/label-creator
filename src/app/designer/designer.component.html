@@ -10,12 +10,15 @@
       }
     </div>
   </div>
-  <div id="upDown">
+  <div id="upDown" *ngIf="designService.getCurrent()">
     <button mat-icon-button (click)="designService.up()">
       <mat-icon>arrow_upward</mat-icon>
     </button>
     <button mat-icon-button (click)="designService.down()">
       <mat-icon>arrow_downward</mat-icon>
+    </button>
+    <button mat-icon-button (click)="designService.deleteCurrent()">
+      <mat-icon>delete</mat-icon>
     </button>
   </div>
   <div id="zoom">

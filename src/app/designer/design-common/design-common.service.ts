@@ -47,11 +47,11 @@ export class DesignCommonService {
   }
 
   public deleteCurrent(): void {
-    this.delete(this.current);
+    this.delete(this.current!);
     this.current = undefined;
   }
 
-  public delete(designToDelete?: Design): void {
+  public delete(designToDelete: Design): void {
     let index = this.listOfDesign.findIndex(design => design.name == designToDelete?.name);
 
     if (index !== -1) {
@@ -75,8 +75,8 @@ export class DesignCommonService {
   }
 
   private onMouseDown(event: MouseEvent): void {
-    if (document.getElementById('zoom')!.contains(event.target as HTMLElement) ||
-        document.getElementById('upDown')!.contains(event.target as HTMLElement)) {
+    if (document.getElementById('zoom')?.contains(event.target as HTMLElement) ||
+        document.getElementById('upDown')?.contains(event.target as HTMLElement)) {
       return;
     }
 
