@@ -9,10 +9,10 @@ export class DesignCommonService {
 
   private listOfDesign: Design[] = [{
     name: "1",
-    top: 100,
-    left: 100,
-    width: 100,
-    height: 100,
+    top: 10,
+    left: 4,
+    width: 50,
+    height: 31,
     type: 'label',
     content: 'testeste',
     textAlign: 'left',
@@ -20,8 +20,8 @@ export class DesignCommonService {
     linkedDirective: undefined
   },{
     name: "2",
-    top: 100,
-    left: 100,
+    top: 0,
+    left: 0,
     width: 100,
     height: 100,
     type: 'label',
@@ -31,8 +31,8 @@ export class DesignCommonService {
     linkedDirective: undefined
   },{
     name: "3",
-    top: 100,
-    left: 100,
+    top: 0,
+    left: 0,
     width: 100,
     height: 100,
     type: 'label',
@@ -80,6 +80,7 @@ export class DesignCommonService {
   }
 
   private onMouseDown(event: MouseEvent): void {
+    this.current = undefined;
     this.listOfDesign.forEach(designCommon => {
       if (designCommon.linkedDirective?._elementRef.nativeElement.contains(event.target)) {
         this.current = designCommon.linkedDirective;
@@ -88,7 +89,9 @@ export class DesignCommonService {
         designCommon.linkedDirective!.changeSelection(false);
       }
     });
-    this.unsubscribeMouseMove = this._renderer.listen(document, "mousemove", (event) => this.onMouseMove(event));
+    if (this.current) {
+      this.unsubscribeMouseMove = this._renderer.listen(document, "mousemove", (event) => this.onMouseMove(event));
+    }
   }
 
   private onKeydown(event: KeyboardEvent): void {

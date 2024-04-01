@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DesignCommonDirective} from "../design-common/design-common.directive";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
+import {Design} from "../design";
 
 @Component({
   selector: 'app-design-label',
@@ -18,5 +19,6 @@ import {CdkDragHandle} from "@angular/cdk/drag-drop";
   }]
 })
 export class DesignLabelComponent {
-
+  @Input('design')
+  public designLabel?: Design;
 }

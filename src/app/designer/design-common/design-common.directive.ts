@@ -12,6 +12,7 @@ import {
 import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
 import {DesignCommonService} from "./design-common.service";
 import {Design} from "../design";
+import {LogicalFileSystem} from "@angular/compiler-cli";
 
 @Directive({
   selector: '[appDesignCommon]',
@@ -28,10 +29,10 @@ export class DesignCommonDirective implements OnInit {
   private currentY: number = 0;
   private reverseX = false;
   private reverseY = false;
-  private MIN_WIDTH = 48;
+  private MIN_WIDTH = 15;
   private MIN_HEIGHT = 15;
-  private MAX_WIDTH = 250;
-  private MAX_HEIGHT = 250;
+  private MAX_WIDTH = 400;
+  private MAX_HEIGHT = 400;
 
   private resizerBottomRight?: HTMLDivElement;
   private resizerBottomLeft?: HTMLDivElement;
@@ -47,6 +48,10 @@ export class DesignCommonDirective implements OnInit {
   @Input() set design(value: Design) {
     this._design = value;
     if (!this.registered) {
+      this.top = this.design!.top;
+      this.left = this.design!.left;
+      this.width = this.design!.width;
+      this.height = this.design!.height;
       this.designCommonService.registerNew(this, this.design!.name);
     }
   }
@@ -77,6 +82,8 @@ export class DesignCommonDirective implements OnInit {
     this.top = this.top + event.distance.y;
     this.left = this.left + event.distance.x;
     event.source.reset();
+
+    this.updateDesign();
   }
 
   private initResizers(): void {
@@ -169,10 +176,10 @@ export class DesignCommonDirective implements OnInit {
   }
 
   private updateDesign(): void {
-    this.design!.top = this.top;
-    this.design!.left = this.left;
-    this.design!.height = this.height;
-    this.design!.width = this.width;
+    this._design!.top = this.top;
+    this._design!.left = this.left;
+    this._design!.height = this.height;
+    this._design!.width = this.width;
     this.designChange.emit(this.design);
   }
 
