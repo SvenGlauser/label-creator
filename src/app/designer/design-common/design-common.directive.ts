@@ -58,6 +58,9 @@ export class DesignCommonDirective implements OnInit, DoCheck {
   @Output()
   public designChange = new EventEmitter<Design>();
 
+  @Input()
+  public zoomLevel: number = 1;
+
   @HostBinding('style.height.px')
   private height = 100;
   @HostBinding('style.width.px')
@@ -152,8 +155,8 @@ export class DesignCommonDirective implements OnInit, DoCheck {
       return;
     }
 
-    let x =  event.x - this.currentX;
-    let y =  event.y - this.currentY;
+    let x =  Math.round((event.x - this.currentX)/this.zoomLevel);
+    let y =  Math.round((event.y - this.currentY)/this.zoomLevel);
 
     if (x != 0) {
       if (this.reverseX && this.width - x >= this.MIN_WIDTH && this.width - x <= this.MAX_WIDTH) {

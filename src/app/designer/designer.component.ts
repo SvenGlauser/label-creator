@@ -44,8 +44,8 @@ export class DesignerComponent implements OnInit {
     if (this.deltaY > 1000) {
       this.deltaY = 1000;
     }
-    if (this.deltaY < -1000) {
-      this.deltaY = -1000;
+    if (this.deltaY < -1600) {
+      this.deltaY = -1600;
     }
 
     this.scaleValue = Math.pow(2, -this.deltaY / 1000);

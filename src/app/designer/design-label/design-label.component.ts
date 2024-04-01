@@ -14,7 +14,7 @@ import {Design, DesignLabel} from "../design";
   styleUrl: './design-label.component.scss',
   hostDirectives: [{
     directive: DesignCommonDirective,
-    inputs: ['design'],
+    inputs: ['design', 'zoomLevel'],
     outputs: ['designChange']
   }]
 })

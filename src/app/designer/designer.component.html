@@ -3,9 +3,9 @@
     <div id="designer-zone" [style.transform]="'scale('+ this.scaleValue +')'">
       @for (design of this.designService.getAll(); track design.name) {
         @if (design.type == 'label') {
-          <app-design-label [design]="design" (designChange)="this.designService.update($event)"></app-design-label>
+          <app-design-label [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-design-label>
         } @else if (design.type == 'image') {
-          <app-design-image [design]="design" (designChange)="this.designService.update($event)"></app-design-image>
+          <app-design-image [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-design-image>
         }
       }
     </div>
@@ -19,10 +19,10 @@
     </button>
   </div>
   <div id="zoom">
-    <button [disabled]="scaleValue <= 0.5" mat-icon-button (click)="zoomOut()">
+    <button [disabled]="deltaY >= 1000" mat-icon-button (click)="zoomOut()">
       <mat-icon>zoom_out</mat-icon>
     </button>
-    <button [disabled]="scaleValue >= 2" mat-icon-button (click)="zoomIn()">
+    <button [disabled]="deltaY <= -1600" mat-icon-button (click)="zoomIn()">
       <mat-icon>zoom_in</mat-icon>
     </button>
   </div>

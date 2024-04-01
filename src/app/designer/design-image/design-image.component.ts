@@ -13,7 +13,7 @@ import {CdkDragHandle} from "@angular/cdk/drag-drop";
   styleUrl: './design-image.component.scss',
   hostDirectives: [{
     directive: DesignCommonDirective,
-    inputs: ['design'],
+    inputs: ['design', 'zoomLevel'],
     outputs: ['designChange']
   }]
 })
