@@ -1,5 +1,5 @@
 import {
-  Directive,
+  Directive, DoCheck,
   ElementRef,
   EventEmitter,
   HostBinding,
@@ -21,7 +21,7 @@ import {Design} from "../design";
     outputs: ['cdkDragEnded']
   }]
 })
-export class DesignCommonDirective implements OnInit {
+export class DesignCommonDirective implements OnInit, DoCheck {
 
   public currentlyResizing = false;
   private currentX: number = 0;
@@ -50,6 +50,7 @@ export class DesignCommonDirective implements OnInit {
     this.left = this.design!.left;
     this.width = this.design!.width;
     this.height = this.design!.height;
+    this.zIndex = this.design!.index;
     if (!this.registered) {
       this.designCommonService.registerNew(this, this.design!.name);
     }
@@ -65,6 +66,8 @@ export class DesignCommonDirective implements OnInit {
   private top = 0;
   @HostBinding('style.left.px')
   private left = 0;
+  @HostBinding('style.z-index')
+  private zIndex = 0;
 
   constructor(public _elementRef: ElementRef,
               private _renderer : Renderer2,
@@ -210,6 +213,12 @@ export class DesignCommonDirective implements OnInit {
       this.resizerBottomLeft!.style.display = "none";
       this.resizerTopRight!.style.display = "none";
       this.resizerTopLeft!.style.display = "none";
+    }
+  }
+
+  public ngDoCheck(): void {
+    if (this.design && this.design.index != this.zIndex) {
+      this.zIndex = this.design!.index;
     }
   }
 }

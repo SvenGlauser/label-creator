@@ -8,7 +8,8 @@ export interface Design {
   left: number;
   height: number;
   width: number;
-  align: 'none' | 'center' | 'left' | 'right';
+  index: number;
+  align: 'none' | 'center' | 'left' | 'right';// TODO
 
   linkedDirective: DesignCommonDirective | undefined;
 }

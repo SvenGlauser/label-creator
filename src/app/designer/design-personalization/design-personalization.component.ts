@@ -95,6 +95,7 @@ export class DesignPersonalizationComponent implements OnInit, DoCheck {
       _design?.top == _designOld?.top &&
       _design?.left == _designOld?.left &&
       _design?.width == _designOld?.width &&
+      _design?.width == _designOld?.width &&
       _design?.height == _designOld?.height
     );
   }

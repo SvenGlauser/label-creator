@@ -20,6 +20,7 @@ export class DesignCommonService {
     color: '#fff',
     textAlign: 'left',
     verticalTextAlign: 'flex-start',
+    index: 0,
     align: 'left',
     linkedDirective: undefined
   },<DesignLabel>{
@@ -35,6 +36,7 @@ export class DesignCommonService {
     color: '#eee',
     textAlign: 'left',
     verticalTextAlign: 'flex-start',
+    index: 1,
     align: 'left',
     linkedDirective: undefined
   },<DesignLabel>{
@@ -51,6 +53,7 @@ export class DesignCommonService {
     textAlign: 'left',
     verticalTextAlign: 'flex-start',
     align: 'left',
+    index: 3,
     linkedDirective: undefined
   },<DesignImage>{
     name: "4",
@@ -59,6 +62,7 @@ export class DesignCommonService {
     width: 100,
     height: 20,
     type: 'image',
+    index: -1,
     imageUrl: 'https://static.wixstatic.com/media/53d566_b68a3a188f724be98447d465a2cc5ad3~mv2.png/v1/fill/w_167,h_90,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/AGROCentre_Logo_01_Couleur.png',
     backgroundSize: 'contain'
   }]
@@ -119,6 +123,11 @@ export class DesignCommonService {
   }
 
   private onMouseDown(event: MouseEvent): void {
+    if (document.getElementById('zoom')!.contains(event.target as HTMLElement) ||
+        document.getElementById('upDown')!.contains(event.target as HTMLElement)) {
+      return;
+    }
+
     this.current = undefined;
     this.listOfDesign.forEach(designCommon => {
       if (designCommon.linkedDirective?._elementRef.nativeElement.contains(event.target)) {
@@ -174,8 +183,45 @@ export class DesignCommonService {
     }
   }
 
-
   public getCurrent(): Design | undefined {
     return this.current;
+  }
+
+  public down(): void {
+    if (this.current) {
+      let currentIndex = this.current.index;
+      let justBeforeDesignIndex = Number.NEGATIVE_INFINITY;
+      let justBeforeIndex = -1;
+      this.listOfDesign.forEach((design, index) => {
+        if (design.index > justBeforeDesignIndex && design.index < currentIndex) {
+          justBeforeDesignIndex = design.index;
+          justBeforeIndex = index;
+        }
+      });
+
+      if (justBeforeIndex != -1) {
+        this.listOfDesign[justBeforeIndex].index = currentIndex;
+        this.current.index = justBeforeDesignIndex;
+      }
+    }
+  }
+
+  public up(): void {
+    if (this.current) {
+      let currentIndex = this.current.index;
+      let justAfterDesignIndex = Number.MAX_VALUE;
+      let justAfterIndex = -1;
+      this.listOfDesign.forEach((design, index) => {
+        if (design.index < justAfterDesignIndex && design.index > currentIndex) {
+          justAfterDesignIndex = design.index;
+          justAfterIndex = index;
+        }
+      });
+
+      if (justAfterIndex !== -1) {
+        this.listOfDesign[justAfterIndex].index = currentIndex;
+        this.current.index = justAfterDesignIndex;
+      }
+    }
   }
 }
