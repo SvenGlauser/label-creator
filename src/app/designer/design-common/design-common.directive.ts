@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2} from '@angular/core';
+import {Directive, ElementRef, HostBinding, HostListener, Input, OnInit, Renderer2} from '@angular/core';
 import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
 import {DesignCommonService} from "./design-common.service";
 
@@ -22,20 +22,19 @@ export class DesignCommonDirective implements OnInit {
   private MAX_WIDTH = 250;
   private MAX_HEIGHT = 250;
 
-  @HostBinding('class.selected')
-  protected isSelected: boolean = false;
-  @HostBinding('style.height.px')
-  protected height = 100;
-  @HostBinding('style.width.px')
-  protected width = 100;
-  @HostBinding('style.top.px')
-  public top = 0;
-  @HostBinding('style.left.px')
-  public left = 0;
   private resizerBottomRight?: HTMLDivElement;
   private resizerBottomLeft?: HTMLDivElement;
   private resizerTopRight?: HTMLDivElement;
   private resizerTopLeft?: HTMLDivElement;
+
+  @HostBinding('style.height.px')
+  private height = 100;
+  @HostBinding('style.width.px')
+  private width = 100;
+  @HostBinding('style.top.px')
+  private top = 0;
+  @HostBinding('style.left.px')
+  private left = 0;
 
   constructor(public _elementRef: ElementRef,
               private _renderer : Renderer2,
@@ -48,7 +47,14 @@ export class DesignCommonDirective implements OnInit {
     this.designCommonService.registerNew(this);
   }
 
-  private initResizers() {
+  @HostListener('cdkDragEnded', ['$event'])
+  protected onDragEnd(event: CdkDragEnd) {
+    this.top = this.top + event.distance.y;
+    this.left = this.left + event.distance.x;
+    event.source.reset();
+  }
+
+  private initResizers(): void {
     this.resizerBottomRight = this._renderer.createElement('div');
     this._renderer.setStyle(this.resizerBottomRight, "position", "absolute");
     this._renderer.setStyle(this.resizerBottomRight, "width", "6px");
@@ -59,7 +65,7 @@ export class DesignCommonDirective implements OnInit {
     this._renderer.setStyle(this.resizerBottomRight, "right", "-3px");
     this._renderer.setStyle(this.resizerBottomRight, "cursor", "se-resize");
     this._renderer.setStyle(this.resizerBottomRight, "display", "none");
-    this._renderer.listen(this.resizerBottomRight, "mousedown", ($event: MouseEvent) => this.onMouseDown($event, false, false));
+    this._renderer.listen(this.resizerBottomRight, "mousedown", ($event: MouseEvent) => this.startResizing($event, false, false));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizerBottomRight);
     this.resizerBottomLeft = this._renderer.createElement('div');
     this._renderer.setStyle(this.resizerBottomLeft, "position", "absolute");
@@ -71,7 +77,7 @@ export class DesignCommonDirective implements OnInit {
     this._renderer.setStyle(this.resizerBottomLeft, "left", "-3px");
     this._renderer.setStyle(this.resizerBottomLeft, "cursor", "sw-resize");
     this._renderer.setStyle(this.resizerBottomLeft, "display", "none");
-    this._renderer.listen(this.resizerBottomLeft, "mousedown", ($event: MouseEvent) => this.onMouseDown($event, true, false));
+    this._renderer.listen(this.resizerBottomLeft, "mousedown", ($event: MouseEvent) => this.startResizing($event, true, false));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizerBottomLeft);
     this.resizerTopRight = this._renderer.createElement('div');
     this._renderer.setStyle(this.resizerTopRight, "position", "absolute");
@@ -83,7 +89,7 @@ export class DesignCommonDirective implements OnInit {
     this._renderer.setStyle(this.resizerTopRight, "right", "-3px");
     this._renderer.setStyle(this.resizerTopRight, "cursor", "ne-resize");
     this._renderer.setStyle(this.resizerTopRight, "display", "none");
-    this._renderer.listen(this.resizerTopRight, "mousedown", ($event: MouseEvent) => this.onMouseDown($event, false, true));
+    this._renderer.listen(this.resizerTopRight, "mousedown", ($event: MouseEvent) => this.startResizing($event, false, true));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizerTopRight);
     this.resizerTopLeft = this._renderer.createElement('div');
     this._renderer.setStyle(this.resizerTopLeft, "position", "absolute");
@@ -95,18 +101,19 @@ export class DesignCommonDirective implements OnInit {
     this._renderer.setStyle(this.resizerTopLeft, "left", "-3px");
     this._renderer.setStyle(this.resizerTopLeft, "cursor", "nw-resize");
     this._renderer.setStyle(this.resizerTopLeft, "display", "none");
-    this._renderer.listen(this.resizerTopLeft, "mousedown", ($event: MouseEvent) => this.onMouseDown($event, true, true));
+    this._renderer.listen(this.resizerTopLeft, "mousedown", ($event: MouseEvent) => this.startResizing($event, true, true));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizerTopLeft);
   }
 
-  @HostListener('cdkDragEnded', ['$event'])
-  public onDragEnd(event: CdkDragEnd) {
-    this.top = this.top + event.distance.y;
-    this.left = this.left + event.distance.x;
-    event.source.reset();
+  private startResizing(event: MouseEvent, reverseX: boolean, reverseY: boolean): void {
+    this.currentlyResizing = true;
+    this.currentX = event.x;
+    this.currentY = event.y;
+    this.reverseX = reverseX;
+    this.reverseY = reverseY;
   }
 
-  public onMouseMove(event: MouseEvent): void {
+  public move(event: MouseEvent): void {
     if (!this.currentlyResizing) {
       return;
     }
@@ -134,23 +141,26 @@ export class DesignCommonDirective implements OnInit {
     }
   }
 
-  public onMouseUp(event: MouseEvent): void {
+  public moveBy(changeX: number, changeY: number): void {
+    this.top = this.top + changeY;
+    this.left = this.left + changeX;
+  }
+
+  public stopResizing(event: MouseEvent): void {
     if (!this.currentlyResizing) {
       return;
     }
     this.currentlyResizing = false;
-    this.setSelected(true);
+    this.changeSelection(true);
   }
 
-  public setSelected(isSelected: boolean) {
-    this.isSelected = isSelected;
+  public changeSelection(isSelected: boolean): void {
     if (isSelected) {
       this._elementRef.nativeElement.style.outline = "1px solid blue";
       this.resizerBottomRight!.style.display = "block";
       this.resizerBottomLeft!.style.display = "block";
       this.resizerTopRight!.style.display = "block";
       this.resizerTopLeft!.style.display = "block";
-
     } else {
       this._elementRef.nativeElement.style.outline = "none";
       this.resizerBottomRight!.style.display = "none";
@@ -158,13 +168,5 @@ export class DesignCommonDirective implements OnInit {
       this.resizerTopRight!.style.display = "none";
       this.resizerTopLeft!.style.display = "none";
     }
-  }
-
-  protected onMouseDown(event: MouseEvent, reverseX: boolean, reverseY: boolean) {
-    this.currentlyResizing = true;
-    this.currentX = event.x;
-    this.currentY = event.y;
-    this.reverseX = reverseX;
-    this.reverseY = reverseY;
   }
 }

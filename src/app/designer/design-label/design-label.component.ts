@@ -10,7 +10,10 @@ import {CdkDragHandle} from "@angular/cdk/drag-drop";
     CdkDragHandle
   ],
   templateUrl: './design-label.component.html',
-  styleUrl: './design-label.component.scss'
+  styleUrl: './design-label.component.scss',
+  hostDirectives: [{
+    directive: DesignCommonDirective
+  }]
 })
 export class DesignLabelComponent {
 

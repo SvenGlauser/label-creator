@@ -9,7 +9,6 @@ export class DesignCommonService {
   private listOfDesignCommons: DesignCommonDirective[] = []
   private current?: DesignCommonDirective;
   private _renderer: Renderer2;
-  private elementEvent = document;
 
   private unsubscribeMouseMove?: () => void;
   private unsubscribeMouseUp?: () => void;
@@ -18,65 +17,66 @@ export class DesignCommonService {
 
   constructor(private rendererFactory2: RendererFactory2) {
     this._renderer = this.rendererFactory2.createRenderer(null, null);
-    console.log("elementEvent")
-    // TODO a tester "elementEvent"
-    this.unsubscribeMouseUp = this._renderer.listen(this.elementEvent, "mouseup", (event) => this.onMouseUp(event));
-    this.unsubscribeMouseDown = this._renderer.listen(this.elementEvent, "mousedown", (event) => this.onMouseDown(event));
-    this.unsubscribeKeyDown = this._renderer.listen(this.elementEvent, "keydown", (event) => this.onKeydown(event));
+    this.unsubscribeMouseUp = this._renderer.listen(document, "mouseup", (event) => this.onMouseUp(event));
+    this.unsubscribeMouseDown = this._renderer.listen(document, "mousedown", (event) => this.onMouseDown(event));
+    this.unsubscribeKeyDown = this._renderer.listen(document, "keydown", (event) => this.onKeydown(event));
   }
 
-  public registerNew(designCommonDirective: DesignCommonDirective) {
+  public registerNew(designCommonDirective: DesignCommonDirective): void {
     this.listOfDesignCommons.push(designCommonDirective);
   }
 
-  public onMouseMove(event: MouseEvent) {
+  public unregister(designCommonDirective: DesignCommonDirective): void {
+    const index = this.listOfDesignCommons.indexOf(designCommonDirective);
+    if (index > -1) { // only splice array when item is found
+      this.listOfDesignCommons = this.listOfDesignCommons.splice(index, 1); // 2nd parameter means remove one item only
+    }
+  }
+
+  private onMouseMove(event: MouseEvent): void {
     if (this.current) {
       if (!this.current.currentlyResizing) {
         this.unsubscribeMouseMove!();
       }
-      this.current.onMouseMove(event);
+      this.current.move(event);
     }
   }
 
-  public onMouseUp(event: MouseEvent) {
+  private onMouseUp(event: MouseEvent): void {
     if (this.current) {
-      this.current.onMouseUp(event);
+      this.current.stopResizing(event);
     }
   }
 
-  public onMouseDown(event: MouseEvent) {
+  private onMouseDown(event: MouseEvent): void {
     this.listOfDesignCommons.forEach(designCommon => {
-      if (!!designCommon._elementRef.nativeElement.contains(event.target)) {
-        designCommon.setSelected(true);
+      if (designCommon._elementRef.nativeElement.contains(event.target)) {
+        designCommon.changeSelection(true);
         this.current = designCommon;
       } else {
-        designCommon.setSelected(false);
+        designCommon.changeSelection(false);
       }
     });
-    this.unsubscribeMouseMove = this._renderer.listen(this.elementEvent, "mousemove", (event) => this.onMouseMove(event));
+    this.unsubscribeMouseMove = this._renderer.listen(document, "mousemove", (event) => this.onMouseMove(event));
   }
 
-  public onKeydown(event: KeyboardEvent): void {
+  private onKeydown(event: KeyboardEvent): void {
     if (this.current && !this.current.currentlyResizing) {
       switch (event.key) {
         case "ArrowLeft": {
-          this.current.left = this.current.left - 1;
-          console.log(this.current.left)
+          this.current.moveBy(-1, 0)
           break;
         }
         case "ArrowRight": {
-          this.current.left = this.current.left + 1;
-          console.log(this.current.left)
+          this.current.moveBy(1, 0)
           break;
         }
         case "ArrowUp": {
-          this.current.top = this.current.top - 1;
-          console.log(this.current.left)
+          this.current.moveBy(0, -1)
           break;
         }
         case "ArrowDown": {
-          this.current.top = this.current.top + 1;
-          console.log(this.current.left)
+          this.current.moveBy(0, 1)
           break;
         }
       }
