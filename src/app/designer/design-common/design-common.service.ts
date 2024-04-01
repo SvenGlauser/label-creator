@@ -7,65 +7,7 @@ import {Design, DesignImage, DesignLabel} from "../design";
 })
 export class DesignCommonService {
 
-  private listOfDesign: Design[] = [<DesignLabel>{
-    name: "1",
-    top: 10,
-    left: 4,
-    width: 75,
-    height: 20,
-    type: 'label',
-    content: 'testeste',
-    fontSize: 15,
-    fontFamily: 'Helvetica',
-    color: '#fff',
-    textAlign: 'left',
-    verticalTextAlign: 'flex-start',
-    index: 0,
-    align: 'left',
-    linkedDirective: undefined
-  },<DesignLabel>{
-    name: "2",
-    top: 0,
-    left: 0,
-    width: 100,
-    height: 20,
-    type: 'label',
-    content: 'testsetest',
-    fontSize: 15,
-    fontFamily: 'Helvetica',
-    color: '#eee',
-    textAlign: 'left',
-    verticalTextAlign: 'flex-start',
-    index: 1,
-    align: 'left',
-    linkedDirective: undefined
-  },<DesignLabel>{
-    name: "3",
-    top: 0,
-    left: 0,
-    width: 100,
-    height: 20,
-    type: 'label',
-    content: 'Testsetest',
-    fontSize: 15,
-    fontFamily: 'Helvetica',
-    color: 'red',
-    textAlign: 'left',
-    verticalTextAlign: 'flex-start',
-    align: 'left',
-    index: 3,
-    linkedDirective: undefined
-  },<DesignImage>{
-    name: "4",
-    top: 0,
-    left: 0,
-    width: 100,
-    height: 20,
-    type: 'image',
-    index: -1,
-    imageUrl: 'https://static.wixstatic.com/media/53d566_b68a3a188f724be98447d465a2cc5ad3~mv2.png/v1/fill/w_167,h_90,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/AGROCentre_Logo_01_Couleur.png',
-    backgroundSize: 'contain'
-  }]
+  private listOfDesign: Design[] = []
   private current?: Design;
   private _renderer: Renderer2;
 
@@ -85,6 +27,16 @@ export class DesignCommonService {
 
   public getAll(): Design[] {
     return this.listOfDesign;
+  }
+
+  public addNew(design: Design): void {
+    if (design.index == Number.NEGATIVE_INFINITY) {
+      let biggerIndex = this.listOfDesign.length > 0 ? this.listOfDesign.map(design => design.index).sort().reverse()[0] : 0;
+      design.index = biggerIndex + 1;
+    }
+
+    this.listOfDesign.push(design);
+    this.current = design;
   }
 
   public registerNew(designCommonDirective: DesignCommonDirective, name: string): void {

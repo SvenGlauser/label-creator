@@ -6,7 +6,7 @@ export interface DesignPersonalization {
 
   hasChanged(design: Design, designOld: Design): boolean;
 
-  getNew(design: Design): DesignImage;
+  getNew(design: Design): Design;
 
   updateForm(design: Design): void;
 }

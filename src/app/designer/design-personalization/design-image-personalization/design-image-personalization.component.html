@@ -21,6 +21,9 @@
   </mat-form-field>
   <mat-label>Remplissage</mat-label>
   <mat-button-toggle-group [formControl]="getForm('backgroundSize')" [hideSingleSelectionIndicator]="true">
+    <mat-button-toggle value="">
+      <mat-icon>open_in_full</mat-icon>
+    </mat-button-toggle>
     <mat-button-toggle value="contain">
       <mat-icon>fullscreen_exit</mat-icon>
     </mat-button-toggle>

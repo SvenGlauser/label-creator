@@ -1,0 +1,13 @@
+p {
+  font-weight: bold;
+  font-size: 1.3em;
+  text-align: center;
+  padding: 0 20px;
+}
+
+#adding-zone {
+  display: grid;
+  grid-template-columns: auto;
+  grid-row-gap: 20px;
+  padding: 0 20px;
+}

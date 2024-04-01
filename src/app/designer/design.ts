@@ -9,7 +9,6 @@ export interface Design {
   height: number;
   width: number;
   index: number;
-  align: 'none' | 'center' | 'left' | 'right';// TODO
 
   linkedDirective: DesignCommonDirective | undefined;
 }
@@ -27,5 +26,5 @@ export interface DesignLabel extends Design {
 export interface DesignImage extends Design {
   image?: Blob;
   imageUrl?: string;
-  backgroundSize?: 'contain' | 'cover';
+  backgroundSize: '' | 'contain' | 'cover';
 }
