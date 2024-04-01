@@ -21,24 +21,25 @@ export class DesignImageComponent implements DoCheck {
   @Input('design')
   public designImage?: Design;
 
-  private oldImage?: string | File;
+  private oldImage?: string | Blob;
 
   protected url?: string;
 
   public getImage(): void {
     if (this.get().imageUrl) {
-      console.log(this.get())
       this.url = this.get().imageUrl;
       this.oldImage = this.get().imageUrl;
       return;
     }
-    this.oldImage = this.get().image;
+    if (this.get().image) {
+      this.oldImage = this.get().image;
 
-    const reader = new FileReader();
+      const reader = new FileReader();
 
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      console.log(base64String)
+      reader.onloadend = () => {
+        this.url = reader.result as string;
+      }
+      reader.readAsDataURL(this.get().image!);
     }
   }
 

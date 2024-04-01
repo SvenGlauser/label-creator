@@ -12,6 +12,7 @@ import {
 import {
   DesignImagePersonalizationComponent
 } from "./design-image-personalization/design-image-personalization.component";
+import {DesignPersonalization} from "./design-personalization";
 
 @Component({
   selector: 'app-design-personalization',
@@ -41,7 +42,7 @@ export class DesignPersonalizationComponent implements OnInit, DoCheck {
   public designChange = new EventEmitter<Design>();
 
   @ViewChild('child')
-  public child?: DesignLabelPersonalizationComponent | DesignImagePersonalizationComponent;
+  public child?: DesignPersonalization;
 
   private cancelNextUpdate = false;
 

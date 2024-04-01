@@ -10,4 +10,16 @@
   mat-button-toggle-group {
     width: min-content;
   }
+
+  .file-upload {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 150px auto;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
 }

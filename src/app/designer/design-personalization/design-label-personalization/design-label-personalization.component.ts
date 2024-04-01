@@ -6,6 +6,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {NgxColorsModule} from "ngx-colors";
+import {DesignPersonalization} from "../design-personalization";
 
 @Component({
   selector: 'app-design-label-personalization',
@@ -23,7 +24,7 @@ import {NgxColorsModule} from "ngx-colors";
   templateUrl: './design-label-personalization.component.html',
   styleUrl: './design-label-personalization.component.scss'
 })
-export class DesignLabelPersonalizationComponent implements OnInit {
+export class DesignLabelPersonalizationComponent implements OnInit, DesignPersonalization {
 
   @Input()
   public form?: AbstractControl;
