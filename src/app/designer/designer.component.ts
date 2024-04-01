@@ -50,10 +50,10 @@ export class DesignerComponent implements OnInit {
   }
 
   protected zoomIn(): void {
-    this.calculateScale(200);
+    this.calculateScale(-200);
   }
 
   protected zoomOut(): void {
-    this.calculateScale(-200);
+    this.calculateScale(+200);
   }
 }
