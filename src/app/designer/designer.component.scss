@@ -3,19 +3,53 @@
   width: 100%;
   height: 100%;
   display: grid;
+  grid-template-columns: 1fr auto;
 
-  #designer-zone {
-    display: block;
-    width: 400px;
-    height: 300px;
+  #edition-zone {
+    display: grid;
+    grid-area: 1/1;
     position: relative;
-    align-self: center;
-    justify-self: center;
 
+    #zoom-zone {
+      display: grid;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+
+      #designer-zone {
+        display: block;
+        width: 400px;
+        height: 300px;
+        position: relative;
+        align-self: center;
+        justify-self: center;
+
+        background-color: white;
+
+        & > .app-design-common {
+          position: absolute;
+        }
+      }
+    }
+
+    #zoom {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  #personalization-zone {
+    display: block;
+    height: 100%;
+    grid-area: 1/2;
+    width: 350px;
     background-color: white;
 
-    & > .app-design-common {
-      position: absolute;
+    app-design-personalization {
+      display: block;
+      height: 100%;
+      width: 100%;
     }
   }
 }

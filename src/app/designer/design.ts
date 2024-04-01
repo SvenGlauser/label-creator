@@ -4,6 +4,7 @@ export interface Design {
   name: string;
   type: 'label';
   content: string;
+  fontSize: number;
   textAlign: 'center' | 'left' | 'right' | 'justify';
 
   top: number;

@@ -1,0 +1,26 @@
+<div id="modify" [formGroup]="form">
+  <mat-form-field appearance="outline" id="content-edition" subscriptSizing="dynamic">
+    <mat-label>Texte</mat-label>
+    <textarea matInput placeholder="Quantité de #cereale" formControlName="content"></textarea>
+  </mat-form-field>
+  <mat-label>Taille de la police</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <input matInput placeholder="15" type="number" formControlName="fontSize">
+  </mat-form-field>
+  <mat-label>Position X</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <input matInput placeholder="100" type="number" formControlName="top">
+  </mat-form-field>
+  <mat-label>Position Y</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <input matInput placeholder="100" type="number" formControlName="left">
+  </mat-form-field>
+  <mat-label>Largeur</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <input matInput placeholder="100" type="number" formControlName="width">
+  </mat-form-field>
+  <mat-label>Hauteur</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <input matInput placeholder="100" type="number" formControlName="height">
+  </mat-form-field>
+</div>

@@ -47,11 +47,11 @@ export class DesignCommonDirective implements OnInit {
   }
   @Input() set design(value: Design) {
     this._design = value;
+    this.top = this.design!.top;
+    this.left = this.design!.left;
+    this.width = this.design!.width;
+    this.height = this.design!.height;
     if (!this.registered) {
-      this.top = this.design!.top;
-      this.left = this.design!.left;
-      this.width = this.design!.width;
-      this.height = this.design!.height;
       this.designCommonService.registerNew(this, this.design!.name);
     }
   }

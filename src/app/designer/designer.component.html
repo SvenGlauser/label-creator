@@ -1,3 +1,18 @@
-<div id="designer-zone">
-  <app-design-label [design]="design" (designChange)="this.designService.update($event)" *ngFor="let design of this.designService.getAll()"></app-design-label>
+<div id="edition-zone">
+  <div id="zoom-zone">
+    <div id="designer-zone" [style.transform]="'scale('+ this.scaleValue +')'">
+      <app-design-label [design]="design" (designChange)="this.designService.update($event)" *ngFor="let design of this.designService.getAll()"></app-design-label>
+    </div>
+  </div>
+  <div id="zoom">
+    <button [disabled]="scaleValue <= 0.5" mat-icon-button (click)="zoomOut()">
+      <mat-icon>zoom_out</mat-icon>
+    </button>
+    <button [disabled]="scaleValue >= 2" mat-icon-button (click)="zoomIn()">
+      <mat-icon>zoom_in</mat-icon>
+    </button>
+  </div>
+</div>
+<div id="personalization-zone">
+  <app-design-personalization *ngIf="this.designService.getCurrent()" [design]="this.designService.getCurrent()!" (designChange)="this.designService.update($event)"></app-design-personalization>
 </div>

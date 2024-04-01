@@ -21,4 +21,8 @@ import {Design} from "../design";
 export class DesignLabelComponent {
   @Input('design')
   public designLabel?: Design;
+
+  public getText(): string {
+    return <string>this.designLabel?.content.replaceAll("\n", "<br>");
+  }
 }
