@@ -9,6 +9,9 @@ import {MatIcon} from "@angular/material/icon";
 import {
   DesignLabelPersonalizationComponent
 } from "./design-label-personalization/design-label-personalization.component";
+import {
+  DesignImagePersonalizationComponent
+} from "./design-image-personalization/design-image-personalization.component";
 
 @Component({
   selector: 'app-design-personalization',
@@ -21,14 +24,15 @@ import {
     MatButtonToggle,
     MatButtonToggleGroup,
     MatIcon,
-    DesignLabelPersonalizationComponent
+    DesignLabelPersonalizationComponent,
+    DesignImagePersonalizationComponent
   ],
   templateUrl: './design-personalization.component.html',
   styleUrl: './design-personalization.component.scss'
 })
 export class DesignPersonalizationComponent implements OnInit, DoCheck {
 
-  private _design?: Design;
+  protected _design?: Design;
   private _designOld?: Design;
   @Input() set design(value: Design) {
     this._design = value;
@@ -37,7 +41,7 @@ export class DesignPersonalizationComponent implements OnInit, DoCheck {
   public designChange = new EventEmitter<Design>();
 
   @ViewChild('child')
-  public child?: DesignLabelPersonalizationComponent;
+  public child?: DesignLabelPersonalizationComponent | DesignImagePersonalizationComponent;
 
   private cancelNextUpdate = false;
 

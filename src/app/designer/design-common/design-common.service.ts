@@ -1,6 +1,6 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {DesignCommonDirective} from "./design-common.directive";
-import {Design, DesignLabel} from "../design";
+import {Design, DesignImage, DesignLabel} from "../design";
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,15 @@ export class DesignCommonService {
     verticalTextAlign: 'flex-start',
     align: 'left',
     linkedDirective: undefined
+  },<DesignImage>{
+    name: "4",
+    top: 0,
+    left: 0,
+    width: 100,
+    height: 20,
+    type: 'image',
+    imageUrl: 'https://static.wixstatic.com/media/53d566_b68a3a188f724be98447d465a2cc5ad3~mv2.png/v1/fill/w_167,h_90,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/AGROCentre_Logo_01_Couleur.png',
+    backgroundSize: 'contain'
   }]
   private current?: Design;
   private _renderer: Renderer2;

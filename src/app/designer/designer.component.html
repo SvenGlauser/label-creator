@@ -1,7 +1,13 @@
 <div id="edition-zone">
   <div id="zoom-zone">
     <div id="designer-zone" [style.transform]="'scale('+ this.scaleValue +')'">
-      <app-design-label [design]="design" (designChange)="this.designService.update($event)" *ngFor="let design of this.designService.getAll()"></app-design-label>
+      @for (design of this.designService.getAll(); track design.name) {
+        @if (design.type == 'label') {
+          <app-design-label [design]="design" (designChange)="this.designService.update($event)"></app-design-label>
+        } @else if (design.type == 'image') {
+          <app-design-image [design]="design" (designChange)="this.designService.update($event)"></app-design-image>
+        }
+      }
     </div>
   </div>
   <div id="zoom">

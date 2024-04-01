@@ -1,0 +1,15 @@
+<ng-container>
+  <mat-label>URL</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <textarea matInput placeholder="https://google.com/..." [formControl]="getForm('imageUrl')"></textarea>
+  </mat-form-field>
+  <mat-label>Remplissage</mat-label>
+  <mat-button-toggle-group [formControl]="getForm('backgroundSize')" [hideSingleSelectionIndicator]="true">
+    <mat-button-toggle value="contain" aria-label="Text align left">
+      <mat-icon>fullscreen_exit</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="cover" aria-label="Text align center">
+      <mat-icon>fullscreen</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</ng-container>

@@ -2,7 +2,7 @@ import {DesignCommonDirective} from "./design-common/design-common.directive";
 
 export interface Design {
   name: string;
-  type: 'label';
+  type: 'label' | 'image';
 
   top: number;
   left: number;
@@ -21,4 +21,10 @@ export interface DesignLabel extends Design {
   verticalTextAlign: 'center' | 'flex-end' | 'flex-start';
   color: string;
   backgroundColor: string;
+}
+
+export interface DesignImage extends Design {
+  image?: File;
+  imageUrl?: string;
+  backgroundSize?: 'contain' | 'cover';
 }

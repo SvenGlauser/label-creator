@@ -1,0 +1,13 @@
+:host {
+  display: grid;
+  grid-template-columns: auto 194px;
+  grid-template-rows: repeat(3, 70px);
+  grid-column-gap: 20px;
+  grid-row-gap: 0;
+
+  align-items: center;
+
+  mat-button-toggle-group {
+    width: min-content;
+  }
+}

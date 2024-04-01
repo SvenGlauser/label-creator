@@ -7,6 +7,7 @@ import {DesignCommonService} from "./design-common/design-common.service";
 import {DesignPersonalizationComponent} from "./design-personalization/design-personalization.component";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
+import {DesignImageComponent} from "./design-image/design-image.component";
 
 @Component({
   selector: 'app-designer',
@@ -19,7 +20,8 @@ import {MatIcon} from "@angular/material/icon";
     DesignPersonalizationComponent,
     NgIf,
     MatIconButton,
-    MatIcon
+    MatIcon,
+    DesignImageComponent
   ],
   templateUrl: './designer.component.html',
   styleUrl: './designer.component.scss'
