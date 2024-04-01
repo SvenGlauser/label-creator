@@ -1,13 +1,13 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {DesignCommonDirective} from "./design-common.directive";
-import {Design} from "../design";
+import {Design, DesignLabel} from "../design";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DesignCommonService {
 
-  private listOfDesign: Design[] = [{
+  private listOfDesign: Design[] = [<DesignLabel>{
     name: "1",
     top: 10,
     left: 4,
@@ -16,10 +16,13 @@ export class DesignCommonService {
     type: 'label',
     content: 'testeste',
     fontSize: 15,
+    fontFamily: 'Helvetica',
+    color: '#fff',
     textAlign: 'left',
+    verticalTextAlign: 'flex-start',
     align: 'left',
     linkedDirective: undefined
-  },{
+  },<DesignLabel>{
     name: "2",
     top: 0,
     left: 0,
@@ -28,10 +31,13 @@ export class DesignCommonService {
     type: 'label',
     content: 'testsetest',
     fontSize: 15,
+    fontFamily: 'Helvetica',
+    color: '#eee',
     textAlign: 'left',
+    verticalTextAlign: 'flex-start',
     align: 'left',
     linkedDirective: undefined
-  },{
+  },<DesignLabel>{
     name: "3",
     top: 0,
     left: 0,
@@ -40,7 +46,10 @@ export class DesignCommonService {
     type: 'label',
     content: 'Testsetest',
     fontSize: 15,
+    fontFamily: 'Helvetica',
+    color: 'red',
     textAlign: 'left',
+    verticalTextAlign: 'flex-start',
     align: 'left',
     linkedDirective: undefined
   }]
@@ -107,7 +116,7 @@ export class DesignCommonService {
         this.current = designCommon;
         this.current.linkedDirective!.changeSelection(true);
       } else {
-        if (designCommon.type == 'label' && designCommon.content == '') {
+        if (designCommon.type == 'label' && (<DesignLabel>designCommon).content == '') {
           this.delete(designCommon);
         }
         designCommon.linkedDirective!.changeSelection(false);

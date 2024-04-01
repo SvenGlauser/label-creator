@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DesignPersonalizationComponent } from './design-personalization.component';
+import {DesignPersonalizationComponent} from './design-personalization.component';
 
 describe('DesignPersonalizationComponent', () => {
   let component: DesignPersonalizationComponent;
@@ -11,7 +11,7 @@ describe('DesignPersonalizationComponent', () => {
       imports: [DesignPersonalizationComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(DesignPersonalizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

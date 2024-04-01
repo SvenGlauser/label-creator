@@ -3,9 +3,6 @@ import {DesignCommonDirective} from "./design-common/design-common.directive";
 export interface Design {
   name: string;
   type: 'label';
-  content: string;
-  fontSize: number;
-  textAlign: 'center' | 'left' | 'right' | 'justify';
 
   top: number;
   left: number;
@@ -14,4 +11,14 @@ export interface Design {
   align: 'none' | 'center' | 'left' | 'right';
 
   linkedDirective: DesignCommonDirective | undefined;
+}
+
+export interface DesignLabel extends Design {
+  content: string;
+  fontSize: number;
+  fontFamily: string;
+  textAlign: 'center' | 'left' | 'right' | 'justify';
+  verticalTextAlign: 'center' | 'flex-end' | 'flex-start';
+  color: string;
+  backgroundColor: string;
 }

@@ -1,12 +1,5 @@
 <div id="modify" [formGroup]="form">
-  <mat-form-field appearance="outline" id="content-edition" subscriptSizing="dynamic">
-    <mat-label>Texte</mat-label>
-    <textarea matInput placeholder="Quantité de #cereale" formControlName="content"></textarea>
-  </mat-form-field>
-  <mat-label>Taille de la police</mat-label>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <input matInput placeholder="15" type="number" formControlName="fontSize">
-  </mat-form-field>
+  <app-design-label-personalization #child [form]="getChildForm()" id="child"></app-design-label-personalization>
   <mat-label>Position X</mat-label>
   <mat-form-field appearance="outline" subscriptSizing="dynamic">
     <input matInput placeholder="100" type="number" formControlName="top">

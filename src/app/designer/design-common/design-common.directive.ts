@@ -12,7 +12,6 @@ import {
 import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
 import {DesignCommonService} from "./design-common.service";
 import {Design} from "../design";
-import {LogicalFileSystem} from "@angular/compiler-cli";
 
 @Directive({
   selector: '[appDesignCommon]',

@@ -1,3 +1,10 @@
-<div id="content" cdkDragHandle>
-  <p [style.font-size]="designLabel?.fontSize + 'px'" [innerHTML]="getText()"></p>
+<div id="content"
+     [style.background-color]="get().backgroundColor"
+     cdkDragHandle>
+  <p [style.font-size]="get().fontSize + 'px'"
+     [style.color]="get().color"
+     [style.font-family]="get().fontFamily"
+     [style.text-align]="get().textAlign"
+     [style.align-self]="get().verticalTextAlign"
+     [innerHTML]="getText()"></p>
 </div>

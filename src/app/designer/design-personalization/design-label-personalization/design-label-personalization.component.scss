@@ -1,18 +1,17 @@
-#modify {
-  background: white;
+:host {
   display: grid;
   grid-template-columns: auto 194px;
-  grid-template-rows: min-content repeat(4, 70px);
+  grid-template-rows: min-content repeat(3, 70px);
   grid-column-gap: 20px;
   grid-row-gap: 0;
 
   align-items: center;
 
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-
-  #child {
+  #content-edition {
     grid-area: 1 / 1 / 1 / 3;
+  }
+
+  mat-button-toggle-group {
+    width: min-content;
   }
 }

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {DesignCommonDirective} from "../design-common/design-common.directive";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
-import {Design} from "../design";
+import {Design, DesignLabel} from "../design";
 
 @Component({
   selector: 'app-design-label',
@@ -23,6 +23,10 @@ export class DesignLabelComponent {
   public designLabel?: Design;
 
   public getText(): string {
-    return <string>this.designLabel?.content.replaceAll("\n", "<br>");
+    return this.get().content.replaceAll("\n", "<br>");
+  }
+
+  public get(): DesignLabel {
+    return <DesignLabel>this.designLabel;
   }
 }

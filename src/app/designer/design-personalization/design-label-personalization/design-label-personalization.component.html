@@ -1,0 +1,46 @@
+<ng-container>
+  <mat-form-field appearance="outline" id="content-edition" subscriptSizing="dynamic">
+    <mat-label>Texte</mat-label>
+    <textarea matInput placeholder="Quantité de #cereale" [formControl]="getForm('content')"></textarea>
+  </mat-form-field>
+  <mat-label>Police</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <input matInput placeholder="Helvetica" type="string" [formControl]="getForm('fontFamily')">
+  </mat-form-field>
+  <mat-label>Taille</mat-label>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <input matInput placeholder="15" type="number" [formControl]="getForm('fontSize')">
+  </mat-form-field>
+  <mat-label>Couleur</mat-label>
+  <div>
+    <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('color')"></ngx-colors>
+    <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('backgroundColor')"></ngx-colors>
+  </div>
+  <mat-label>Alignement horizontal</mat-label>
+  <mat-button-toggle-group [formControl]="getForm('textAlign')" [hideSingleSelectionIndicator]="true">
+    <mat-button-toggle value="left" aria-label="Text align left">
+      <mat-icon>format_align_left</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="center" aria-label="Text align center">
+      <mat-icon>format_align_center</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="right" aria-label="Text align right">
+      <mat-icon>format_align_right</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="justify" aria-label="Text align justify">
+      <mat-icon>format_align_justify</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  <mat-label>Alignement vertical</mat-label>
+  <mat-button-toggle-group [formControl]="getForm('verticalTextAlign')" [hideSingleSelectionIndicator]="true">
+    <mat-button-toggle value="flex-start" aria-label="Text align left">
+      <mat-icon>vertical_align_top</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="center" aria-label="Text align center">
+      <mat-icon>vertical_align_center</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="flex-end" aria-label="Text align right">
+      <mat-icon>vertical_align_bottom</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</ng-container>

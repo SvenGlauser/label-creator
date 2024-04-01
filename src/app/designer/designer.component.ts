@@ -1,11 +1,10 @@
-import {Component, HostListener, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {DesignLabelComponent} from "./design-label/design-label.component";
 import {DesignCommonDirective} from "./design-common/design-common.directive";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {NgForOf, NgIf} from "@angular/common";
 import {DesignCommonService} from "./design-common/design-common.service";
 import {DesignPersonalizationComponent} from "./design-personalization/design-personalization.component";
-import {PanZoomComponent} from "ngx-panzoom";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 
@@ -19,7 +18,6 @@ import {MatIcon} from "@angular/material/icon";
     NgForOf,
     DesignPersonalizationComponent,
     NgIf,
-    PanZoomComponent,
     MatIconButton,
     MatIcon
   ],
@@ -48,7 +46,7 @@ export class DesignerComponent implements OnInit {
       this.deltaY = -1000;
     }
 
-    this.scaleValue = Math.pow(2, this.deltaY / 1000);
+    this.scaleValue = Math.pow(2, -this.deltaY / 1000);
   }
 
   protected zoomIn(): void {
