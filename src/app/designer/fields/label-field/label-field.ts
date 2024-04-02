@@ -1,3 +1,5 @@
+import {CommonField} from "../common-field/common-field";
+
 /**
  * Interface pour les champs textes classiques
  */
