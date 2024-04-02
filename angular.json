@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "agrocente-etiquettes": {
+    "label-creator": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/agrocente-etiquettes",
+            "outputPath": "dist/label-creator",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "agrocente-etiquettes:build:production"
+              "buildTarget": "label-creator:build:production"
             },
             "development": {
-              "buildTarget": "agrocente-etiquettes:build:development"
+              "buildTarget": "label-creator:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "agrocente-etiquettes:build"
+            "buildTarget": "label-creator:build"
           }
         },
         "test": {
