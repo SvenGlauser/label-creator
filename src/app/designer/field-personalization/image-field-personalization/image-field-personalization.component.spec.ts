@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DesignImagePersonalizationComponent } from './design-image-personalization.component';
+import { ImageFieldPersonalizationComponent } from './image-field-personalization.component';
 
 describe('DesignImagePersonalizationComponent', () => {
-  let component: DesignImagePersonalizationComponent;
-  let fixture: ComponentFixture<DesignImagePersonalizationComponent>;
+  let component: ImageFieldPersonalizationComponent;
+  let fixture: ComponentFixture<ImageFieldPersonalizationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DesignImagePersonalizationComponent]
+      imports: [ImageFieldPersonalizationComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(DesignImagePersonalizationComponent);
+
+    fixture = TestBed.createComponent(ImageFieldPersonalizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

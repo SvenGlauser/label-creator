@@ -47,6 +47,6 @@
   </div>
 </div>
 <div id="personalization-zone">
-  <app-design-personalization *ngIf="this.designService.getCurrent()" [design]="this.designService.getCurrent()!" (designChange)="this.designService.update($event)"></app-design-personalization>
+  <app-field-personalization *ngIf="this.designService.getCurrent()" [field]="this.designService.getCurrent()!" (fieldChange)="this.designService.update($event)"></app-field-personalization>
   <app-design-creation *ngIf="!this.designService.getCurrent()"></app-design-creation>
 </div>

@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {DesignLabelPersonalizationComponent} from './design-label-personalization.component';
+import {LabelFieldPersonalizationComponent} from './label-field-personalization.component';
 
 describe('DesignLabelPersonalizationComponent', () => {
-  let component: DesignLabelPersonalizationComponent;
-  let fixture: ComponentFixture<DesignLabelPersonalizationComponent>;
+  let component: LabelFieldPersonalizationComponent;
+  let fixture: ComponentFixture<LabelFieldPersonalizationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DesignLabelPersonalizationComponent]
+      imports: [LabelFieldPersonalizationComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DesignLabelPersonalizationComponent);
+    fixture = TestBed.createComponent(LabelFieldPersonalizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

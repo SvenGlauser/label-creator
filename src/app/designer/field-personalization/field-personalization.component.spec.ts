@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {DesignPersonalizationComponent} from './design-personalization.component';
+import {FieldPersonalizationComponent} from './field-personalization.component';
 
 describe('DesignPersonalizationComponent', () => {
-  let component: DesignPersonalizationComponent;
-  let fixture: ComponentFixture<DesignPersonalizationComponent>;
+  let component: FieldPersonalizationComponent;
+  let fixture: ComponentFixture<FieldPersonalizationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DesignPersonalizationComponent]
+      imports: [FieldPersonalizationComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DesignPersonalizationComponent);
+    fixture = TestBed.createComponent(FieldPersonalizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

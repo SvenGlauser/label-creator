@@ -208,7 +208,6 @@ export class DesignCommonService {
     let listOfImageTOString = listOfDesignToString
       .filter(design => design.type == 'image' && (<DesignImage>design).image != undefined)
       .map(design => {
-        console.log(listOfDesignToString.indexOf(design))
         return {
           indexOf: listOfDesignToString.indexOf(design),
           image: (<DesignImage>design).image
@@ -218,7 +217,6 @@ export class DesignCommonService {
     listOfImageTOString.forEach(image => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log(image.indexOf)
         let newDesign = <DesignImageExportable>listOfDesignToString.at(image.indexOf);
         newDesign.image = <string>reader.result
         newDesign.imageName = <string>image.image!.name;

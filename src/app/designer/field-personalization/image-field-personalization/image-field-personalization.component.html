@@ -8,12 +8,14 @@
     </mat-button-toggle>
   </mat-button-toggle-group>
   <div class="file-upload" *ngIf="currentChoose == 'image'">
-    <span>{{fileName || "No file uploaded yet."}}</span>
+    <span>{{fileName || "Aucun fichier sélectionné."}}</span>
     <button mat-mini-fab color="primary" class="upload-btn"
             (click)="fileUpload.click()">
       <mat-icon>attach_file</mat-icon>
     </button>
-    <input type="file" class="file-input" hidden="hidden"
+    <input type="file"
+           hidden="hidden"
+           accept="image/png, image/jpeg"
            (change)="onFileSelected($event)" #fileUpload>
   </div>
   <mat-form-field appearance="outline" subscriptSizing="dynamic" *ngIf="currentChoose == 'url'">

@@ -4,7 +4,7 @@ import {DesignCommonDirective} from "./design-common/design-common.directive";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {NgForOf, NgIf} from "@angular/common";
 import {DesignCommonService} from "./design-common/design-common.service";
-import {DesignPersonalizationComponent} from "./design-personalization/design-personalization.component";
+import {FieldPersonalizationComponent} from "./field-personalization/field-personalization.component";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {DesignImageComponent} from "./design-image/design-image.component";
@@ -19,7 +19,7 @@ import {VersionningService} from "./versionning-service/versionning.service";
     DesignCommonDirective,
     CdkDropList,
     NgForOf,
-    DesignPersonalizationComponent,
+    FieldPersonalizationComponent,
     NgIf,
     MatIconButton,
     MatIcon,

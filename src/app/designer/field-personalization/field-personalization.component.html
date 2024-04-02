@@ -1,9 +1,9 @@
 <p>Modifier l'élément</p>
 <div id="modify" [formGroup]="form">
-  @if (this._design!.type == 'label') {
-    <app-design-label-personalization #child [form]="getChildForm()" id="child"></app-design-label-personalization>
-  } @else if (this._design!.type == 'image') {
-    <app-design-image-personalization #child [form]="getChildForm()" id="child"></app-design-image-personalization>
+  @if (this.field!.type == 'label') {
+    <app-label-field-personalization #child [form]="getChildForm()" id="child"></app-label-field-personalization>
+  } @else if (this.field!.type == 'image') {
+    <app-image-field-personalization #child [form]="getChildForm()" id="child"></app-image-field-personalization>
   }
   <mat-label>Position X</mat-label>
   <mat-form-field appearance="outline" subscriptSizing="dynamic">
