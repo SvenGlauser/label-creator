@@ -24,7 +24,14 @@ export interface DesignLabel extends Design {
 }
 
 export interface DesignImage extends Design {
-  image?: Blob;
+  image?: File;
+  imageUrl?: string;
+  backgroundSize: '' | 'contain' | 'cover';
+}
+
+export interface DesignImageExportable extends Design {
+  image?: string;
+  imageName?: string;
   imageUrl?: string;
   backgroundSize: '' | 'contain' | 'cover';
 }

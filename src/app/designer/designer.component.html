@@ -18,6 +18,12 @@
       <button mat-icon-button (click)="goNext()" [disabled]="!versionningService.canGoNext()">
         <mat-icon>redo</mat-icon>
       </button>
+      <button mat-icon-button (click)="designService.getJson()">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+      <button mat-icon-button (click)="designService.setJson()">
+        <mat-icon>content_paste</mat-icon>
+      </button>
     </div>
     <div id="upDown" *ngIf="designService.getCurrent()">
       <button mat-icon-button (click)="designService.up()">

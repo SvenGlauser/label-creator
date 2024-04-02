@@ -91,6 +91,7 @@ export class DesignImagePersonalizationComponent implements OnInit, DesignPerson
       return 'url'
     }
     if (!!this.form?.get('image')!.value) {
+      console.log(this.form?.get('image')!.value)
       this.fileName = this.form?.get('image')!.value.name;
       return 'image'
     }

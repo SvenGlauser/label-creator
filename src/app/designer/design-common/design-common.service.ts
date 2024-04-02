@@ -1,7 +1,8 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {DesignCommonDirective} from "./design-common.directive";
-import {Design, DesignLabel} from "../design";
+import {Design, DesignImage, DesignImageExportable, DesignLabel} from "../design";
 import {VersionningService} from "../versionning-service/versionning.service";
+import {from} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -199,5 +200,89 @@ export class DesignCommonService {
     this.listOfDesign = this.versionningService.goNext();
     this.current?.linkedDirective!.changeSelection(false);
     this.current = undefined;
+  }
+
+  public getJson(): void {
+    let listOfDesignToString = this.listOfDesign.map(design => ({...design}));
+
+    let listOfImageTOString = listOfDesignToString
+      .filter(design => design.type == 'image' && (<DesignImage>design).image != undefined)
+      .map(design => {
+        console.log(listOfDesignToString.indexOf(design))
+        return {
+          indexOf: listOfDesignToString.indexOf(design),
+          image: (<DesignImage>design).image
+        }
+      }).filter(image => image.image != undefined);
+
+    listOfImageTOString.forEach(image => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        console.log(image.indexOf)
+        let newDesign = <DesignImageExportable>listOfDesignToString.at(image.indexOf);
+        newDesign.image = <string>reader.result
+        newDesign.imageName = <string>image.image!.name;
+        listOfDesignToString[image.indexOf] = newDesign;
+        const index = listOfImageTOString.indexOf(image);
+        if (index > -1) {
+          listOfImageTOString.splice(index, 1);
+        }
+        if (listOfImageTOString.length == 0) {
+          navigator.clipboard.writeText(JSON.stringify(listOfDesignToString.map(design => {
+            design.linkedDirective = undefined;
+            return design;
+          })));
+        }
+      };
+      reader.readAsDataURL(<Blob>image.image);
+    })
+
+    if (listOfImageTOString.length == 0) {
+      navigator.clipboard.writeText(JSON.stringify(listOfDesignToString.map(design => {
+        design.linkedDirective = undefined;
+        return design;
+      })));
+    }
+
+
+  }
+
+  public setJson(): void {
+    navigator.clipboard.readText().then((event) => {
+      let listOfDesignExported: Design[] = JSON.parse(event);
+      let listOfImages: {index: number, image: string, imageName: string}[] = [];
+      listOfDesignExported.forEach((design, index) => {
+        if (design.type == 'image' && (<DesignImageExportable>design).image) {
+          listOfImages.push({
+            index: index,
+            image: <string>(<DesignImageExportable>design).image,
+            imageName: <string>(<DesignImageExportable>design).imageName
+          });
+        }
+      });
+
+      listOfImages.forEach((image) => {
+        from(
+          fetch(image.image)
+            .then(res => res.blob())
+            .then(blob => {
+              let newDesign = <DesignImage>listOfDesignExported.at(image.index);
+              newDesign.image = new File([blob], image.imageName);
+              listOfDesignExported[image.index] = newDesign;
+              const index = listOfImages.indexOf(image);
+              if (index > -1) {
+                listOfImages.splice(index, 1);
+              }
+              if (listOfImages.length == 0) {
+                this.listOfDesign = listOfDesignExported;
+              }
+            })
+        );
+      });
+
+      if (listOfImages.length == 0) {
+        this.listOfDesign = listOfDesignExported;
+      }
+    })
   }
 }
