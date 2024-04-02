@@ -3,7 +3,7 @@
     <div id="designer-zone" [style.transform]="'scale('+ this.scaleValue +')'">
       @for (design of this.designService.getAll(); track design.name) {
         @if (design.type == 'label') {
-          <app-design-label [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-design-label>
+          <app-label-field [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-label-field>
         } @else if (design.type == 'image') {
           <app-design-image [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-design-image>
         }

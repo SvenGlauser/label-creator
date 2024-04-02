@@ -1,0 +1,10 @@
+<div id="content"
+     [style.background-color]="getField().backgroundColor"
+     cdkDragHandle>
+  <p [style.font-size]="getField().fontSize + 'px'"
+     [style.color]="getField().color"
+     [style.font-family]="getField().fontFamily"
+     [style.text-align]="getField().textAlign"
+     [style.align-self]="getField().verticalTextAlign"
+     [innerHTML]="getText()"></p>
+</div>

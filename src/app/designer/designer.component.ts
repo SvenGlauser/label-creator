@@ -1,5 +1,5 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {DesignLabelComponent} from "./design-label/design-label.component";
+import {LabelFieldComponent} from "./label-field/label-field.component";
 import {DesignCommonDirective} from "./design-common/design-common.directive";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {NgForOf, NgIf} from "@angular/common";
@@ -15,7 +15,7 @@ import {VersionningService} from "./versionning-service/versionning.service";
   selector: 'app-designer',
   standalone: true,
   imports: [
-    DesignLabelComponent,
+    LabelFieldComponent,
     DesignCommonDirective,
     CdkDropList,
     NgForOf,
