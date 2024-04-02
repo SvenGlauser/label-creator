@@ -35,7 +35,7 @@ export class LabelFieldComponent {
   /**
    * Récupère une version du champ dans l'interface de bon type (réalise un cast)
    */
-  public getField(): DesignLabel {
+  protected getField(): DesignLabel {
     return <DesignLabel>this.labelField;
   }
 }

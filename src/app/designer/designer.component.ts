@@ -7,7 +7,7 @@ import {DesignCommonService} from "./design-common/design-common.service";
 import {FieldPersonalizationComponent} from "./field-personalization/field-personalization.component";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {DesignImageComponent} from "./design-image/design-image.component";
+import {ImageFieldComponent} from "./image-field/image-field.component";
 import {DesignCreationComponent} from "./design-creation/design-creation.component";
 import {VersionningService} from "./versionning-service/versionning.service";
 
@@ -23,7 +23,7 @@ import {VersionningService} from "./versionning-service/versionning.service";
     NgIf,
     MatIconButton,
     MatIcon,
-    DesignImageComponent,
+    ImageFieldComponent,
     DesignCreationComponent
   ],
   templateUrl: './designer.component.html',

@@ -5,7 +5,7 @@
         @if (design.type == 'label') {
           <app-label-field [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-label-field>
         } @else if (design.type == 'image') {
-          <app-design-image [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-design-image>
+          <app-image-field [design]="design" (designChange)="this.designService.update($event)" [zoomLevel]="scaleValue"></app-image-field>
         }
       }
     </div>
