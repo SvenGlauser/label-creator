@@ -1,16 +1,18 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {CommonFieldDirective} from "../fields/common-field/common-field.directive";
-import {Field, ImageField, ImageFieldExportable, LabelField} from "../field";
+import {CommonField} from "../fields/common-field/common-field";
 import {VersionningService} from "../versionning-service/versionning.service";
 import {from} from "rxjs";
+import {ImageField, ImageFieldExportable} from "../fields/image-field/image-field";
+import {LabelField} from "../fields/label-field/label-field";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DesignCommonService {
 
-  private listOfDesign: Field[] = []
-  private current?: Field;
+  private listOfDesign: CommonField[] = []
+  private current?: CommonField;
   private _renderer: Renderer2;
 
   private unsubscribeMouseMove?: () => void;
@@ -28,11 +30,11 @@ export class DesignCommonService {
     }, 100)
   }
 
-  public getAll(): Field[] {
+  public getAll(): CommonField[] {
     return this.listOfDesign;
   }
 
-  public addNew(design: Field): void {
+  public addNew(design: CommonField): void {
     if (design.index == Number.NEGATIVE_INFINITY) {
       let biggerIndex = this.listOfDesign.length > 0 ? this.listOfDesign.map(design => design.index).sort().reverse()[0] : 0;
       design.index = biggerIndex + 1;
@@ -55,7 +57,7 @@ export class DesignCommonService {
     this.current = undefined;
   }
 
-  public delete(designToDelete: Field): void {
+  public delete(designToDelete: CommonField): void {
     let index = this.listOfDesign.findIndex(design => design.name == designToDelete?.name);
 
     if (index !== -1) {
@@ -132,7 +134,7 @@ export class DesignCommonService {
     }
   }
 
-  public update(newDesign: Field): void {
+  public update(newDesign: CommonField): void {
     let index = this.listOfDesign.findIndex(design => design.name == newDesign.name);
 
     if (index !== -1) {
@@ -142,7 +144,7 @@ export class DesignCommonService {
     this.makeAVersion();
   }
 
-  public getCurrent(): Field | undefined {
+  public getCurrent(): CommonField | undefined {
     return this.current;
   }
 
@@ -247,7 +249,7 @@ export class DesignCommonService {
 
   public setJson(): void {
     navigator.clipboard.readText().then((event) => {
-      let listOfDesignExported: Field[] = JSON.parse(event);
+      let listOfDesignExported: CommonField[] = JSON.parse(event);
       let listOfImages: {index: number, image: string, imageName: string}[] = [];
       listOfDesignExported.forEach((design, index) => {
         if (design.type == 'image' && (<ImageFieldExportable>design).image) {

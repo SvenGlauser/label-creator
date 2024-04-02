@@ -1,5 +1,5 @@
 import {AbstractControl} from "@angular/forms";
-import {Field, ImageField} from "../field";
+import {CommonField} from "../fields/common-field/common-field";
 
 export interface FieldPersonalization {
   form?: AbstractControl;
@@ -9,17 +9,17 @@ export interface FieldPersonalization {
    * @param field Valeurs actuelles
    * @param oldField Anciennes valeurs
    */
-  hasChanged(field: Field, oldField: Field): boolean;
+  hasChanged(field: CommonField, oldField: CommonField): boolean;
 
   /**
    * Récupère les nouvelles informations de champs
    * @param field Champs auquel ajouter les informations
    */
-  getNew(field: Field): Field;
+  getNew(field: CommonField): CommonField;
 
   /**
    * Met à jour les champs
    * @param field Nouvelles valeurs
    */
-  updateForm(field: Field): void;
+  updateForm(field: CommonField): void;
 }

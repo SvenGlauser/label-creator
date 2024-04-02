@@ -1,7 +1,8 @@
 import {Component, DoCheck, Input} from '@angular/core';
 import {CommonFieldDirective} from "../common-field/common-field.directive";
-import {Field, ImageField} from "../../field";
+import {CommonField} from "../common-field/common-field";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
+import {ImageField} from "./image-field";
 
 @Component({
   selector: 'app-image-field',
@@ -20,7 +21,7 @@ import {CdkDragHandle} from "@angular/cdk/drag-drop";
 export class ImageFieldComponent implements DoCheck {
 
   @Input('field')
-  public imageField?: Field;
+  public imageField?: CommonField;
 
   private oldImage?: string | Blob;
   protected url?: string;

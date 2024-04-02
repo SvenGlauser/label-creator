@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Addition, Deletion, Modification, Version} from "./version";
-import {Field, ImageField, LabelField} from "../field";
+import {CommonField} from "../fields/common-field/common-field";
+import {ImageField} from "../fields/image-field/image-field";
+import {LabelField} from "../fields/label-field/label-field";
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +10,14 @@ import {Field, ImageField, LabelField} from "../field";
 export class VersionningService {
 
   private versions: Version[] = [];
-  private oldList: Field[] = [];
+  private oldList: CommonField[] = [];
 
   private currentVersion = -1;
 
   constructor() {}
 
-  public add(designs: Field[]): void {
-    let oldDesignsChecked: Field[] = []
+  public add(designs: CommonField[]): void {
+    let oldDesignsChecked: CommonField[] = []
 
     let version: Version = {
       added: [],
@@ -36,11 +38,11 @@ export class VersionningService {
 
         for (const designKey in design) {
           if (designKey != "name" && designKey != "linkedDirective") {
-            if (design[designKey as keyof Field] != oldDesign[designKey as keyof Field]) {
+            if (design[designKey as keyof CommonField] != oldDesign[designKey as keyof CommonField]) {
               modification.attributes.push({
                 name: designKey,
-                newValue: design[designKey as keyof Field],
-                oldValue: oldDesign[designKey as keyof Field]
+                newValue: design[designKey as keyof CommonField],
+                oldValue: oldDesign[designKey as keyof CommonField]
               });
             }
           }
@@ -59,7 +61,7 @@ export class VersionningService {
           if (designKey != "name" && designKey != "linkedDirective") {
             addition.attributes.push({
               name: designKey,
-              newValue: design[designKey as keyof Field]
+              newValue: design[designKey as keyof CommonField]
             });
           }
         }
@@ -82,7 +84,7 @@ export class VersionningService {
         if (designKey != "name" && designKey != "linkedDirective") {
           deletion.attributes.push({
             name: designKey,
-            oldValue: design[designKey as keyof Field]
+            oldValue: design[designKey as keyof CommonField]
           });
         }
       }
@@ -101,7 +103,7 @@ export class VersionningService {
     }
   }
 
-  public goBack(): Field[] {
+  public goBack(): CommonField[] {
     if (!this.canGoBack()) {
       return this.oldList.map(design => ({...design}));
     }
@@ -156,7 +158,7 @@ export class VersionningService {
     return newList.map(design => ({...design}));
   }
 
-  public goNext(): Field[] {
+  public goNext(): CommonField[] {
     if (!this.canGoNext()) {
       return this.oldList.map(design => ({...design}));
     }

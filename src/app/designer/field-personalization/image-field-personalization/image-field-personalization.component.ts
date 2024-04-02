@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {Field, ImageField} from "../../field";
+import {CommonField} from "../../fields/common-field/common-field";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
@@ -9,6 +9,7 @@ import {NgxColorsModule} from "ngx-colors";
 import {MatMiniFabButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
 import {FieldPersonalization} from "../field-personalization";
+import {ImageField} from "../../fields/image-field/image-field";
 
 /**
  * Composant pour la personnalisation des champs contenant des images
@@ -47,7 +48,7 @@ export class ImageFieldPersonalizationComponent implements OnInit, FieldPersonal
     (<FormGroup>this.form).addControl('backgroundSize', new FormControl(), { emitEvent: false });
   }
 
-  public hasChanged(design: Field, designOld: Field): boolean {
+  public hasChanged(design: CommonField, designOld: CommonField): boolean {
     return !(
       (<ImageField>design).image == (<ImageField>designOld).image &&
       (<ImageField>design).imageUrl == (<ImageField>designOld).imageUrl &&
@@ -55,7 +56,7 @@ export class ImageFieldPersonalizationComponent implements OnInit, FieldPersonal
     );
   }
 
-  public getNew(field: Field): ImageField {
+  public getNew(field: CommonField): ImageField {
     let newField = <ImageField>{...field}
     if (this.currentChoose == 'url') {
       newField.imageUrl = this.form!.get('imageUrl')!.value;
@@ -71,7 +72,7 @@ export class ImageFieldPersonalizationComponent implements OnInit, FieldPersonal
     return newField;
   }
 
-  public updateForm(design: Field): void {
+  public updateForm(design: CommonField): void {
     this.form!.get('image')!.setValue((<ImageField>design).image, { emitEvent: false })
     this.form!.get('imageUrl')!.setValue((<ImageField>design).imageUrl, { emitEvent: false })
     this.form!.get('backgroundSize')!.setValue((<ImageField>design).backgroundSize, { emitEvent: false })

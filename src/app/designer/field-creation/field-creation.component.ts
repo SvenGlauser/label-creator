@@ -2,10 +2,13 @@ import {Component} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {DesignCommonService} from "../field-service/design-common.service";
-import {ImageField, LabelField} from "../field";
 import { v4 as uuidv4 } from 'uuid';
+import {ImageField} from "../fields/image-field/image-field";
+import {LabelField} from "../fields/label-field/label-field";
 
-
+/**
+ * Composant s'occupant de la création des nouveaux champs
+ */
 @Component({
   selector: 'app-field-creation',
   standalone: true,
@@ -20,6 +23,9 @@ export class FieldCreationComponent {
 
   constructor(private fieldService: DesignCommonService) {}
 
+  /**
+   * Crée un nouveau champ texte
+   */
   public addTextArea(): void {
     let field: LabelField = {
       name: uuidv4(),
@@ -42,6 +48,9 @@ export class FieldCreationComponent {
     this.fieldService.addNew(field);
   }
 
+  /**
+   * Crée un nouveau champ image
+   */
   public addImage(): void {
     let field: ImageField = {
       name: uuidv4(),

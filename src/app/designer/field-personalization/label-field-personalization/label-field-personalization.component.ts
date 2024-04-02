@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Field, LabelField} from "../../field";
+import {CommonField} from "../../fields/common-field/common-field";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
@@ -7,6 +7,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {NgxColorsModule} from "ngx-colors";
 import {FieldPersonalization} from "../field-personalization";
+import {LabelField} from "../../fields/label-field/label-field";
 
 /**
  * Composant pour la personnalisation des champs de saisie
@@ -32,7 +33,7 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
   @Input()
   public form?: AbstractControl;
 
-  public hasChanged(field: Field, oldField: Field): boolean {
+  public hasChanged(field: CommonField, oldField: CommonField): boolean {
     return !(
       (<LabelField>field).content == (<LabelField>oldField).content &&
       (<LabelField>field).fontFamily == (<LabelField>oldField).fontFamily &&
@@ -44,7 +45,7 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
     );
   }
 
-  public getNew(field: Field): LabelField {
+  public getNew(field: CommonField): LabelField {
     let newField = <LabelField>{...field}
     newField.content = this.form!.get('content')!.value;
     newField.fontSize = Number.parseInt(this.form!.get('fontSize')!.value);
@@ -56,7 +57,7 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
     return newField;
   }
 
-  public updateForm(field: Field): void {
+  public updateForm(field: CommonField): void {
     this.form!.get('content')!.setValue((<LabelField>field).content, { emitEvent: false })
     this.form!.get('fontSize')!.setValue((<LabelField>field).fontSize, { emitEvent: false })
     this.form!.get('fontFamily')!.setValue((<LabelField>field).fontFamily, { emitEvent: false })

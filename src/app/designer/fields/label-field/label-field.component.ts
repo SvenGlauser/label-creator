@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {CommonFieldDirective} from "../common-field/common-field.directive";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
-import {Field, LabelField} from "../../field";
+import {CommonField} from "../common-field/common-field";
+import {LabelField} from "./label-field";
 
 /**
  * Composant d'affichage pour les champs de saisie classique
@@ -23,7 +24,7 @@ import {Field, LabelField} from "../../field";
 })
 export class LabelFieldComponent {
   @Input('field')
-  public labelField?: Field;
+  public labelField?: CommonField;
 
   /**
    * Récupère le texte à afficher

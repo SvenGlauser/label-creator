@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
 import {DesignCommonService} from "../../field-service/design-common.service";
-import {Field} from "../../field";
+import {CommonField} from "./common-field";
 
 /**
  * Directive gérer les propriétés communes à tous les champs
@@ -43,9 +43,7 @@ export class CommonFieldDirective implements OnInit, DoCheck {
   private resizeButtonTopRight?: HTMLDivElement;
   private resizeButtonTopLeft?: HTMLDivElement;
 
-  private registered = false;
-
-  @Input('field') set setField(field: Field) {
+  @Input('field') set setField(field: CommonField) {
     this.field = field;
     this.top = this.field.top;
     this.left = this.field.left;
@@ -53,15 +51,12 @@ export class CommonFieldDirective implements OnInit, DoCheck {
     this.height = this.field.height;
     this.zIndex = this.field.index;
 
-    // Enregistre le composant dans le service si nécessaire
-    if (!this.registered) {
-      this.fieldService.registerNew(this, this.field.name)
-      this.registered = true;
-    }
+    // Enregistre le composant dans le service
+    this.fieldService.registerNew(this, this.field.name)
   }
-  private field?: Field;
+  private field?: CommonField;
   @Output()
-  public fieldChange = new EventEmitter<Field>();
+  public fieldChange = new EventEmitter<CommonField>();
 
   @Input()
   public zoomLevel: number = 1;
