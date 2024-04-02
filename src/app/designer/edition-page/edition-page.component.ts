@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
 import {EditionOptionsComponent} from "./edition-options/edition-options.component";
 import {ZoomComponent} from "./zoom/zoom.component";
 import {FieldCreationComponent} from "../field-creation/field-creation.component";
@@ -26,7 +26,7 @@ import {LabelFieldComponent} from "../fields/label-field/label-field.component";
   templateUrl: './edition-page.component.html',
   styleUrl: './edition-page.component.scss'
 })
-export class EditionPageComponent implements AfterViewInit {
+export class EditionPageComponent implements AfterViewInit, OnDestroy {
 
   protected scale: number = 1;
 
@@ -46,6 +46,13 @@ export class EditionPageComponent implements AfterViewInit {
    */
   public ngAfterViewInit(): void {
     this.fieldService.initializeEvents(this.editionZone!, [this.editionOptions!, this.zoomOptions!]);
+  }
+
+  /**
+   * Détruit les listeners
+   */
+  public ngOnDestroy(): void {
+    this.fieldService.destroyEvents();
   }
 
   /**

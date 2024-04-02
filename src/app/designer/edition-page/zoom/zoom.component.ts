@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 
@@ -12,10 +12,12 @@ import {MatIconButton} from "@angular/material/button";
   templateUrl: './zoom.component.html',
   styleUrl: './zoom.component.scss'
 })
-export class ZoomComponent implements AfterViewInit {
+export class ZoomComponent implements AfterViewInit, OnDestroy {
   protected MAX_ZOOM: number = -1600;
   protected MIN_ZOOM: number = 1000;
   protected deltaY: number = 0;
+
+  private unsubscribeWheelEvent?: () => void;
 
   @Input()
   public zoomZone?: HTMLDivElement;
@@ -29,9 +31,18 @@ export class ZoomComponent implements AfterViewInit {
    * Initialise le zoom
    */
   public ngAfterViewInit(): void {
-    this._render.listen(this.zoomZone, "wheel", (event: WheelEvent) => {
+    this.unsubscribeWheelEvent = this._render.listen(this.zoomZone, "wheel", (event: WheelEvent) => {
       this.calculateScale(event.deltaY);
     });
+  }
+
+  /**
+   * Détruit les listeners
+   */
+  public ngOnDestroy(): void {
+    if (this.unsubscribeWheelEvent) {
+      this.unsubscribeWheelEvent();
+    }
   }
 
   /**

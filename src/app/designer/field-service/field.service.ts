@@ -1,4 +1,4 @@
-import {ElementRef, Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {ElementRef, Injectable, OnDestroy, Renderer2, RendererFactory2} from '@angular/core';
 import {CommonFieldDirective} from "../fields/common-field/common-field.directive";
 import {CommonField} from "../fields/common-field/common-field";
 import {VersioningService} from "../versioning-service/versioning.service";
@@ -12,7 +12,7 @@ import {LabelField} from "../fields/label-field/label-field";
 @Injectable({
   providedIn: 'root'
 })
-export class FieldService {
+export class FieldService implements OnDestroy {
 
   private fields: CommonField[] = []
   private currentField?: CommonField;
@@ -32,6 +32,13 @@ export class FieldService {
   }
 
   /**
+   * Détruit les listeners
+   */
+  public ngOnDestroy(): void {
+    this.destroyEvents();
+  }
+
+  /**
    * Initialise la gestion des événements
    * @param editionZone Zone sur laquelle sont lancés les événements
    * @param excludedZones Zones à exclure de certains événements
@@ -43,6 +50,24 @@ export class FieldService {
     this.unsubscribeMouseUp = this._renderer.listen(this.editionZone.nativeElement, "mouseup", () => this.onMouseUp());
     this.unsubscribeMouseDown = this._renderer.listen(this.editionZone.nativeElement, "mousedown", (event) => this.onMouseDown(event));
     this.unsubscribeKeyDown = this._renderer.listen(document, "keydown", (event) => this.onKeydown(event));
+  }
+
+  /**
+   * Détruit les listeners
+   */
+  public destroyEvents(): void {
+    if (this.unsubscribeMouseDown) {
+      this.unsubscribeMouseDown();
+    }
+    if (this.unsubscribeMouseMove) {
+      this.unsubscribeMouseMove();
+    }
+    if (this.unsubscribeMouseUp) {
+      this.unsubscribeMouseUp();
+    }
+    if (this.unsubscribeKeyDown) {
+      this.unsubscribeKeyDown();
+    }
   }
 
   /**

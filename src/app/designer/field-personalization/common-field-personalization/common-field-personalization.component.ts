@@ -4,7 +4,7 @@ import {
   Component,
   DoCheck,
   EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output,
   ViewChild
@@ -13,7 +13,7 @@ import {CommonField} from "../../fields/common-field/common-field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {debounceTime} from "rxjs";
+import {debounceTime, Subscription} from "rxjs";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatIcon} from "@angular/material/icon";
 import {
@@ -47,7 +47,7 @@ import {FieldService} from "../../field-service/field.service";
   templateUrl: './common-field-personalization.component.html',
   styleUrl: './common-field-personalization.component.scss'
 })
-export class CommonFieldPersonalizationComponent implements OnInit, DoCheck {
+export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnDestroy {
 
   @Input('field')
   public set setField(value: CommonField) {
@@ -62,6 +62,7 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck {
 
   private oldField?: CommonField;
   private initializedChild = false;
+  private valueChangesSubscription?: Subscription;
 
   protected form: FormGroup = new FormGroup({
     child: new FormGroup({}),
@@ -77,9 +78,18 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck {
    * Lors de la création du composant, souscription au changement de valeur des champs de formulaire
    */
   public ngOnInit(): void {
-    this.form.valueChanges.pipe(debounceTime(100)).subscribe((changes) => {
+    this.valueChangesSubscription = this.form.valueChanges.pipe(debounceTime(100)).subscribe((changes) => {
       this.updateContent();
     });
+  }
+
+  /**
+   * Se désabonne de la souscription
+   */
+  public ngOnDestroy(): void {
+    if (this.valueChangesSubscription) {
+      this.valueChangesSubscription.unsubscribe();
+    }
   }
 
   /**
