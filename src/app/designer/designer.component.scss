@@ -18,8 +18,8 @@
 
       #designer-zone {
         display: block;
-        width: calc(21.0cm / 3);
-        height: calc(29.7cm / 8);
+        width: 300px;
+        aspect-ratio: 1 / 0.53;
         position: relative;
         align-self: center;
         justify-self: center;
@@ -32,10 +32,11 @@
       }
     }
 
-    #upDown {
+    #options {
       position: absolute;
       bottom: 0;
       left: 0;
+      display: flex;
     }
 
     #zoom {

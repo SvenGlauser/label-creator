@@ -155,8 +155,8 @@ export class DesignCommonDirective implements OnInit, DoCheck {
       return;
     }
 
-    let x =  Math.round((event.x - this.currentX)/this.zoomLevel);
-    let y =  Math.round((event.y - this.currentY)/this.zoomLevel);
+    let x =  (event.x - this.currentX)/this.zoomLevel;
+    let y =  (event.y - this.currentY)/this.zoomLevel;
 
     if (x != 0) {
       if (this.reverseX && this.width - x >= this.MIN_WIDTH && this.width - x <= this.MAX_WIDTH) {
@@ -176,15 +176,13 @@ export class DesignCommonDirective implements OnInit, DoCheck {
       }
       this.currentY = event.y;
     }
-
-    this.updateDesign();
   }
 
   private updateDesign(): void {
-    this._design!.top = this.top;
-    this._design!.left = this.left;
-    this._design!.height = this.height;
-    this._design!.width = this.width;
+    this._design!.top = Math.round(this.top);
+    this._design!.left = Math.round(this.left);
+    this._design!.height = Math.round(this.height);
+    this._design!.width = Math.round(this.width);
     this.designChange.emit(this.design);
   }
 
@@ -201,6 +199,8 @@ export class DesignCommonDirective implements OnInit, DoCheck {
     }
     this.currentlyResizing = false;
     this.changeSelection(true);
+
+    this.updateDesign();
   }
 
   public changeSelection(isSelected: boolean): void {

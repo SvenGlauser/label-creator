@@ -41,6 +41,7 @@ export class DesignImageComponent implements DoCheck {
       }
       reader.readAsDataURL(this.get().image!);
     }
+    this.url = undefined;
   }
 
   public get(): DesignImage {

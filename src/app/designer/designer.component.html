@@ -10,16 +10,26 @@
       }
     </div>
   </div>
-  <div id="upDown" *ngIf="designService.getCurrent()">
-    <button mat-icon-button (click)="designService.up()">
-      <mat-icon>arrow_upward</mat-icon>
-    </button>
-    <button mat-icon-button (click)="designService.down()">
-      <mat-icon>arrow_downward</mat-icon>
-    </button>
-    <button mat-icon-button (click)="designService.deleteCurrent()">
-      <mat-icon>delete</mat-icon>
-    </button>
+  <div id="options">
+    <div id="undoRedo">
+      <button mat-icon-button (click)="goBack()" [disabled]="!versionningService.canGoBack()">
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button mat-icon-button (click)="goNext()" [disabled]="!versionningService.canGoNext()">
+        <mat-icon>redo</mat-icon>
+      </button>
+    </div>
+    <div id="upDown" *ngIf="designService.getCurrent()">
+      <button mat-icon-button (click)="designService.up()">
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
+      <button mat-icon-button (click)="designService.down()">
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
+      <button mat-icon-button (click)="designService.deleteCurrent()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </div>
   <div id="zoom">
     <button [disabled]="deltaY >= 1000" mat-icon-button (click)="zoomOut()">

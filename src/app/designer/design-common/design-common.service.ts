@@ -1,6 +1,7 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {DesignCommonDirective} from "./design-common.directive";
-import {Design, DesignImage, DesignLabel} from "../design";
+import {Design, DesignLabel} from "../design";
+import {VersionningService} from "../versionning-service/versionning.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class DesignCommonService {
   private unsubscribeMouseDown?: () => void;
   private unsubscribeKeyDown?: () => void;
 
-  constructor(private rendererFactory2: RendererFactory2) {
+  constructor(private rendererFactory2: RendererFactory2,
+              private versionningService: VersionningService) {
     this._renderer = this.rendererFactory2.createRenderer(null, null);
     setTimeout(()=> {
       this.unsubscribeMouseUp = this._renderer.listen(document.getElementById('edition-zone'), "mouseup", (event) => this.onMouseUp(event));
@@ -37,6 +39,7 @@ export class DesignCommonService {
 
     this.listOfDesign.push(design);
     this.current = design;
+    this.makeAVersion();
   }
 
   public registerNew(designCommonDirective: DesignCommonDirective, name: string): void {
@@ -57,6 +60,7 @@ export class DesignCommonService {
     if (index !== -1) {
       this.listOfDesign.splice(index, 1);
     }
+    this.makeAVersion();
   }
 
   private onMouseMove(event: MouseEvent): void {
@@ -76,7 +80,7 @@ export class DesignCommonService {
 
   private onMouseDown(event: MouseEvent): void {
     if (document.getElementById('zoom')?.contains(event.target as HTMLElement) ||
-        document.getElementById('upDown')?.contains(event.target as HTMLElement)) {
+        document.getElementById('options')?.contains(event.target as HTMLElement)) {
       return;
     }
 
@@ -133,6 +137,8 @@ export class DesignCommonService {
     if (index !== -1) {
       this.listOfDesign[index] = newDesign;
     }
+
+    this.makeAVersion();
   }
 
   public getCurrent(): Design | undefined {
@@ -155,6 +161,7 @@ export class DesignCommonService {
         this.listOfDesign[justBeforeIndex].index = currentIndex;
         this.current.index = justBeforeDesignIndex;
       }
+      this.makeAVersion();
     }
   }
 
@@ -174,6 +181,23 @@ export class DesignCommonService {
         this.listOfDesign[justAfterIndex].index = currentIndex;
         this.current.index = justAfterDesignIndex;
       }
+      this.makeAVersion();
     }
+  }
+
+  public makeAVersion(): void {
+    this.versionningService.add(this.listOfDesign);
+  }
+
+  public goBack(): void {
+    this.listOfDesign = this.versionningService.goBack();
+    this.current?.linkedDirective!.changeSelection(false);
+    this.current = undefined;
+  }
+
+  public goNext(): void {
+    this.listOfDesign = this.versionningService.goNext();
+    this.current?.linkedDirective!.changeSelection(false);
+    this.current = undefined;
   }
 }
