@@ -12,10 +12,10 @@
   </div>
   <div id="options">
     <div id="undoRedo">
-      <button mat-icon-button (click)="goBack()" [disabled]="!versionningService.canGoBack()">
+      <button mat-icon-button (click)="goBack()" [disabled]="!versioningService.canUndo()">
         <mat-icon>undo</mat-icon>
       </button>
-      <button mat-icon-button (click)="goNext()" [disabled]="!versionningService.canGoNext()">
+      <button mat-icon-button (click)="goNext()" [disabled]="!versioningService.canRedo()">
         <mat-icon>redo</mat-icon>
       </button>
       <button mat-icon-button (click)="designService.getJson()">

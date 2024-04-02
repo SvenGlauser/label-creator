@@ -9,7 +9,7 @@ import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ImageFieldComponent} from "./fields/image-field/image-field.component";
 import {FieldCreationComponent} from "./field-creation/field-creation.component";
-import {VersionningService} from "./versionning-service/versionning.service";
+import {VersioningService} from "./versioning-service/versioning.service";
 
 @Component({
   selector: 'app-designer',
@@ -34,7 +34,7 @@ export class DesignerComponent implements OnInit {
   protected scaleValue = 1;
 
   constructor(protected designService: FieldService,
-              protected versionningService: VersionningService,
+              protected versioningService: VersioningService,
               private _render: Renderer2) {}
 
   public ngOnInit(): void {

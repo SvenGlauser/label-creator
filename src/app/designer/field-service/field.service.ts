@@ -1,11 +1,14 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {CommonFieldDirective} from "../fields/common-field/common-field.directive";
 import {CommonField} from "../fields/common-field/common-field";
-import {VersionningService} from "../versionning-service/versionning.service";
+import {VersioningService} from "../versioning-service/versioning.service";
 import {from} from "rxjs";
 import {ImageField, ImageFieldExportable} from "../fields/image-field/image-field";
 import {LabelField} from "../fields/label-field/label-field";
 
+/**
+ * Service de gestion des champs
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +25,7 @@ export class FieldService {
   private unsubscribeKeyDown?: () => void;
 
   constructor(private rendererFactory2: RendererFactory2,
-              private versionningService: VersionningService) {
+              private versioningService: VersioningService) {
     this._renderer = this.rendererFactory2.createRenderer(null, null);
 
     this.initializeEvents();
@@ -270,14 +273,14 @@ export class FieldService {
    * Versionne l'état actuel des champs
    */
   public makeAVersion(): void {
-    this.versionningService.add(this.fields);
+    this.versioningService.add(this.fields);
   }
 
   /**
    * Annule la dernière modification
    */
   public undo(): void {
-    this.fields = this.versionningService.goBack();
+    this.fields = this.versioningService.goBack();
     this.currentField?.linkedDirective!.changeSelection(false);
     this.currentField = undefined;
   }
@@ -286,7 +289,7 @@ export class FieldService {
    * Rejoue la dernière modification annulée
    */
   public redo(): void {
-    this.fields = this.versionningService.goNext();
+    this.fields = this.versioningService.redo();
     this.currentField?.linkedDirective!.changeSelection(false);
     this.currentField = undefined;
   }
