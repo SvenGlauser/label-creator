@@ -209,7 +209,6 @@ export class FieldService {
   public update(newField: CommonField): void {
     let index = this.fields.findIndex(design => design.name == newField.name);
 
-    // TODO Modifier en ajoutant la directive et retirer l'enregistrement au changement d'input
     if (index !== -1) {
       this.fields[index] = newField;
     }
