@@ -1,0 +1,30 @@
+<div id="edition-zone">
+  <div id="zoom-zone" #zoom>
+    <div id="designer-zone" [style.transform]="'scale('+ scale +')'">
+      @for (field of getAll(); track field.name) {
+        @if (field.type == 'label') {
+          <app-label-field [field]="field"
+                           (fieldChange)="update($event)"
+                           [zoomLevel]="scale">
+          </app-label-field>
+        } @else if (field.type == 'image') {
+          <app-image-field [field]="field"
+                           (fieldChange)="update($event)"
+                           [zoomLevel]="scale">
+          </app-image-field>
+        }
+      }
+    </div>
+  </div>
+  <app-edition-options></app-edition-options>
+  <app-zoom [zoomZone]="zoom" (scaleChange)="updateScale($event)"></app-zoom>
+</div>
+<div id="personalization-zone">
+  @if (hasCurrent()) {
+    <app-common-field-personalization [field]="getCurrent()!"
+                                      (fieldChange)="update($event)">
+    </app-common-field-personalization>
+  } @else {
+    <app-field-creation></app-field-creation>
+  }
+</div>

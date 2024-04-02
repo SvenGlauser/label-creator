@@ -6,7 +6,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {NgxColorsModule} from "ngx-colors";
-import {FieldPersonalization} from "../field-personalization";
+import {FieldPersonalization} from "../common-field-personalization/field-personalization";
 import {LabelField} from "../../fields/label-field/label-field";
 
 /**

@@ -8,7 +8,7 @@ import {MatInput} from "@angular/material/input";
 import {NgxColorsModule} from "ngx-colors";
 import {MatMiniFabButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
-import {FieldPersonalization} from "../field-personalization";
+import {FieldPersonalization} from "../common-field-personalization/field-personalization";
 import {ImageField} from "../../fields/image-field/image-field";
 
 /**

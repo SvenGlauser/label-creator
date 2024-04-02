@@ -1,0 +1,8 @@
+<div id="zoom">
+  <button [disabled]="deltaY >= MIN_ZOOM" mat-icon-button (click)="zoomOut()">
+    <mat-icon>zoom_out</mat-icon>
+  </button>
+  <button [disabled]="deltaY <= MAX_ZOOM" mat-icon-button (click)="zoomIn()">
+    <mat-icon>zoom_in</mat-icon>
+  </button>
+</div>

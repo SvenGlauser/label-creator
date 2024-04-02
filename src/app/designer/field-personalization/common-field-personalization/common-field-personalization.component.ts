@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {CommonField} from "../fields/common-field/common-field";
+import {CommonField} from "../../fields/common-field/common-field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
@@ -18,17 +18,17 @@ import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-to
 import {MatIcon} from "@angular/material/icon";
 import {
   LabelFieldPersonalizationComponent
-} from "./label-field-personalization/label-field-personalization.component";
+} from "../label-field-personalization/label-field-personalization.component";
 import {
   ImageFieldPersonalizationComponent
-} from "./image-field-personalization/image-field-personalization.component";
+} from "../image-field-personalization/image-field-personalization.component";
 import {FieldPersonalization} from "./field-personalization";
 
 /**
  * Composant parent pour la personnalisation des champs
  */
 @Component({
-  selector: 'app-field-personalization',
+  selector: 'app-common-field-personalization',
   standalone: true,
   imports: [
     MatFormField,
@@ -41,10 +41,10 @@ import {FieldPersonalization} from "./field-personalization";
     LabelFieldPersonalizationComponent,
     ImageFieldPersonalizationComponent
   ],
-  templateUrl: './field-personalization.component.html',
-  styleUrl: './field-personalization.component.scss'
+  templateUrl: './common-field-personalization.component.html',
+  styleUrl: './common-field-personalization.component.scss'
 })
-export class FieldPersonalizationComponent implements OnInit, DoCheck {
+export class CommonFieldPersonalizationComponent implements OnInit, DoCheck {
 
   @Input('field')
   public set setField(value: CommonField) {

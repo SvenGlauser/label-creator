@@ -32,14 +32,13 @@
       }
     }
 
-    #options {
+    app-edition-options {
       position: absolute;
       bottom: 0;
       left: 0;
-      display: flex;
     }
 
-    #zoom {
+    app-zoom {
       position: absolute;
       bottom: 0;
       right: 0;

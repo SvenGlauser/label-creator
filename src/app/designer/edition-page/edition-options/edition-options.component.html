@@ -1,0 +1,27 @@
+<div id="options">
+  <div>
+    <button mat-icon-button (click)="undo()" [disabled]="cannotUndo()">
+      <mat-icon>undo</mat-icon>
+    </button>
+    <button mat-icon-button (click)="redo()" [disabled]="cannotRedo()">
+      <mat-icon>redo</mat-icon>
+    </button>
+<!--    <button mat-icon-button (click)="designService.getJson()">-->
+<!--      <mat-icon>content_copy</mat-icon>-->
+<!--    </button>-->
+<!--    <button mat-icon-button (click)="designService.setJson()">-->
+<!--      <mat-icon>content_paste</mat-icon>-->
+<!--    </button>-->
+  </div>
+  <div *ngIf="hasCurrent()">
+    <button mat-icon-button (click)="moveUpward()">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    <button mat-icon-button (click)="moveDownward()">
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+    <button mat-icon-button (click)="delete()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

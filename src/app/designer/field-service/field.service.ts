@@ -209,11 +209,19 @@ export class FieldService {
   public update(newField: CommonField): void {
     let index = this.fields.findIndex(design => design.name == newField.name);
 
+    // TODO Modifier en ajoutant la directive et retirer l'enregistrement au changement d'input
     if (index !== -1) {
       this.fields[index] = newField;
     }
 
     this.makeAVersion();
+  }
+
+  /**
+   * Vérifie si un champ est sélectionné
+   */
+  public hasCurrent(): boolean {
+    return !!this.currentField;
   }
 
   /**
@@ -226,7 +234,7 @@ export class FieldService {
   /**
    * Diminue le z-index
    */
-  public down(): void {
+  public moveDownward(): void {
     if (this.currentField) {
       let currentIndex = this.currentField.index;
       let justBeforeIndex = -1;
@@ -249,7 +257,7 @@ export class FieldService {
   /**
    * Augmente le z-index
    */
-  public up(): void {
+  public moveUpward(): void {
     if (this.currentField) {
       let currentIndex = this.currentField.index;
       let justAfterIndex = -1;
@@ -294,6 +302,7 @@ export class FieldService {
     this.currentField = undefined;
   }
 
+  // TODO améliorer
   public getJson(): void {
     let listOfDesignToString = this.fields.map(design => ({...design}));
 
@@ -337,6 +346,7 @@ export class FieldService {
 
   }
 
+  // TODO améliorer
   public setJson(): void {
     navigator.clipboard.readText().then((event) => {
       let listOfDesignExported: CommonField[] = JSON.parse(event);

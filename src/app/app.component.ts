@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {DesignerComponent} from "./designer/designer.component";
+import {EditionPageComponent} from "./designer/edition-page/edition-page.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DesignerComponent],
+  imports: [RouterOutlet, EditionPageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

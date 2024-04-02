@@ -1,5 +1,5 @@
 import {AbstractControl} from "@angular/forms";
-import {CommonField} from "../fields/common-field/common-field";
+import {CommonField} from "../../fields/common-field/common-field";
 
 export interface FieldPersonalization {
   form?: AbstractControl;
