@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ZoomComponent } from './zoom.component';
+import {ZoomComponent} from './zoom.component';
 
 describe('ZoomComponent', () => {
   let component: ZoomComponent;
@@ -11,7 +11,7 @@ describe('ZoomComponent', () => {
       imports: [ZoomComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ZoomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

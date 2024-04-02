@@ -351,7 +351,7 @@ export class FieldService implements OnDestroy {
       reader.onloadend = () => {
         let newDesign = <ImageFieldExportable>listOfDesignToString.at(image.indexOf);
         newDesign.image = <string>reader.result
-        newDesign.imageName = <string>image.image!.name;
+        newDesign.imageName = image.image!.name;
         listOfDesignToString[image.indexOf] = newDesign;
         const index = listOfImageTOString.indexOf(image);
         if (index > -1) {
@@ -361,7 +361,7 @@ export class FieldService implements OnDestroy {
           navigator.clipboard.writeText(JSON.stringify(listOfDesignToString.map(design => {
             design.linkedDirective = undefined;
             return design;
-          })));
+          }))).then();
         }
       };
       reader.readAsDataURL(<Blob>image.image);
@@ -371,7 +371,7 @@ export class FieldService implements OnDestroy {
       navigator.clipboard.writeText(JSON.stringify(listOfDesignToString.map(design => {
         design.linkedDirective = undefined;
         return design;
-      })));
+      }))).then();
     }
 
 

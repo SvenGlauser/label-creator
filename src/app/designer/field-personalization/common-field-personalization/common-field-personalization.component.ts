@@ -1,14 +1,4 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  DoCheck,
-  EventEmitter,
-  Input, OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import {Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {CommonField} from "../../fields/common-field/common-field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -16,12 +6,8 @@ import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@ang
 import {debounceTime, Subscription} from "rxjs";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatIcon} from "@angular/material/icon";
-import {
-  LabelFieldPersonalizationComponent
-} from "../label-field-personalization/label-field-personalization.component";
-import {
-  ImageFieldPersonalizationComponent
-} from "../image-field-personalization/image-field-personalization.component";
+import {LabelFieldPersonalizationComponent} from "../label-field-personalization/label-field-personalization.component";
+import {ImageFieldPersonalizationComponent} from "../image-field-personalization/image-field-personalization.component";
 import {FieldPersonalization} from "./field-personalization";
 import {MatIconButton} from "@angular/material/button";
 import {FieldService} from "../../field-service/field.service";
@@ -78,7 +64,7 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
    * Lors de la création du composant, souscription au changement de valeur des champs de formulaire
    */
   public ngOnInit(): void {
-    this.valueChangesSubscription = this.form.valueChanges.pipe(debounceTime(100)).subscribe((changes) => {
+    this.valueChangesSubscription = this.form.valueChanges.pipe(debounceTime(100)).subscribe(() => {
       this.updateContent();
     });
   }
@@ -93,7 +79,7 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
   }
 
   /**
-   * Vérifie si l'interface a changée de valeurs et modifie le formulaire en conséquence
+   * Vérifie si l'interface a changé de valeurs et modifie le formulaire en conséquence
    */
   public ngDoCheck(): void {
     if (this.hasChanged()) {

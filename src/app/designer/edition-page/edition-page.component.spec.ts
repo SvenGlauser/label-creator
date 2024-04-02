@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EditionPageComponent } from './edition-page.component';
+import {EditionPageComponent} from './edition-page.component';
 
 describe('EditionPageComponent', () => {
   let component: EditionPageComponent;
@@ -11,7 +11,7 @@ describe('EditionPageComponent', () => {
       imports: [EditionPageComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(EditionPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ImageFieldComponent } from './image-field.component';
+import {ImageFieldComponent} from './image-field.component';
 
 describe('DesignImageComponent', () => {
   let component: ImageFieldComponent;

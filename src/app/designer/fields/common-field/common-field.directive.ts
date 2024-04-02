@@ -1,10 +1,12 @@
 import {
-  Directive, DoCheck,
+  Directive,
+  DoCheck,
   ElementRef,
   EventEmitter,
   HostBinding,
   HostListener,
-  Input, OnDestroy,
+  Input,
+  OnDestroy,
   OnInit,
   Output,
   Renderer2

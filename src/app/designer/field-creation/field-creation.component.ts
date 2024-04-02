@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {FieldService} from "../field-service/field.service";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import {ImageField} from "../fields/image-field/image-field";
 import {LabelField} from "../fields/label-field/label-field";
 
