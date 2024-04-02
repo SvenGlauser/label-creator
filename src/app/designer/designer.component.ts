@@ -3,7 +3,7 @@ import {LabelFieldComponent} from "./fields/label-field/label-field.component";
 import {CommonFieldDirective} from "./fields/common-field/common-field.directive";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {NgForOf, NgIf} from "@angular/common";
-import {DesignCommonService} from "./field-service/design-common.service";
+import {FieldService} from "./field-service/field.service";
 import {FieldPersonalizationComponent} from "./field-personalization/field-personalization.component";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
@@ -33,7 +33,7 @@ export class DesignerComponent implements OnInit {
   protected deltaY = 0;
   protected scaleValue = 1;
 
-  constructor(protected designService: DesignCommonService,
+  constructor(protected designService: FieldService,
               protected versionningService: VersionningService,
               private _render: Renderer2) {}
 
@@ -64,10 +64,10 @@ export class DesignerComponent implements OnInit {
   }
 
   protected goBack(): void {
-    this.designService.goBack();
+    this.designService.undo();
   }
 
   protected goNext(): void {
-    this.designService.goNext();
+    this.designService.redo();
   }
 }

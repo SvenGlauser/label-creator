@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {DesignCommonService} from "../field-service/design-common.service";
+import {FieldService} from "../field-service/field.service";
 import { v4 as uuidv4 } from 'uuid';
 import {ImageField} from "../fields/image-field/image-field";
 import {LabelField} from "../fields/label-field/label-field";
@@ -21,7 +21,7 @@ import {LabelField} from "../fields/label-field/label-field";
 })
 export class FieldCreationComponent {
 
-  constructor(private fieldService: DesignCommonService) {}
+  constructor(private fieldService: FieldService) {}
 
   /**
    * Crée un nouveau champ texte

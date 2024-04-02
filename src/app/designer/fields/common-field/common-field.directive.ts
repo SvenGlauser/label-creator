@@ -10,7 +10,7 @@ import {
   Renderer2
 } from '@angular/core';
 import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
-import {DesignCommonService} from "../../field-service/design-common.service";
+import {FieldService} from "../../field-service/field.service";
 import {CommonField} from "./common-field";
 
 /**
@@ -75,7 +75,7 @@ export class CommonFieldDirective implements OnInit, DoCheck {
 
   constructor(public _elementRef: ElementRef,
               private _renderer : Renderer2,
-              private fieldService: DesignCommonService) {}
+              private fieldService: FieldService) {}
 
   /**
    * Initialise les champs avec les styles communs et les boutons de redimensionnement (resizeButton)
@@ -115,6 +115,7 @@ export class CommonFieldDirective implements OnInit, DoCheck {
     this._renderer.setStyle(this.resizeButtonBottomRight, "right", "-3px");
     this._renderer.setStyle(this.resizeButtonBottomRight, "cursor", "se-resize");
     this._renderer.setStyle(this.resizeButtonBottomRight, "display", "none");
+    this._renderer.setAttribute(this.resizeButtonBottomRight, "draggable", "false");
     this._renderer.listen(this.resizeButtonBottomRight, "mousedown", ($event: MouseEvent) => this.startResizing($event, false, false));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizeButtonBottomRight);
     this.resizeButtonBottomLeft = this._renderer.createElement('div');
@@ -126,7 +127,8 @@ export class CommonFieldDirective implements OnInit, DoCheck {
     this._renderer.setStyle(this.resizeButtonBottomLeft, "bottom", "-3px");
     this._renderer.setStyle(this.resizeButtonBottomLeft, "left", "-3px");
     this._renderer.setStyle(this.resizeButtonBottomLeft, "cursor", "sw-resize");
-    this._renderer.setStyle(this.resizeButtonBottomLeft, "display", "none");
+    this._renderer.setStyle(this.resizeButtonBottomLeft, "display", "none")
+    this._renderer.setAttribute(this.resizeButtonBottomLeft, "draggable", "false");
     this._renderer.listen(this.resizeButtonBottomLeft, "mousedown", ($event: MouseEvent) => this.startResizing($event, true, false));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizeButtonBottomLeft);
     this.resizeButtonTopRight = this._renderer.createElement('div');
@@ -139,6 +141,7 @@ export class CommonFieldDirective implements OnInit, DoCheck {
     this._renderer.setStyle(this.resizeButtonTopRight, "right", "-3px");
     this._renderer.setStyle(this.resizeButtonTopRight, "cursor", "ne-resize");
     this._renderer.setStyle(this.resizeButtonTopRight, "display", "none");
+    this._renderer.setAttribute(this.resizeButtonTopRight, "draggable", "false");
     this._renderer.listen(this.resizeButtonTopRight, "mousedown", ($event: MouseEvent) => this.startResizing($event, false, true));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizeButtonTopRight);
     this.resizeButtonTopLeft = this._renderer.createElement('div');
@@ -151,6 +154,7 @@ export class CommonFieldDirective implements OnInit, DoCheck {
     this._renderer.setStyle(this.resizeButtonTopLeft, "left", "-3px");
     this._renderer.setStyle(this.resizeButtonTopLeft, "cursor", "nw-resize");
     this._renderer.setStyle(this.resizeButtonTopLeft, "display", "none");
+    this._renderer.setAttribute(this.resizeButtonTopLeft, "draggable", "false");
     this._renderer.listen(this.resizeButtonTopLeft, "mousedown", ($event: MouseEvent) => this.startResizing($event, true, true));
     this._renderer.appendChild(this._elementRef.nativeElement, this.resizeButtonTopLeft);
   }
