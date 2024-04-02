@@ -1,4 +1,9 @@
-<p>Modifier l'élément</p>
+<div id="personalization-zone-title">
+  <button mat-icon-button (click)="goToCreationMenu()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <p>Modifier l'élément</p>
+</div>
 <div id="modify" [formGroup]="form">
   @if (this.field!.type == 'label') {
     <app-label-field-personalization #child [form]="getChildForm()" id="child"></app-label-field-personalization>

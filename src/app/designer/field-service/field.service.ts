@@ -391,4 +391,12 @@ export class FieldService {
       }
     })
   }
+
+  /**
+   * Désélectionne l'élément courant
+   */
+  public unSelectCurrent(): void {
+    this.currentField?.linkedDirective?.changeSelection(false);
+    this.currentField = undefined;
+  }
 }

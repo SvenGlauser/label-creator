@@ -23,6 +23,8 @@ import {
   ImageFieldPersonalizationComponent
 } from "../image-field-personalization/image-field-personalization.component";
 import {FieldPersonalization} from "./field-personalization";
+import {MatIconButton} from "@angular/material/button";
+import {FieldService} from "../../field-service/field.service";
 
 /**
  * Composant parent pour la personnalisation des champs
@@ -39,7 +41,8 @@ import {FieldPersonalization} from "./field-personalization";
     MatButtonToggleGroup,
     MatIcon,
     LabelFieldPersonalizationComponent,
-    ImageFieldPersonalizationComponent
+    ImageFieldPersonalizationComponent,
+    MatIconButton
   ],
   templateUrl: './common-field-personalization.component.html',
   styleUrl: './common-field-personalization.component.scss'
@@ -68,6 +71,8 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck {
     height: new FormControl(0),
   });
 
+  constructor(private fieldService: FieldService) {}
+
   /**
    * Lors de la création du composant, souscription au changement de valeur des champs de formulaire
    */
@@ -87,6 +92,13 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck {
       this.child.updateForm(this.field!);
       this.initializedChild = true;
     }
+  }
+
+  /**
+   * Désélectionne l'élément courant pour afficher le menu de création
+   */
+  protected goToCreationMenu(): void {
+    this.fieldService.unSelectCurrent();
   }
 
   /**

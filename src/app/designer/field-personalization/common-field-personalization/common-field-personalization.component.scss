@@ -1,9 +1,17 @@
-p {
-  font-weight: bold;
-  font-size: 1.3em;
-  text-align: center;
-  padding: 20px 20px;
-  margin: 0;
+#personalization-zone-title {
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  p {
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
+    margin: 0;
+  }
+
+  margin-bottom: 20px;
 }
 
 #modify {
