@@ -1,5 +1,5 @@
-<div id="edition-zone">
-  <div id="zoom-zone" #zoom>
+<div id="edition-zone" #editionZone>
+  <div id="zoom-zone" #zoomZone>
     <div id="designer-zone" [style.transform]="'scale('+ scale +')'">
       @for (field of getAll(); track field.name) {
         @if (field.type == 'label') {
@@ -16,8 +16,11 @@
       }
     </div>
   </div>
-  <app-edition-options></app-edition-options>
-  <app-zoom [zoomZone]="zoom" (scaleChange)="updateScale($event)"></app-zoom>
+  <app-edition-options #editionOptions></app-edition-options>
+  <app-zoom #zoomOptions
+            [zoomZone]="zoomZone"
+            (scaleChange)="updateScale($event)">
+  </app-zoom>
 </div>
 <div id="personalization-zone">
   @if (hasCurrent()) {

@@ -1,4 +1,4 @@
-import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {ElementRef, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {CommonFieldDirective} from "../fields/common-field/common-field.directive";
 import {CommonField} from "../fields/common-field/common-field";
 import {VersioningService} from "../versioning-service/versioning.service";
@@ -18,6 +18,8 @@ export class FieldService {
   private currentField?: CommonField;
 
   private _renderer: Renderer2;
+  private editionZone?: ElementRef;
+  private excludedZones: ElementRef[] = [];
 
   private unsubscribeMouseMove?: () => void;
   private unsubscribeMouseUp?: () => void;
@@ -27,20 +29,20 @@ export class FieldService {
   constructor(private rendererFactory2: RendererFactory2,
               private versioningService: VersioningService) {
     this._renderer = this.rendererFactory2.createRenderer(null, null);
-
-    this.initializeEvents();
   }
 
   /**
    * Initialise la gestion des événements
+   * @param editionZone Zone sur laquelle sont lancés les événements
+   * @param excludedZones Zones à exclure de certains événements
    */
-  private initializeEvents(): void {
-    // Timeout car il faut attendre que les composants soient générées
-    setTimeout(() => {
-      this.unsubscribeMouseUp = this._renderer.listen(document.getElementById('edition-zone'), "mouseup", () => this.onMouseUp());
-      this.unsubscribeMouseDown = this._renderer.listen(document.getElementById('edition-zone'), "mousedown", (event) => this.onMouseDown(event));
-      this.unsubscribeKeyDown = this._renderer.listen(document, "keydown", (event) => this.onKeydown(event));
-    }, 100)
+  public initializeEvents(editionZone: ElementRef, excludedZones?: ElementRef[]): void {
+    this.editionZone = editionZone;
+    this.excludedZones = excludedZones || this.excludedZones;
+
+    this.unsubscribeMouseUp = this._renderer.listen(this.editionZone.nativeElement, "mouseup", () => this.onMouseUp());
+    this.unsubscribeMouseDown = this._renderer.listen(this.editionZone.nativeElement, "mousedown", (event) => this.onMouseDown(event));
+    this.unsubscribeKeyDown = this._renderer.listen(document, "keydown", (event) => this.onKeydown(event));
   }
 
   /**
@@ -140,8 +142,13 @@ export class FieldService {
    */
   private onMouseDown(event: MouseEvent): void {
     // Si le clic a lieu en dehors de la zone
-    if (document.getElementById('zoom')?.contains(event.target as HTMLElement) ||
-        document.getElementById('options')?.contains(event.target as HTMLElement)) {
+    let inForbiddenZone: boolean = false;
+    for (const excludedZone of this.excludedZones) {
+      if (excludedZone.nativeElement.contains(event.target)) {
+        inForbiddenZone = true;
+      }
+    }
+    if (inForbiddenZone) {
       return;
     }
 
@@ -161,7 +168,7 @@ export class FieldService {
 
     // Démarre l'événement de gestion des mouvements de souris
     if (this.currentField) {
-      this.unsubscribeMouseMove = this._renderer.listen(document.getElementById('edition-zone'), "mousemove", (event) => this.onMouseMove(event));
+      this.unsubscribeMouseMove = this._renderer.listen(this.editionZone?.nativeElement, "mousemove", (event) => this.onMouseMove(event));
     }
   }
 
