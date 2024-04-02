@@ -1,5 +1,5 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
-import {CommonFieldDirective} from "./common-field.directive";
+import {CommonFieldDirective} from "../fields/common-field/common-field.directive";
 import {Design, DesignImage, DesignImageExportable, DesignLabel} from "../design";
 import {VersionningService} from "../versionning-service/versionning.service";
 import {from} from "rxjs";

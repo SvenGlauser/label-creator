@@ -1,4 +1,4 @@
-import {CommonFieldDirective} from "./common-field/common-field.directive";
+import {CommonFieldDirective} from "./fields/common-field/common-field.directive";
 
 export interface Design {
   name: string;

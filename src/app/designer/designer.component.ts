@@ -1,14 +1,14 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {LabelFieldComponent} from "./fields/label-field/label-field.component";
-import {CommonFieldDirective} from "./common-field/common-field.directive";
+import {CommonFieldDirective} from "./fields/common-field/common-field.directive";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {NgForOf, NgIf} from "@angular/common";
-import {DesignCommonService} from "./common-field/design-common.service";
+import {DesignCommonService} from "./field-service/design-common.service";
 import {FieldPersonalizationComponent} from "./field-personalization/field-personalization.component";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ImageFieldComponent} from "./fields/image-field/image-field.component";
-import {DesignCreationComponent} from "./design-creation/design-creation.component";
+import {FieldCreationComponent} from "./field-creation/field-creation.component";
 import {VersionningService} from "./versionning-service/versionning.service";
 
 @Component({
@@ -24,7 +24,7 @@ import {VersionningService} from "./versionning-service/versionning.service";
     MatIconButton,
     MatIcon,
     ImageFieldComponent,
-    DesignCreationComponent
+    FieldCreationComponent
   ],
   templateUrl: './designer.component.html',
   styleUrl: './designer.component.scss'

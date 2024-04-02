@@ -1,27 +1,27 @@
 import {Component} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {DesignCommonService} from "../common-field/design-common.service";
+import {DesignCommonService} from "../field-service/design-common.service";
 import {DesignImage, DesignLabel} from "../design";
 import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
-  selector: 'app-design-creation',
+  selector: 'app-field-creation',
   standalone: true,
   imports: [
     MatButton,
     MatIcon
   ],
-  templateUrl: './design-creation.component.html',
-  styleUrl: './design-creation.component.scss'
+  templateUrl: './field-creation.component.html',
+  styleUrl: './field-creation.component.scss'
 })
-export class DesignCreationComponent {
+export class FieldCreationComponent {
 
-  constructor(private designService: DesignCommonService) {}
+  constructor(private fieldService: DesignCommonService) {}
 
   public addTextArea(): void {
-    let design: DesignLabel = {
+    let field: DesignLabel = {
       name: uuidv4(),
       type: 'label',
       color: '#000000',
@@ -39,11 +39,11 @@ export class DesignCreationComponent {
       linkedDirective: undefined
     }
 
-    this.designService.addNew(design);
+    this.fieldService.addNew(field);
   }
 
   public addImage(): void {
-    let design: DesignImage = {
+    let field: DesignImage = {
       name: uuidv4(),
       type: 'image',
       height: 300,
@@ -55,6 +55,6 @@ export class DesignCreationComponent {
       linkedDirective: undefined
     }
 
-    this.designService.addNew(design);
+    this.fieldService.addNew(field);
   }
 }

@@ -10,8 +10,8 @@ import {
   Renderer2
 } from '@angular/core';
 import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
-import {DesignCommonService} from "./design-common.service";
-import {Design} from "../design";
+import {DesignCommonService} from "../../field-service/design-common.service";
+import {Design} from "../../design";
 
 /**
  * Directive gérer les propriétés communes à tous les champs

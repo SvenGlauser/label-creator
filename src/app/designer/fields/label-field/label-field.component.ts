@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {CommonFieldDirective} from "../../common-field/common-field.directive";
+import {CommonFieldDirective} from "../common-field/common-field.directive";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
 import {Design, DesignLabel} from "../../design";
 
