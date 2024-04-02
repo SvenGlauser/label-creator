@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {Design} from "../design";
+import {Field} from "../field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
@@ -47,17 +47,17 @@ import {FieldPersonalization} from "./field-personalization";
 export class FieldPersonalizationComponent implements OnInit, DoCheck {
 
   @Input('field')
-  public set setField(value: Design) {
+  public set setField(value: Field) {
     this.field = value;
   }
   @Output()
-  public fieldChange = new EventEmitter<Design>();
-  protected field?: Design;
+  public fieldChange = new EventEmitter<Field>();
+  protected field?: Field;
 
   @ViewChild('child')
   private child?: FieldPersonalization;
 
-  private oldField?: Design;
+  private oldField?: Field;
   private initializedChild = false;
 
   protected form: FormGroup = new FormGroup({
@@ -100,7 +100,7 @@ export class FieldPersonalizationComponent implements OnInit, DoCheck {
    * Met à jour le champ affiché à l'écran
    */
   private updateContent(): void {
-    let newField: Design = this.child!.getNew(this.field!);
+    let newField: Field = this.child!.getNew(this.field!);
     newField.top = Number.parseInt(this.form.get('top')!.value);
     newField.left = Number.parseInt(this.form.get('left')!.value);
     newField.width = Number.parseInt(this.form.get('width')!.value);
@@ -119,7 +119,7 @@ export class FieldPersonalizationComponent implements OnInit, DoCheck {
     this.form.get('left')!.setValue(this.field?.left, { emitEvent: false })
     this.form.get('width')!.setValue(this.field?.width, { emitEvent: false })
     this.form.get('height')!.setValue(this.field?.height, { emitEvent: false })
-    this.oldField = <Design>{...this.field};
+    this.oldField = <Field>{...this.field};
   }
 
   /**

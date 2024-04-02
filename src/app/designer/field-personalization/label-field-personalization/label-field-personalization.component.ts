@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Design, DesignLabel} from "../../design";
+import {Field, LabelField} from "../../field";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
@@ -32,20 +32,20 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
   @Input()
   public form?: AbstractControl;
 
-  public hasChanged(field: Design, oldField: Design): boolean {
+  public hasChanged(field: Field, oldField: Field): boolean {
     return !(
-      (<DesignLabel>field).content == (<DesignLabel>oldField).content &&
-      (<DesignLabel>field).fontFamily == (<DesignLabel>oldField).fontFamily &&
-      (<DesignLabel>field).fontSize == (<DesignLabel>oldField).fontSize &&
-      (<DesignLabel>field).textAlign == (<DesignLabel>oldField).textAlign &&
-      (<DesignLabel>field).verticalTextAlign == (<DesignLabel>oldField).verticalTextAlign &&
-      (<DesignLabel>field).color == (<DesignLabel>oldField).color &&
-      (<DesignLabel>field).backgroundColor == (<DesignLabel>oldField).backgroundColor
+      (<LabelField>field).content == (<LabelField>oldField).content &&
+      (<LabelField>field).fontFamily == (<LabelField>oldField).fontFamily &&
+      (<LabelField>field).fontSize == (<LabelField>oldField).fontSize &&
+      (<LabelField>field).textAlign == (<LabelField>oldField).textAlign &&
+      (<LabelField>field).verticalTextAlign == (<LabelField>oldField).verticalTextAlign &&
+      (<LabelField>field).color == (<LabelField>oldField).color &&
+      (<LabelField>field).backgroundColor == (<LabelField>oldField).backgroundColor
     );
   }
 
-  public getNew(field: Design): DesignLabel {
-    let newField = <DesignLabel>{...field}
+  public getNew(field: Field): LabelField {
+    let newField = <LabelField>{...field}
     newField.content = this.form!.get('content')!.value;
     newField.fontSize = Number.parseInt(this.form!.get('fontSize')!.value);
     newField.fontFamily = this.form!.get('fontFamily')!.value;
@@ -56,14 +56,14 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
     return newField;
   }
 
-  public updateForm(field: Design): void {
-    this.form!.get('content')!.setValue((<DesignLabel>field).content, { emitEvent: false })
-    this.form!.get('fontSize')!.setValue((<DesignLabel>field).fontSize, { emitEvent: false })
-    this.form!.get('fontFamily')!.setValue((<DesignLabel>field).fontFamily, { emitEvent: false })
-    this.form!.get('textAlign')!.setValue((<DesignLabel>field).textAlign, { emitEvent: false })
-    this.form!.get('verticalTextAlign')!.setValue((<DesignLabel>field).verticalTextAlign, { emitEvent: false })
-    this.form!.get('color')!.setValue((<DesignLabel>field).color, { emitEvent: false })
-    this.form!.get('backgroundColor')!.setValue((<DesignLabel>field).backgroundColor, { emitEvent: false })
+  public updateForm(field: Field): void {
+    this.form!.get('content')!.setValue((<LabelField>field).content, { emitEvent: false })
+    this.form!.get('fontSize')!.setValue((<LabelField>field).fontSize, { emitEvent: false })
+    this.form!.get('fontFamily')!.setValue((<LabelField>field).fontFamily, { emitEvent: false })
+    this.form!.get('textAlign')!.setValue((<LabelField>field).textAlign, { emitEvent: false })
+    this.form!.get('verticalTextAlign')!.setValue((<LabelField>field).verticalTextAlign, { emitEvent: false })
+    this.form!.get('color')!.setValue((<LabelField>field).color, { emitEvent: false })
+    this.form!.get('backgroundColor')!.setValue((<LabelField>field).backgroundColor, { emitEvent: false })
   }
 
   /**

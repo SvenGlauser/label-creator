@@ -1,6 +1,6 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {CommonFieldDirective} from "../fields/common-field/common-field.directive";
-import {Design, DesignImage, DesignImageExportable, DesignLabel} from "../design";
+import {Field, ImageField, ImageFieldExportable, LabelField} from "../field";
 import {VersionningService} from "../versionning-service/versionning.service";
 import {from} from "rxjs";
 
@@ -9,8 +9,8 @@ import {from} from "rxjs";
 })
 export class DesignCommonService {
 
-  private listOfDesign: Design[] = []
-  private current?: Design;
+  private listOfDesign: Field[] = []
+  private current?: Field;
   private _renderer: Renderer2;
 
   private unsubscribeMouseMove?: () => void;
@@ -28,11 +28,11 @@ export class DesignCommonService {
     }, 100)
   }
 
-  public getAll(): Design[] {
+  public getAll(): Field[] {
     return this.listOfDesign;
   }
 
-  public addNew(design: Design): void {
+  public addNew(design: Field): void {
     if (design.index == Number.NEGATIVE_INFINITY) {
       let biggerIndex = this.listOfDesign.length > 0 ? this.listOfDesign.map(design => design.index).sort().reverse()[0] : 0;
       design.index = biggerIndex + 1;
@@ -55,7 +55,7 @@ export class DesignCommonService {
     this.current = undefined;
   }
 
-  public delete(designToDelete: Design): void {
+  public delete(designToDelete: Field): void {
     let index = this.listOfDesign.findIndex(design => design.name == designToDelete?.name);
 
     if (index !== -1) {
@@ -91,7 +91,7 @@ export class DesignCommonService {
         this.current = designCommon;
         this.current.linkedDirective!.changeSelection(true);
       } else {
-        if (designCommon.type == 'label' && (<DesignLabel>designCommon).content == '') {
+        if (designCommon.type == 'label' && (<LabelField>designCommon).content == '') {
           this.delete(designCommon);
         }
         designCommon.linkedDirective!.changeSelection(false);
@@ -132,7 +132,7 @@ export class DesignCommonService {
     }
   }
 
-  public update(newDesign: Design): void {
+  public update(newDesign: Field): void {
     let index = this.listOfDesign.findIndex(design => design.name == newDesign.name);
 
     if (index !== -1) {
@@ -142,7 +142,7 @@ export class DesignCommonService {
     this.makeAVersion();
   }
 
-  public getCurrent(): Design | undefined {
+  public getCurrent(): Field | undefined {
     return this.current;
   }
 
@@ -206,18 +206,18 @@ export class DesignCommonService {
     let listOfDesignToString = this.listOfDesign.map(design => ({...design}));
 
     let listOfImageTOString = listOfDesignToString
-      .filter(design => design.type == 'image' && (<DesignImage>design).image != undefined)
+      .filter(design => design.type == 'image' && (<ImageField>design).image != undefined)
       .map(design => {
         return {
           indexOf: listOfDesignToString.indexOf(design),
-          image: (<DesignImage>design).image
+          image: (<ImageField>design).image
         }
       }).filter(image => image.image != undefined);
 
     listOfImageTOString.forEach(image => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        let newDesign = <DesignImageExportable>listOfDesignToString.at(image.indexOf);
+        let newDesign = <ImageFieldExportable>listOfDesignToString.at(image.indexOf);
         newDesign.image = <string>reader.result
         newDesign.imageName = <string>image.image!.name;
         listOfDesignToString[image.indexOf] = newDesign;
@@ -247,14 +247,14 @@ export class DesignCommonService {
 
   public setJson(): void {
     navigator.clipboard.readText().then((event) => {
-      let listOfDesignExported: Design[] = JSON.parse(event);
+      let listOfDesignExported: Field[] = JSON.parse(event);
       let listOfImages: {index: number, image: string, imageName: string}[] = [];
       listOfDesignExported.forEach((design, index) => {
-        if (design.type == 'image' && (<DesignImageExportable>design).image) {
+        if (design.type == 'image' && (<ImageFieldExportable>design).image) {
           listOfImages.push({
             index: index,
-            image: <string>(<DesignImageExportable>design).image,
-            imageName: <string>(<DesignImageExportable>design).imageName
+            image: <string>(<ImageFieldExportable>design).image,
+            imageName: <string>(<ImageFieldExportable>design).imageName
           });
         }
       });
@@ -264,7 +264,7 @@ export class DesignCommonService {
           fetch(image.image)
             .then(res => res.blob())
             .then(blob => {
-              let newDesign = <DesignImage>listOfDesignExported.at(image.index);
+              let newDesign = <ImageField>listOfDesignExported.at(image.index);
               newDesign.image = new File([blob], image.imageName);
               listOfDesignExported[image.index] = newDesign;
               const index = listOfImages.indexOf(image);

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {DesignCommonService} from "../field-service/design-common.service";
-import {DesignImage, DesignLabel} from "../design";
+import {ImageField, LabelField} from "../field";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -21,7 +21,7 @@ export class FieldCreationComponent {
   constructor(private fieldService: DesignCommonService) {}
 
   public addTextArea(): void {
-    let field: DesignLabel = {
+    let field: LabelField = {
       name: uuidv4(),
       type: 'label',
       color: '#000000',
@@ -43,7 +43,7 @@ export class FieldCreationComponent {
   }
 
   public addImage(): void {
-    let field: DesignImage = {
+    let field: ImageField = {
       name: uuidv4(),
       type: 'image',
       height: 300,

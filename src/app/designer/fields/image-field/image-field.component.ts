@@ -1,6 +1,6 @@
 import {Component, DoCheck, Input} from '@angular/core';
 import {CommonFieldDirective} from "../common-field/common-field.directive";
-import {Design, DesignImage} from "../../design";
+import {Field, ImageField} from "../../field";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
 
 @Component({
@@ -20,7 +20,7 @@ import {CdkDragHandle} from "@angular/cdk/drag-drop";
 export class ImageFieldComponent implements DoCheck {
 
   @Input('field')
-  public imageField?: Design;
+  public imageField?: Field;
 
   private oldImage?: string | Blob;
   protected url?: string;
@@ -61,7 +61,7 @@ export class ImageFieldComponent implements DoCheck {
   /**
    * Récupère une version du champ dans l'interface de bon type (réalise un cast)
    */
-  protected getField(): DesignImage {
-    return <DesignImage>this.imageField;
+  protected getField(): ImageField {
+    return <ImageField>this.imageField;
   }
 }

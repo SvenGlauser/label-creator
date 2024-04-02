@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Addition, Deletion, Modification, Version} from "./version";
-import {Design, DesignImage, DesignLabel} from "../design";
+import {Field, ImageField, LabelField} from "../field";
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +8,14 @@ import {Design, DesignImage, DesignLabel} from "../design";
 export class VersionningService {
 
   private versions: Version[] = [];
-  private oldList: Design[] = [];
+  private oldList: Field[] = [];
 
   private currentVersion = -1;
 
   constructor() {}
 
-  public add(designs: Design[]): void {
-    let oldDesignsChecked: Design[] = []
+  public add(designs: Field[]): void {
+    let oldDesignsChecked: Field[] = []
 
     let version: Version = {
       added: [],
@@ -36,11 +36,11 @@ export class VersionningService {
 
         for (const designKey in design) {
           if (designKey != "name" && designKey != "linkedDirective") {
-            if (design[designKey as keyof Design] != oldDesign[designKey as keyof Design]) {
+            if (design[designKey as keyof Field] != oldDesign[designKey as keyof Field]) {
               modification.attributes.push({
                 name: designKey,
-                newValue: design[designKey as keyof Design],
-                oldValue: oldDesign[designKey as keyof Design]
+                newValue: design[designKey as keyof Field],
+                oldValue: oldDesign[designKey as keyof Field]
               });
             }
           }
@@ -59,7 +59,7 @@ export class VersionningService {
           if (designKey != "name" && designKey != "linkedDirective") {
             addition.attributes.push({
               name: designKey,
-              newValue: design[designKey as keyof Design]
+              newValue: design[designKey as keyof Field]
             });
           }
         }
@@ -82,7 +82,7 @@ export class VersionningService {
         if (designKey != "name" && designKey != "linkedDirective") {
           deletion.attributes.push({
             name: designKey,
-            oldValue: design[designKey as keyof Design]
+            oldValue: design[designKey as keyof Field]
           });
         }
       }
@@ -101,7 +101,7 @@ export class VersionningService {
     }
   }
 
-  public goBack(): Design[] {
+  public goBack(): Field[] {
     if (!this.canGoBack()) {
       return this.oldList.map(design => ({...design}));
     }
@@ -124,10 +124,10 @@ export class VersionningService {
 
       switch (newDesign['type']) {
         case 'image':
-          newList.push(<DesignImage><unknown>newDesign);
+          newList.push(<ImageField><unknown>newDesign);
           break;
         case 'label':
-          newList.push(<DesignLabel><unknown>newDesign);
+          newList.push(<LabelField><unknown>newDesign);
           break;
       }
     }
@@ -143,10 +143,10 @@ export class VersionningService {
 
       switch (newDesign['type']) {
         case 'image':
-          newList[index] = <DesignImage><unknown>newDesign;
+          newList[index] = <ImageField><unknown>newDesign;
           break;
         case 'label':
-          newList[index] = <DesignLabel><unknown>newDesign;
+          newList[index] = <LabelField><unknown>newDesign;
           break;
       }
     }
@@ -156,7 +156,7 @@ export class VersionningService {
     return newList.map(design => ({...design}));
   }
 
-  public goNext(): Design[] {
+  public goNext(): Field[] {
     if (!this.canGoNext()) {
       return this.oldList.map(design => ({...design}));
     }
@@ -179,10 +179,10 @@ export class VersionningService {
 
       switch (newDesign['type']) {
         case 'image':
-          newList.push(<DesignImage><unknown>newDesign);
+          newList.push(<ImageField><unknown>newDesign);
           break;
         case 'label':
-          newList.push(<DesignLabel><unknown>newDesign);
+          newList.push(<LabelField><unknown>newDesign);
           break;
       }
     }
@@ -198,10 +198,10 @@ export class VersionningService {
 
       switch (newDesign['type']) {
         case 'image':
-          newList[index] = <DesignImage><unknown>newDesign;
+          newList[index] = <ImageField><unknown>newDesign;
           break;
         case 'label':
-          newList[index] = <DesignLabel><unknown>newDesign;
+          newList[index] = <LabelField><unknown>newDesign;
           break;
       }
     }

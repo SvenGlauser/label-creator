@@ -1,6 +1,6 @@
 import {CommonFieldDirective} from "./fields/common-field/common-field.directive";
 
-export interface Design {
+export interface Field {
   name: string;
   type: 'label' | 'image';
 
@@ -13,7 +13,7 @@ export interface Design {
   linkedDirective: CommonFieldDirective | undefined;
 }
 
-export interface DesignLabel extends Design {
+export interface LabelField extends Field {
   content: string;
   fontSize: number;
   fontFamily: string;
@@ -23,13 +23,13 @@ export interface DesignLabel extends Design {
   backgroundColor: string;
 }
 
-export interface DesignImage extends Design {
+export interface ImageField extends Field {
   image?: File;
   imageUrl?: string;
   backgroundSize: '' | 'contain' | 'cover';
 }
 
-export interface DesignImageExportable extends Design {
+export interface ImageFieldExportable extends Field {
   image?: string;
   imageName?: string;
   imageUrl?: string;
