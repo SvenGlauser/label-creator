@@ -1,4 +1,4 @@
-import {DesignCommonDirective} from "./design-common/design-common.directive";
+import {CommonFieldDirective} from "./common-field/common-field.directive";
 
 export interface Design {
   name: string;
@@ -10,7 +10,7 @@ export interface Design {
   width: number;
   index: number;
 
-  linkedDirective: DesignCommonDirective | undefined;
+  linkedDirective: CommonFieldDirective | undefined;
 }
 
 export interface DesignLabel extends Design {

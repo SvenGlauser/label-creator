@@ -1,13 +1,13 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
-import {LabelFieldComponent} from "./label-field/label-field.component";
-import {DesignCommonDirective} from "./design-common/design-common.directive";
+import {LabelFieldComponent} from "./fields/label-field/label-field.component";
+import {CommonFieldDirective} from "./common-field/common-field.directive";
 import {CdkDropList} from "@angular/cdk/drag-drop";
 import {NgForOf, NgIf} from "@angular/common";
-import {DesignCommonService} from "./design-common/design-common.service";
+import {DesignCommonService} from "./common-field/design-common.service";
 import {FieldPersonalizationComponent} from "./field-personalization/field-personalization.component";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {ImageFieldComponent} from "./image-field/image-field.component";
+import {ImageFieldComponent} from "./fields/image-field/image-field.component";
 import {DesignCreationComponent} from "./design-creation/design-creation.component";
 import {VersionningService} from "./versionning-service/versionning.service";
 
@@ -16,7 +16,7 @@ import {VersionningService} from "./versionning-service/versionning.service";
   standalone: true,
   imports: [
     LabelFieldComponent,
-    DesignCommonDirective,
+    CommonFieldDirective,
     CdkDropList,
     NgForOf,
     FieldPersonalizationComponent,

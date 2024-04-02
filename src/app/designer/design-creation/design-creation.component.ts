@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {DesignCommonService} from "../design-common/design-common.service";
+import {DesignCommonService} from "../common-field/design-common.service";
 import {DesignImage, DesignLabel} from "../design";
 import { v4 as uuidv4 } from 'uuid';
 

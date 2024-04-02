@@ -1,6 +1,6 @@
 import {Component, DoCheck, Input} from '@angular/core';
-import {DesignCommonDirective} from "../design-common/design-common.directive";
-import {Design, DesignImage} from "../design";
+import {CommonFieldDirective} from "../../common-field/common-field.directive";
+import {Design, DesignImage} from "../../design";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
 
 @Component({
@@ -12,14 +12,14 @@ import {CdkDragHandle} from "@angular/cdk/drag-drop";
   templateUrl: './image-field.component.html',
   styleUrl: './image-field.component.scss',
   hostDirectives: [{
-    directive: DesignCommonDirective,
-    inputs: ['design', 'zoomLevel'],
-    outputs: ['designChange']
+    directive: CommonFieldDirective,
+    inputs: ['field', 'zoomLevel'],
+    outputs: ['fieldChange']
   }]
 })
 export class ImageFieldComponent implements DoCheck {
 
-  @Input('design')
+  @Input('field')
   public imageField?: Design;
 
   private oldImage?: string | Blob;

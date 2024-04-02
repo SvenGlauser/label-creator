@@ -1,5 +1,5 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
-import {DesignCommonDirective} from "./design-common.directive";
+import {CommonFieldDirective} from "./common-field.directive";
 import {Design, DesignImage, DesignImageExportable, DesignLabel} from "../design";
 import {VersionningService} from "../versionning-service/versionning.service";
 import {from} from "rxjs";
@@ -43,7 +43,7 @@ export class DesignCommonService {
     this.makeAVersion();
   }
 
-  public registerNew(designCommonDirective: DesignCommonDirective, name: string): void {
+  public registerNew(designCommonDirective: CommonFieldDirective, name: string): void {
     this.listOfDesign.find(design => design.name == name)!.linkedDirective = designCommonDirective;
     if (this.current?.name == name) {
       setTimeout(() => designCommonDirective?.changeSelection(true));
@@ -75,7 +75,7 @@ export class DesignCommonService {
 
   private onMouseUp(event: MouseEvent): void {
     if (this.current) {
-      this.current.linkedDirective!.stopResizing(event);
+      this.current.linkedDirective!.stopResizing();
     }
   }
 

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {DesignCommonDirective} from "../design-common/design-common.directive";
+import {CommonFieldDirective} from "../../common-field/common-field.directive";
 import {CdkDragHandle} from "@angular/cdk/drag-drop";
-import {Design, DesignLabel} from "../design";
+import {Design, DesignLabel} from "../../design";
 
 /**
  * Composant d'affichage pour les champs de saisie classique
@@ -10,19 +10,19 @@ import {Design, DesignLabel} from "../design";
   selector: 'app-label-field',
   standalone: true,
   imports: [
-    DesignCommonDirective,
+    CommonFieldDirective,
     CdkDragHandle
   ],
   templateUrl: './label-field.component.html',
   styleUrl: './label-field.component.scss',
   hostDirectives: [{
-    directive: DesignCommonDirective,
-    inputs: ['design', 'zoomLevel'],
-    outputs: ['designChange']
+    directive: CommonFieldDirective,
+    inputs: ['field', 'zoomLevel'],
+    outputs: ['fieldChange']
   }]
 })
 export class LabelFieldComponent {
-  @Input('design')
+  @Input('field')
   public labelField?: Design;
 
   /**
