@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { StringCalculatedFieldPreferenceComponent } from './string-calculated-field-preference.component';
+import {StringCalculatedFieldPreferenceComponent} from './string-calculated-field-preference.component';
 
 describe('StringCalculatedFieldPreferenceComponent', () => {
   let component: StringCalculatedFieldPreferenceComponent;
@@ -11,7 +11,7 @@ describe('StringCalculatedFieldPreferenceComponent', () => {
       imports: [StringCalculatedFieldPreferenceComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(StringCalculatedFieldPreferenceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

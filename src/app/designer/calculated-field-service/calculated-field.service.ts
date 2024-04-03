@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { FieldService } from "../field-service/field.service";
-import { CalculatedField } from "../calculated-fields/calculated-field";
+import {Injectable} from '@angular/core';
+import {CalculatedField} from "../calculated-fields/calculated-field";
 import {LabelField} from "../fields/label-field/label-field";
 import {CommonField} from "../fields/common-field/common-field";
 

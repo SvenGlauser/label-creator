@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DateCalculatedFieldPreferenceComponent } from './date-calculated-field-preference.component';
+import {DateCalculatedFieldPreferenceComponent} from './date-calculated-field-preference.component';
 
 describe('DateCalculatedFieldPreferenceComponent', () => {
   let component: DateCalculatedFieldPreferenceComponent;
@@ -11,7 +11,7 @@ describe('DateCalculatedFieldPreferenceComponent', () => {
       imports: [DateCalculatedFieldPreferenceComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(DateCalculatedFieldPreferenceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

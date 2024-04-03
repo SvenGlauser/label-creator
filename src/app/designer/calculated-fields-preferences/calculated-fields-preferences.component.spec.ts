@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CalculatedFieldsPreferencesComponent } from './calculated-fields-preferences.component';
+import {CalculatedFieldsPreferencesComponent} from './calculated-fields-preferences.component';
 
 describe('CalculatedFieldsPreferencesComponent', () => {
   let component: CalculatedFieldsPreferencesComponent;
@@ -11,7 +11,7 @@ describe('CalculatedFieldsPreferencesComponent', () => {
       imports: [CalculatedFieldsPreferencesComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(CalculatedFieldsPreferencesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

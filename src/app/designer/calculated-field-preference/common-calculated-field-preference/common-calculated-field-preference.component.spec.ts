@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CommonCalculatedFieldPreferenceComponent } from './common-calculated-field-preference.component';
+import {CommonCalculatedFieldPreferenceComponent} from './common-calculated-field-preference.component';
 
 describe('CalculatedFieldPreferenceComponent', () => {
   let component: CommonCalculatedFieldPreferenceComponent;

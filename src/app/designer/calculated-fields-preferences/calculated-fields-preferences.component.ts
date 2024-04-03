@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {CalculatedFieldService} from "../calculated-field-service/calculated-field.service";
 import {CalculatedField} from "../calculated-fields/calculated-field";
-import {CommonCalculatedFieldPreferenceComponent} from "../calculated-field-preference/common-calculated-field-preference/common-calculated-field-preference.component";
+import {
+  CommonCalculatedFieldPreferenceComponent
+} from "../calculated-field-preference/common-calculated-field-preference/common-calculated-field-preference.component";
 import {MatDivider} from "@angular/material/divider";
 import {NgIf} from "@angular/common";
 
