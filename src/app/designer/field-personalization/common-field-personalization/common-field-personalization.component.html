@@ -6,9 +6,9 @@
 </div>
 <div id="modify" [formGroup]="form">
   @if (this.field!.type == 'label') {
-    <app-label-field-personalization #child [form]="getChildForm()" id="child"></app-label-field-personalization>
+    <app-label-field-personalization #child [form]="getChildForm()"></app-label-field-personalization>
   } @else if (this.field!.type == 'image') {
-    <app-image-field-personalization #child [form]="getChildForm()" id="child"></app-image-field-personalization>
+    <app-image-field-personalization #child [form]="getChildForm()"></app-image-field-personalization>
   }
   <div id="emplacement">
     <div id="emplacement-title">
