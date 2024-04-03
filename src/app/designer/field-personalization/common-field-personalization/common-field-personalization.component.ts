@@ -12,6 +12,7 @@ import {FieldPersonalization} from "./field-personalization";
 import {MatIconButton} from "@angular/material/button";
 import {FieldService} from "../../field-service/field.service";
 import {MAX_HEIGHT, MAX_WIDTH, MIN_HEIGHT, MIN_WIDTH, PAGE_HEIGHT, PAGE_WIDTH} from "../../dimensions";
+import {Utils} from "../../utils";
 
 /**
  * Composant parent pour la personnalisation des champs
@@ -77,7 +78,6 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
       this.form.get('height')!.valueChanges,
       this.form.get('child')!.valueChanges,
     ).pipe(debounceTime(100)).subscribe(() => {
-      console.log(1)
       this.updateContent();
     });
   }
@@ -122,10 +122,10 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
    */
   private updateContent(): void {
     let newField: CommonField = this.child!.getNew(this.field!);
-    newField.top = Number.parseInt(this.form.get('top')!.value);
-    newField.left = Number.parseInt(this.form.get('left')!.value);
-    newField.width = Number.parseInt(this.form.get('width')!.value);
-    newField.height = Number.parseInt(this.form.get('height')!.value);
+    newField.top = Utils.roundPixel(this.form.get('top')!.value);
+    newField.left = Utils.roundPixel(this.form.get('left')!.value);
+    newField.width = Utils.roundPixel(this.form.get('width')!.value);
+    newField.height = Utils.roundPixel(this.form.get('height')!.value);
     this.fieldChange.emit(newField);
     this.calculatedField();
   }
@@ -167,5 +167,13 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
       );
     }
     return !!this.field;
+  }
+
+  /**
+   * Centre l'élément dans la page
+   */
+  protected center(): void {
+    this.form.get('top')!.setValue(Utils.roundPixel((PAGE_HEIGHT - this.form.get('height')!.value)/2), { emitEvent: true });
+    this.form.get('left')!.setValue(Utils.roundPixel((PAGE_WIDTH - this.form.get('width')!.value)/2), { emitEvent: true });
   }
 }

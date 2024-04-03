@@ -15,6 +15,7 @@ import {CdkDrag, CdkDragEnd, CdkDragMove} from "@angular/cdk/drag-drop";
 import {FieldService} from "../../field-service/field.service";
 import {CommonField} from "./common-field";
 import {MAX_HEIGHT, MAX_WIDTH, MIN_HEIGHT, MIN_WIDTH} from "../../dimensions";
+import {Utils} from "../../utils";
 
 /**
  * Directive gérer les propriétés communes à tous les champs
@@ -263,10 +264,10 @@ export class CommonFieldDirective implements OnInit, DoCheck, OnDestroy {
    * Met à jour le champ en arrondissant les dimensions en pixel
    */
   private updateDesign(): void {
-    this.field!.top = Math.round(this.top);
-    this.field!.left = Math.round(this.left);
-    this.field!.height = Math.round(this.height);
-    this.field!.width = Math.round(this.width);
+    this.field!.top = Utils.roundPixel(this.top);
+    this.field!.left = Utils.roundPixel(this.left);
+    this.field!.height = Utils.roundPixel(this.height);
+    this.field!.width = Utils.roundPixel(this.width);
     this.fieldChange.emit(this.field);
   }
 

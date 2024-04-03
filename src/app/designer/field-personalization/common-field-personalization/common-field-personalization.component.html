@@ -11,7 +11,12 @@
     <app-image-field-personalization #child [form]="getChildForm()" id="child"></app-image-field-personalization>
   }
   <div id="emplacement">
-    <p>Emplacement</p>
+    <div id="emplacement-title">
+      <p>Emplacement</p>
+      <button mat-icon-button (click)="center()">
+        <mat-icon>center_focus_weak</mat-icon>
+      </button>
+    </div>
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Haut</mat-label>
       <input matInput placeholder="100" type="number" formControlName="top">
