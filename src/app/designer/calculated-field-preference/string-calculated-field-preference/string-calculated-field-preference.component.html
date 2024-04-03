@@ -1,0 +1,4 @@
+<mat-form-field *ngIf="calculatedField" appearance="outline" subscriptSizing="dynamic">
+  <mat-label>Texte par défaut</mat-label>
+  <input matInput [(ngModel)]="calculatedField!.preference" type="text">
+</mat-form-field>

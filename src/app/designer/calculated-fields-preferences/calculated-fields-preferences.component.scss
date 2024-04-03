@@ -1,0 +1,19 @@
+#preferences-title {
+  padding: 0 20px;
+
+  p {
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
+  }
+}
+
+#preferences {
+  display: grid;
+  grid-row-gap: 20px;
+
+  padding: 20px;
+
+  max-height: calc(100vh - 68px);
+  overflow: scroll;
+}

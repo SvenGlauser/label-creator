@@ -11,6 +11,7 @@ import {LabelField} from "../../fields/label-field/label-field";
 import {CdkTextareaAutosize} from "@angular/cdk/text-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {FontService} from "../../font-service/font.service";
+import {CalculatedFieldService} from "../../calculated-field-service/calculated-field.service";
 
 /**
  * Composant pour la personnalisation des champs de saisie

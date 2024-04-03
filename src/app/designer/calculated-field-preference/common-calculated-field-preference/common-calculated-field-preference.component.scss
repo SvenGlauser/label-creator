@@ -1,0 +1,21 @@
+.calculated-field {
+  display: grid;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  p {
+    font-weight: bold;
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .calculated-field-preference {
+    display: block;
+    width: 100%;
+    grid-column: 1 / 3;
+  }
+}

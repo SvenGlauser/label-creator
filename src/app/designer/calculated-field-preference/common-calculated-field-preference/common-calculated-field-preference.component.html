@@ -1,0 +1,29 @@
+<div *ngIf="calculatedField" class="calculated-field">
+  <p>{{calculatedField.name}}</p>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-select [value]="calculatedField.type" (valueChange)="typeChange($event)">
+      <mat-option value="string">Texte</mat-option>
+      <mat-option value="number">Nombre</mat-option>
+      <mat-option value="date">Date</mat-option>
+      <mat-option value="today">Date du jour</mat-option>
+      <mat-option value="dropdown">Liste déroulante</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="calculated-field-preference">
+    @switch (calculatedField.type) {
+      @case ('string') {
+        <app-string-calculated-field-preference [calculatedField]="calculatedField"></app-string-calculated-field-preference>
+      }
+      @case ('number') {
+        <app-number-calculated-field-preference [calculatedField]="calculatedField"></app-number-calculated-field-preference>
+      }
+      @case ('date') {
+        <app-date-calculated-field-preference [calculatedField]="calculatedField"></app-date-calculated-field-preference>
+      }
+      @case ('dropdown') {
+        <app-dropdown-calculated-field-preference [calculatedField]="calculatedField"></app-dropdown-calculated-field-preference>
+      }
+    }
+  </div>
+</div>

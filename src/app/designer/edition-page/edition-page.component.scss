@@ -3,11 +3,11 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
 
   #edition-zone {
     display: grid;
-    grid-area: 1/1;
+    grid-area: 1/2;
     position: relative;
 
     #zoom-zone {
@@ -43,18 +43,20 @@
     }
   }
 
+  #preferences-zone {
+    display: block;
+    height: 100%;
+    grid-area: 1/1;
+    width: 350px;
+    background-color: white;
+  }
+
   #personalization-zone {
     display: block;
     height: 100%;
-    grid-area: 1/2;
+    grid-area: 1/3;
     width: 350px;
     background-color: white;
-
-    app-field-personalization {
-      display: block;
-      height: 100%;
-      width: 100%;
-    }
   }
 }
 

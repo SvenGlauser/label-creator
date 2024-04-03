@@ -11,6 +11,9 @@ import {CommonField} from "../fields/common-field/common-field";
 import {ImageFieldComponent} from "../fields/image-field/image-field.component";
 import {LabelFieldComponent} from "../fields/label-field/label-field.component";
 import {PAGE_HEIGHT, PAGE_WIDTH} from "../dimensions";
+import {
+  CalculatedFieldsPreferencesComponent
+} from "../calculated-fields-preferences/calculated-fields-preferences.component";
 
 @Component({
   selector: 'app-edition-page',
@@ -22,7 +25,8 @@ import {PAGE_HEIGHT, PAGE_WIDTH} from "../dimensions";
     NgIf,
     CommonFieldPersonalizationComponent,
     ImageFieldComponent,
-    LabelFieldComponent
+    LabelFieldComponent,
+    CalculatedFieldsPreferencesComponent
   ],
   templateUrl: './edition-page.component.html',
   styleUrl: './edition-page.component.scss'

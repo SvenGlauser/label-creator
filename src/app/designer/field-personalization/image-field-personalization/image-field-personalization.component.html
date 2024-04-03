@@ -1,36 +1,35 @@
-<ng-container>
-  <mat-button-toggle-group [(value)]="currentChoose" [hideSingleSelectionIndicator]="true">
-    <mat-button-toggle value="image">
-      <mat-icon>photo_camera</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="url">
-      <mat-icon>link</mat-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-  <div class="file-upload" *ngIf="currentChoose == 'image'">
-    <span>{{fileName || "Aucun fichier sélectionné."}}</span>
-    <button mat-mini-fab color="primary" class="upload-btn"
-            (click)="fileUpload.click()">
-      <mat-icon>attach_file</mat-icon>
-    </button>
-    <input type="file"
-           hidden="hidden"
-           accept="image/png, image/jpeg"
-           (change)="onFileSelected($event)" #fileUpload>
-  </div>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic" *ngIf="currentChoose == 'url'">
-    <textarea matInput placeholder="https://google.com/..." [formControl]="getForm('imageUrl')"></textarea>
-  </mat-form-field>
-  <mat-label>Remplissage</mat-label>
-  <mat-button-toggle-group [formControl]="getForm('backgroundSize')" [hideSingleSelectionIndicator]="true">
-    <mat-button-toggle value="">
-      <mat-icon>open_in_full</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="contain">
-      <mat-icon>fullscreen_exit</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="cover">
-      <mat-icon>fullscreen</mat-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-</ng-container>
+<p>Choix de l'image</p>
+<mat-button-toggle-group [(value)]="currentChoose" [hideSingleSelectionIndicator]="true">
+  <mat-button-toggle value="image">
+    <mat-icon>photo_camera</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="url">
+    <mat-icon>link</mat-icon>
+  </mat-button-toggle>
+</mat-button-toggle-group>
+<div class="file-upload" *ngIf="currentChoose == 'image'">
+  <span>{{fileName || "Aucun fichier sélectionné."}}</span>
+  <button mat-mini-fab color="primary" class="upload-btn"
+          (click)="fileUpload.click()">
+    <mat-icon>attach_file</mat-icon>
+  </button>
+  <input type="file"
+         hidden="hidden"
+         accept="image/png, image/jpeg"
+         (change)="onFileSelected($event)" #fileUpload>
+</div>
+<mat-form-field appearance="outline" subscriptSizing="dynamic" *ngIf="currentChoose == 'url'">
+  <input matInput placeholder="https://google.com/..." [formControl]="getForm('imageUrl')">
+</mat-form-field>
+<p>Remplissage</p>
+<mat-button-toggle-group id="remplissage" [formControl]="getForm('backgroundSize')" [hideSingleSelectionIndicator]="true">
+  <mat-button-toggle value="">
+    <mat-icon>open_in_full</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="contain">
+    <mat-icon>fullscreen_exit</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="cover">
+    <mat-icon>fullscreen</mat-icon>
+  </mat-button-toggle>
+</mat-button-toggle-group>

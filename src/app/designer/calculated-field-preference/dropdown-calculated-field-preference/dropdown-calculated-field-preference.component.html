@@ -1,0 +1,27 @@
+<div *ngIf="calculatedField" id="dropdownCreation">
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Sélection par défaut</mat-label>
+    <mat-select [(ngModel)]="calculatedField!.preference">
+      <mat-option [value]="undefined">Aucune valeur par défaut</mat-option>
+      @for (option of calculatedField.options; track option.id) {
+        <mat-option [value]="option.id">{{option.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @for (option of calculatedField.options; track option; let index = $index) {
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Option {{index+1}}</mat-label>
+      <input type="text"
+             matInput
+             [(ngModel)]="calculatedField.options![index].name">
+      <button mat-icon-button matSuffix color="primary" (click)="remove(index)">
+        <mat-icon>remove</mat-icon>
+      </button>
+    </mat-form-field>
+  }
+
+  <button mat-fab id="addNewOption" color="primary" (click)="add()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

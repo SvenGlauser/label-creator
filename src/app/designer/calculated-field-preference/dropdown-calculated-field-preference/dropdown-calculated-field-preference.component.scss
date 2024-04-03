@@ -1,0 +1,13 @@
+mat-form-field {
+  width: 100%;
+}
+
+#dropdownCreation {
+  display: grid;
+  align-items: center;
+  grid-row-gap: 20px;
+
+  #addNewOption {
+    justify-self: center;
+  }
+}

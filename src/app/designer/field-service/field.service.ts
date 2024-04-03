@@ -5,6 +5,7 @@ import {VersioningService} from "../versioning-service/versioning.service";
 import {from} from "rxjs";
 import {ImageField, ImageFieldExportable} from "../fields/image-field/image-field";
 import {LabelField} from "../fields/label-field/label-field";
+import {CalculatedFieldService} from "../calculated-field-service/calculated-field.service";
 
 /**
  * Service de gestion des champs
@@ -27,7 +28,8 @@ export class FieldService implements OnDestroy {
   private unsubscribeKeyDown?: () => void;
 
   constructor(private rendererFactory2: RendererFactory2,
-              private versioningService: VersioningService) {
+              private versioningService: VersioningService,
+              private calculatedFieldService: CalculatedFieldService) {
     this._renderer = this.rendererFactory2.createRenderer(null, null);
   }
 
@@ -96,7 +98,7 @@ export class FieldService implements OnDestroy {
 
     this.fields.push(field);
     this.currentField = field;
-    this.makeAVersion();
+    this.makeAVersionAndRefreshPreferences();
   }
 
   /**
@@ -134,7 +136,7 @@ export class FieldService implements OnDestroy {
       this.currentField = undefined;
     }
 
-    this.makeAVersion();
+    this.makeAVersionAndRefreshPreferences();
   }
 
   /**
@@ -245,7 +247,7 @@ export class FieldService implements OnDestroy {
       this.fields[index] = newField;
     }
 
-    this.makeAVersion();
+    this.makeAVersionAndRefreshPreferences();
   }
 
   /**
@@ -281,7 +283,7 @@ export class FieldService implements OnDestroy {
         this.fields[justBeforeIndex].index = currentIndex;
         this.currentField.index = justBeforeIndexOfField;
       }
-      this.makeAVersion();
+      this.makeAVersionAndRefreshPreferences();
     }
   }
 
@@ -304,15 +306,17 @@ export class FieldService implements OnDestroy {
         this.fields[justAfterIndex].index = currentIndex;
         this.currentField.index = justAfterIndexOfField;
       }
-      this.makeAVersion();
+      this.makeAVersionAndRefreshPreferences();
     }
   }
 
   /**
-   * Versionne l'état actuel des champs
+   * Versionne l'état actuel des champs et met à jour les préférences
    */
-  public makeAVersion(): void {
+  public makeAVersionAndRefreshPreferences(): void {
     this.versioningService.add(this.fields);
+
+    this.calculatedFieldService.refreshCalculatedFields(this.getAll());
   }
 
   /**
