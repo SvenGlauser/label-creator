@@ -3,7 +3,7 @@ import {CommonField} from "../../fields/common-field/common-field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {debounceTime, forkJoin, merge, Subscription} from "rxjs";
+import {debounceTime, merge, Subscription} from "rxjs";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatIcon} from "@angular/material/icon";
 import {LabelFieldPersonalizationComponent} from "../label-field-personalization/label-field-personalization.component";
@@ -11,7 +11,7 @@ import {ImageFieldPersonalizationComponent} from "../image-field-personalization
 import {FieldPersonalization} from "./field-personalization";
 import {MatIconButton} from "@angular/material/button";
 import {FieldService} from "../../field-service/field.service";
-import {MAX_HEIGHT, MAX_WIDTH, MIN_HEIGHT, MIN_WIDTH, PAGE_HEIGHT, PAGE_WIDTH} from "../../dimensions";
+import {PAGE_HEIGHT, PAGE_WIDTH} from "../../dimensions";
 import {Utils} from "../../utils";
 
 /**
