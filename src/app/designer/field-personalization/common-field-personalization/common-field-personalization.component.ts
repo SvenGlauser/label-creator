@@ -3,7 +3,7 @@ import {CommonField} from "../../fields/common-field/common-field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {debounceTime, Subscription} from "rxjs";
+import {debounceTime, forkJoin, merge, Subscription} from "rxjs";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatIcon} from "@angular/material/icon";
 import {LabelFieldPersonalizationComponent} from "../label-field-personalization/label-field-personalization.component";
@@ -11,6 +11,7 @@ import {ImageFieldPersonalizationComponent} from "../image-field-personalization
 import {FieldPersonalization} from "./field-personalization";
 import {MatIconButton} from "@angular/material/button";
 import {FieldService} from "../../field-service/field.service";
+import {MAX_HEIGHT, MAX_WIDTH, MIN_HEIGHT, MIN_WIDTH, PAGE_HEIGHT, PAGE_WIDTH} from "../../dimensions";
 
 /**
  * Composant parent pour la personnalisation des champs
@@ -54,6 +55,8 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
     child: new FormGroup({}),
     top: new FormControl(0),
     left: new FormControl(0),
+    bottom: new FormControl(0),
+    right: new FormControl(0),
     width: new FormControl(0),
     height: new FormControl(0),
   });
@@ -64,7 +67,17 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
    * Lors de la création du composant, souscription au changement de valeur des champs de formulaire
    */
   public ngOnInit(): void {
-    this.valueChangesSubscription = this.form.valueChanges.pipe(debounceTime(100)).subscribe(() => {
+    this.form.get('bottom')?.disable({ emitEvent: false });
+    this.form.get('right')?.disable({ emitEvent: false });
+
+    this.valueChangesSubscription = merge(
+      this.form.get('top')!.valueChanges,
+      this.form.get('left')!.valueChanges,
+      this.form.get('width')!.valueChanges,
+      this.form.get('height')!.valueChanges,
+      this.form.get('child')!.valueChanges,
+    ).pipe(debounceTime(100)).subscribe(() => {
+      console.log(1)
       this.updateContent();
     });
   }
@@ -114,6 +127,7 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
     newField.width = Number.parseInt(this.form.get('width')!.value);
     newField.height = Number.parseInt(this.form.get('height')!.value);
     this.fieldChange.emit(newField);
+    this.calculatedField();
   }
 
   /**
@@ -128,6 +142,15 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
     this.form.get('width')!.setValue(this.field?.width, { emitEvent: false })
     this.form.get('height')!.setValue(this.field?.height, { emitEvent: false })
     this.oldField = <CommonField>{...this.field};
+    this.calculatedField();
+  }
+
+  /**
+   * Met à jour les champs calculés
+   */
+  private calculatedField(): void {
+    this.form.get('bottom')!.setValue(PAGE_HEIGHT - (this.form.get('top')?.value + this.form.get('height')?.value), {emitEvent: false})
+    this.form.get('right')!.setValue(PAGE_WIDTH - (this.form.get('left')?.value + this.form.get('width')?.value), {emitEvent: false})
   }
 
   /**

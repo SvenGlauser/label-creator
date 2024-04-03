@@ -11,9 +11,10 @@ import {
   Output,
   Renderer2
 } from '@angular/core';
-import {CdkDrag, CdkDragEnd} from "@angular/cdk/drag-drop";
+import {CdkDrag, CdkDragEnd, CdkDragMove} from "@angular/cdk/drag-drop";
 import {FieldService} from "../../field-service/field.service";
 import {CommonField} from "./common-field";
+import {MAX_HEIGHT, MAX_WIDTH, MIN_HEIGHT, MIN_WIDTH} from "../../dimensions";
 
 /**
  * Directive gérer les propriétés communes à tous les champs
@@ -23,16 +24,16 @@ import {CommonField} from "./common-field";
   standalone: true,
   hostDirectives: [{
     directive: CdkDrag,
-    outputs: ['cdkDragEnded']
+    outputs: ['cdkDragEnded', 'cdkDragMoved']
   }]
 })
 export class CommonFieldDirective implements OnInit, DoCheck, OnDestroy {
 
   // Dimensions MIN et MAX du champ
-  private MIN_WIDTH = 15;
-  private MIN_HEIGHT = 15;
-  private MAX_WIDTH = 400;
-  private MAX_HEIGHT = 400;
+  private readonly MIN_WIDTH = MIN_WIDTH;
+  private readonly MIN_HEIGHT = MIN_HEIGHT;
+  private readonly MAX_WIDTH = MAX_WIDTH;
+  private readonly MAX_HEIGHT = MAX_HEIGHT;
 
   public currentlyResizing: boolean = false;
   private currentX: number = 0;
@@ -112,13 +113,21 @@ export class CommonFieldDirective implements OnInit, DoCheck, OnDestroy {
   }
 
   /**
+   * Corrige la transformation CSS pour prendre le niveau de zoom en compte
+   */
+  @HostListener('cdkDragMoved', ['$event'])
+  public onDragMove(event: CdkDragMove): void {
+    event.source.element.nativeElement.style.transform = `translate3d(${event.distance.x/this.zoomLevel}px, ${event.distance.y/this.zoomLevel}px, 0)`
+  }
+
+  /**
    * Lors de l'événement CdkDragEnd, transforme le CSS en pixel de déplacement de haut en bas et bas en haut
    * @param event Événement
    */
   @HostListener('cdkDragEnded', ['$event'])
   protected onDragEnd(event: CdkDragEnd): void {
-    this.top = this.top + event.distance.y;
-    this.left = this.left + event.distance.x;
+    this.top = this.top + event.distance.y/this.zoomLevel;
+    this.left = this.left + event.distance.x/this.zoomLevel;
 
     // Supprime le CSS
     event.source.reset();

@@ -10,6 +10,7 @@ import {FieldService} from "../field-service/field.service";
 import {CommonField} from "../fields/common-field/common-field";
 import {ImageFieldComponent} from "../fields/image-field/image-field.component";
 import {LabelFieldComponent} from "../fields/label-field/label-field.component";
+import {PAGE_HEIGHT, PAGE_WIDTH} from "../dimensions";
 
 @Component({
   selector: 'app-edition-page',
@@ -27,6 +28,9 @@ import {LabelFieldComponent} from "../fields/label-field/label-field.component";
   styleUrl: './edition-page.component.scss'
 })
 export class EditionPageComponent implements AfterViewInit, OnDestroy {
+
+  protected readonly PAGE_WIDTH = PAGE_WIDTH;
+  protected readonly PAGE_HEIGHT = PAGE_HEIGHT;
 
   protected scale: number = 1;
 

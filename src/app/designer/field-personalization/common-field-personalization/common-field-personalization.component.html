@@ -10,20 +10,31 @@
   } @else if (this.field!.type == 'image') {
     <app-image-field-personalization #child [form]="getChildForm()" id="child"></app-image-field-personalization>
   }
-  <mat-label>Position X</mat-label>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <input matInput placeholder="100" type="number" formControlName="top">
-  </mat-form-field>
-  <mat-label>Position Y</mat-label>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <input matInput placeholder="100" type="number" formControlName="left">
-  </mat-form-field>
-  <mat-label>Largeur</mat-label>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <input matInput placeholder="100" type="number" formControlName="width">
-  </mat-form-field>
-  <mat-label>Hauteur</mat-label>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <input matInput placeholder="100" type="number" formControlName="height">
-  </mat-form-field>
+  <div id="emplacement">
+    <p>Emplacement</p>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Haut</mat-label>
+      <input matInput placeholder="100" type="number" formControlName="top">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Gauche</mat-label>
+      <input matInput placeholder="100" type="number" formControlName="left">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Bas</mat-label>
+      <input matInput placeholder="100" type="number" formControlName="bottom">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Droite</mat-label>
+      <input matInput placeholder="100" type="number" formControlName="right">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Hauteur</mat-label>
+      <input matInput placeholder="100" type="number" formControlName="height">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Largeur</mat-label>
+      <input matInput placeholder="100" type="number" formControlName="width">
+    </mat-form-field>
+  </div>
 </div>

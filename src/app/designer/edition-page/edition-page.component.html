@@ -1,6 +1,9 @@
 <div id="edition-zone" #editionZone>
   <div id="zoom-zone" #zoomZone>
-    <div id="designer-zone" [style.transform]="'scale('+ scale +')'">
+    <div id="designer-zone"
+         [style.height.px]="PAGE_HEIGHT"
+         [style.width.px]="PAGE_WIDTH"
+         [style.transform]="'scale('+ scale +')'">
       @for (field of getAll(); track field.name) {
         @if (field.type == 'label') {
           <app-label-field [field]="field"
