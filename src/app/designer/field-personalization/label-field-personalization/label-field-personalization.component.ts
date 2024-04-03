@@ -8,6 +8,9 @@ import {MatInput} from "@angular/material/input";
 import {NgxColorsModule} from "ngx-colors";
 import {FieldPersonalization} from "../common-field-personalization/field-personalization";
 import {LabelField} from "../../fields/label-field/label-field";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {FontService} from "../../font-service/font.service";
 
 /**
  * Composant pour la personnalisation des champs de saisie
@@ -23,7 +26,10 @@ import {LabelField} from "../../fields/label-field/label-field";
     MatInput,
     MatLabel,
     ReactiveFormsModule,
-    NgxColorsModule
+    NgxColorsModule,
+    CdkTextareaAutosize,
+    MatSelect,
+    MatOption
   ],
   templateUrl: './label-field-personalization.component.html',
   styleUrl: './label-field-personalization.component.scss'
@@ -32,6 +38,8 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
 
   @Input()
   public form?: AbstractControl;
+
+  constructor(private fontService: FontService) {}
 
   public hasChanged(field: CommonField, oldField: CommonField): boolean {
     return !(
@@ -86,5 +94,12 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
    */
   protected getForm(name: string): FormControl {
     return <FormControl>this.form?.get(name);
+  }
+
+  /**
+   * Récupère la liste des polices pour le champ de saisie
+   */
+  protected getFonts(): string[] {
+    return this.fontService.getFonts();
   }
 }

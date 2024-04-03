@@ -1,22 +1,31 @@
 <ng-container>
+  <p>Texte</p>
   <mat-form-field appearance="outline" id="content-edition" subscriptSizing="dynamic">
     <mat-label>Texte</mat-label>
-    <textarea matInput placeholder="Quantité de #cereale" [formControl]="getForm('content')"></textarea>
+    <textarea matInput
+              placeholder="Quantité de #cereale"
+              rows="3"
+              [formControl]="getForm('content')">
+    </textarea>
   </mat-form-field>
-  <mat-label>Police</mat-label>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <input matInput placeholder="Helvetica" type="string" [formControl]="getForm('fontFamily')">
-  </mat-form-field>
-  <mat-label>Taille</mat-label>
-  <mat-form-field appearance="outline" subscriptSizing="dynamic">
-    <input matInput placeholder="15" type="number" [formControl]="getForm('fontSize')">
-  </mat-form-field>
-  <mat-label>Couleur</mat-label>
-  <div>
-    <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('color')"></ngx-colors>
-    <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('backgroundColor')"></ngx-colors>
+  <div id="fonts">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Police</mat-label>
+      <mat-select [formControl]="getForm('fontFamily')">
+        @for (font of getFonts(); track font) {
+          <mat-option [value]="font"><span [style.font-family]="font">{{font}}</span></mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Taille</mat-label>
+      <input matInput placeholder="15" type="number" [formControl]="getForm('fontSize')">
+    </mat-form-field>
   </div>
-  <mat-label>Alignement horizontal</mat-label>
+  <p>Couleur</p>
+  <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('color')"></ngx-colors>
+  <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('backgroundColor')"></ngx-colors>
+  <p>Alignement</p>
   <mat-button-toggle-group [formControl]="getForm('textAlign')" [hideSingleSelectionIndicator]="true">
     <mat-button-toggle value="left">
       <mat-icon>format_align_left</mat-icon>
@@ -31,7 +40,6 @@
       <mat-icon>format_align_justify</mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>
-  <mat-label>Alignement vertical</mat-label>
   <mat-button-toggle-group [formControl]="getForm('verticalTextAlign')" [hideSingleSelectionIndicator]="true">
     <mat-button-toggle value="flex-start">
       <mat-icon>vertical_align_top</mat-icon>
