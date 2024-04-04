@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {EditionOptionsComponent} from "./edition-options/edition-options.component";
 import {ZoomComponent} from "./zoom/zoom.component";
 import {FieldCreationComponent} from "../field-creation/field-creation.component";
@@ -17,7 +17,7 @@ import {
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 
 @Component({

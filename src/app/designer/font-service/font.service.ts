@@ -154,6 +154,6 @@ export class FontService {
    * Retourne une liste de polices triées par ordre alphabétique
    */
   public getFonts(): string[] {
-    return this.FONTS.sort();
+    return this.FONTS.sort((a, b) => a.localeCompare(b));
   }
 }
