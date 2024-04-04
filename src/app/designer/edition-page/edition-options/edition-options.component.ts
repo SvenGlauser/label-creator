@@ -25,14 +25,14 @@ export class EditionOptionsComponent {
    * Annule la dernière modification
    */
   protected undo(): void {
-    this.fieldService.undo();
+    this.fieldService.undoAndRefreshPreferences();
   }
 
   /**
    * Rejoue la dernière modification
    */
   protected redo(): void {
-    this.fieldService.redo();
+    this.fieldService.redoAndRefreshPreferences();
   }
 
   /**

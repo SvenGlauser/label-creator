@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {CalculatedField} from "../calculated-fields/calculated-field";
 import {LabelField} from "../fields/label-field/label-field";
 import {CommonField} from "../fields/common-field/common-field";
@@ -12,7 +12,12 @@ import {CommonField} from "../fields/common-field/common-field";
 export class CalculatedFieldService {
 
   private calculatedFields: CalculatedField[] = [];
+  public valueChanges: EventEmitter<void> = new EventEmitter<void>();
 
+  /**
+   * Rafraichit la liste des champs calculés
+   * @param fields Champs actuels
+   */
   public refreshCalculatedFields(fields: CommonField[]): void {
     const sortedFields = fields.filter(field => field.type == 'label');
 
@@ -36,7 +41,18 @@ export class CalculatedFieldService {
     }
   }
 
+  /**
+   * Récupère la liste complète des champs calculés actifs
+   */
   public getAllCalculatedFields(): CalculatedField[] {
     return this.calculatedFields.filter(calculatedField => calculatedField.used);
+  }
+
+  /**
+   * Charge les champs calculés stockés dans le stockage
+   * @param preferences Champs calculés
+   */
+  public pushFromStorage(preferences: CalculatedField[]): void {
+    this.calculatedFields = preferences;
   }
 }

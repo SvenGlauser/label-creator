@@ -13,16 +13,16 @@
   <div class="calculated-field-preference">
     @switch (calculatedField.type) {
       @case ('string') {
-        <app-string-calculated-field-preference [calculatedField]="calculatedField"></app-string-calculated-field-preference>
+        <app-string-calculated-field-preference [calculatedField]="calculatedField" (valueChange)="modified()"></app-string-calculated-field-preference>
       }
       @case ('number') {
-        <app-number-calculated-field-preference [calculatedField]="calculatedField"></app-number-calculated-field-preference>
+        <app-number-calculated-field-preference [calculatedField]="calculatedField" (valueChange)="modified()"></app-number-calculated-field-preference>
       }
       @case ('date') {
-        <app-date-calculated-field-preference [calculatedField]="calculatedField"></app-date-calculated-field-preference>
+        <app-date-calculated-field-preference [calculatedField]="calculatedField" (valueChange)="modified()"></app-date-calculated-field-preference>
       }
       @case ('dropdown') {
-        <app-dropdown-calculated-field-preference [calculatedField]="calculatedField"></app-dropdown-calculated-field-preference>
+        <app-dropdown-calculated-field-preference [calculatedField]="calculatedField" (valueChange)="modified()"></app-dropdown-calculated-field-preference>
       }
     }
   </div>

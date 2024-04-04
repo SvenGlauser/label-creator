@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatFormField, MatHint, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {NgIf} from "@angular/common";
@@ -32,4 +32,15 @@ import {MatIcon} from "@angular/material/icon";
 export class DateCalculatedFieldPreferenceComponent {
   @Input()
   public calculatedField?: CalculatedField;
+
+  @Output()
+  public valueChange: EventEmitter<void> = new EventEmitter<void>();
+
+  /**
+   * Informe le parent qu'une des valeurs à changer
+   */
+  protected modified(newPreference: Date): void {
+    this.calculatedField!.preference = newPreference;
+    this.valueChange.emit();
+  }
 }

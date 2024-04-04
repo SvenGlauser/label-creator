@@ -17,8 +17,6 @@ export class VersioningService {
 
   private currentVersion = -1;
 
-  constructor() {}
-
   /**
    * Crée une version des champs actuels
    * @param fields Champs à versionner
@@ -267,5 +265,13 @@ export class VersioningService {
    */
   public canRedo(): boolean {
     return this.currentVersion != this.versions.length - 1;
+  }
+
+  /**
+   * Initialise les champs avant la première version
+   * @param fields Champs actuels
+   */
+  public initFields(fields: CommonField[]): void {
+    this.oldFields = fields.map(field => ({...field}));
   }
 }

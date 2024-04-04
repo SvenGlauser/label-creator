@@ -1,4 +1,4 @@
 <mat-form-field *ngIf="calculatedField" appearance="outline" subscriptSizing="dynamic">
   <mat-label>Nombre par défaut</mat-label>
-  <input matInput [(ngModel)]="calculatedField!.preference" type="number">
+  <input matInput [ngModel]="calculatedField!.preference" (ngModelChange)="modified($event)" type="number">
 </mat-form-field>

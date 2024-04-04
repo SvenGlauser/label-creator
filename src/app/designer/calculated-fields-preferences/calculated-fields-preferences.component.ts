@@ -28,4 +28,12 @@ export class CalculatedFieldsPreferencesComponent {
   public getAll(): CalculatedField[] {
     return this.calculatedFieldService.getAllCalculatedFields();
   }
+
+  /**
+   * Informe les autres services que la valeur d'un des composants a changé
+   */
+  public valueChange(): void {
+    console.log("test")
+    this.calculatedFieldService.valueChanges.emit();
+  }
 }

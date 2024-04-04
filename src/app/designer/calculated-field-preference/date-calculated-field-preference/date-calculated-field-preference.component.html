@@ -1,6 +1,6 @@
 <mat-form-field *ngIf="calculatedField" appearance="outline" subscriptSizing="dynamic">
   <mat-label>Date par défaut</mat-label>
-  <input matInput [matDatepicker]="picker" [(ngModel)]="calculatedField.preference">
+  <input matInput [matDatepicker]="picker" [ngModel]="calculatedField.preference" (ngModelChange)="modified($event)">
   <mat-hint>DD.MM.YYYY</mat-hint>
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>

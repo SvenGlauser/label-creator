@@ -4,7 +4,7 @@
 
 <div id="preferences">
   @for (calculatedField of getAll(); track calculatedField.name; let isLast = $last) {
-    <app-common-calculated-field-preference [calculatedField]="calculatedField"></app-common-calculated-field-preference>
+    <app-common-calculated-field-preference [calculatedField]="calculatedField" (valueChange)="valueChange()"></app-common-calculated-field-preference>
     <mat-divider *ngIf="!isLast"></mat-divider>
   }
 </div>

@@ -1,39 +1,45 @@
-<div id="preferences-zone">
-  <app-calculated-fields-preferences></app-calculated-fields-preferences>
-</div>
-<div id="edition-zone" #editionZone>
-  <div id="zoom-zone" #zoomZone>
-    <div id="designer-zone"
-         [style.height.px]="PAGE_HEIGHT"
-         [style.width.px]="PAGE_WIDTH"
-         [style.transform]="'scale('+ scale +')'">
-      @for (field of getAll(); track field.name) {
-        @if (field.type == 'label') {
-          <app-label-field [field]="field"
-                           (fieldChange)="update($event)"
-                           [zoomLevel]="scale">
-          </app-label-field>
-        } @else if (field.type == 'image') {
-          <app-image-field [field]="field"
-                           (fieldChange)="update($event)"
-                           [zoomLevel]="scale">
-          </app-image-field>
-        }
-      }
-    </div>
+<mat-toolbar color="primary" id="edition-title">
+  <input matInput type="text" [ngModel]="name" (ngModelChange)="nameChange($event)">
+</mat-toolbar>
+
+<div id="edition-page">
+  <div id="preferences-zone">
+    <app-calculated-fields-preferences></app-calculated-fields-preferences>
   </div>
-  <app-edition-options #editionOptions></app-edition-options>
-  <app-zoom #zoomOptions
-            [zoomZone]="zoomZone"
-            (scaleChange)="updateScale($event)">
-  </app-zoom>
-</div>
-<div id="personalization-zone">
-  @if (hasCurrent()) {
-    <app-common-field-personalization [field]="getCurrent()!"
-                                      (fieldChange)="update($event)">
-    </app-common-field-personalization>
-  } @else {
-    <app-field-creation></app-field-creation>
-  }
+  <div id="edition-zone" #editionZone>
+    <div id="zoom-zone" #zoomZone>
+      <div id="designer-zone"
+           [style.height.px]="PAGE_HEIGHT"
+           [style.width.px]="PAGE_WIDTH"
+           [style.transform]="'scale('+ scale +')'">
+        @for (field of getAll(); track field.name) {
+          @if (field.type == 'label') {
+            <app-label-field [field]="field"
+                             (fieldChange)="update($event)"
+                             [zoomLevel]="scale">
+            </app-label-field>
+          } @else if (field.type == 'image') {
+            <app-image-field [field]="field"
+                             (fieldChange)="update($event)"
+                             [zoomLevel]="scale">
+            </app-image-field>
+          }
+        }
+      </div>
+    </div>
+    <app-edition-options #editionOptions></app-edition-options>
+    <app-zoom #zoomOptions
+              [zoomZone]="zoomZone"
+              (scaleChange)="updateScale($event)">
+    </app-zoom>
+  </div>
+  <div id="personalization-zone">
+    @if (hasCurrent()) {
+      <app-common-field-personalization [field]="getCurrent()!"
+                                        (fieldChange)="update($event)">
+      </app-common-field-personalization>
+    } @else {
+      <app-field-creation></app-field-creation>
+    }
+  </div>
 </div>

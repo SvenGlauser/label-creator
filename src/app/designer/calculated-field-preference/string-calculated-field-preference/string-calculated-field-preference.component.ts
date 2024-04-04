@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CalculatedField} from "../../calculated-fields/calculated-field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/autocomplete";
@@ -28,4 +28,15 @@ import {MatInput} from "@angular/material/input";
 export class StringCalculatedFieldPreferenceComponent {
   @Input()
   public calculatedField?: CalculatedField;
+
+  @Output()
+  public valueChange: EventEmitter<void> = new EventEmitter<void>();
+
+  /**
+   * Informe le parent qu'une des valeurs à changer
+   */
+  protected modified(newPreference: string): void {
+    this.calculatedField!.preference = newPreference;
+    this.valueChange.emit();
+  }
 }

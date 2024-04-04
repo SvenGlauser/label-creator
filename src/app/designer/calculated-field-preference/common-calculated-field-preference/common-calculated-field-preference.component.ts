@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CalculatedField} from "../../calculated-fields/calculated-field";
 import {MatFormField, MatOption, MatSelect} from "@angular/material/select";
 import {NgIf} from "@angular/common";
@@ -38,6 +38,9 @@ export class CommonCalculatedFieldPreferenceComponent {
   @Input()
   public calculatedField?: CalculatedField;
 
+  @Output()
+  public valueChange: EventEmitter<void> = new EventEmitter<void>();
+
   /**
    * Actualise le type et reset les attributs spécifiques
    */
@@ -45,5 +48,13 @@ export class CommonCalculatedFieldPreferenceComponent {
     this.calculatedField!.type = newType;
     this.calculatedField!.options = undefined;
     this.calculatedField!.preference = undefined;
+    this.modified();
+  }
+
+  /**
+   * Informe le parent qu'une des valeurs à changer
+   */
+  protected modified(): void {
+    this.valueChange.emit();
   }
 }

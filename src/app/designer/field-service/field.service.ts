@@ -2,10 +2,11 @@ import {ElementRef, Injectable, OnDestroy, Renderer2, RendererFactory2} from '@a
 import {CommonFieldDirective} from "../fields/common-field/common-field.directive";
 import {CommonField} from "../fields/common-field/common-field";
 import {VersioningService} from "../versioning-service/versioning.service";
-import {from} from "rxjs";
 import {ImageField, ImageFieldExportable} from "../fields/image-field/image-field";
 import {LabelField} from "../fields/label-field/label-field";
 import {CalculatedFieldService} from "../calculated-field-service/calculated-field.service";
+import {CalculatedField} from "../calculated-fields/calculated-field";
+import {Subscription} from "rxjs";
 
 /**
  * Service de gestion des champs
@@ -26,6 +27,9 @@ export class FieldService implements OnDestroy {
   private unsubscribeMouseUp?: () => void;
   private unsubscribeMouseDown?: () => void;
   private unsubscribeKeyDown?: () => void;
+  private calculatedFieldServiceValueChangesSouscription?: Subscription;
+  private currentFormID?: string;
+  private currentName?: string;
 
   constructor(private rendererFactory2: RendererFactory2,
               private versioningService: VersioningService,
@@ -69,6 +73,9 @@ export class FieldService implements OnDestroy {
     }
     if (this.unsubscribeKeyDown) {
       this.unsubscribeKeyDown();
+    }
+    if (this.calculatedFieldServiceValueChangesSouscription) {
+      this.calculatedFieldServiceValueChangesSouscription.unsubscribe();
     }
   }
 
@@ -317,108 +324,31 @@ export class FieldService implements OnDestroy {
     this.versioningService.add(this.fields);
 
     this.calculatedFieldService.refreshCalculatedFields(this.getAll());
+    this.save().then();
   }
 
   /**
    * Annule la dernière modification
    */
-  public undo(): void {
+  public undoAndRefreshPreferences(): void {
     this.fields = this.versioningService.goBack();
     this.currentField?.linkedDirective!.changeSelection(false);
     this.currentField = undefined;
+
+    this.calculatedFieldService.refreshCalculatedFields(this.getAll());
+    this.save().then();
   }
 
   /**
    * Rejoue la dernière modification annulée
    */
-  public redo(): void {
+  public redoAndRefreshPreferences(): void {
     this.fields = this.versioningService.redo();
     this.currentField?.linkedDirective!.changeSelection(false);
     this.currentField = undefined;
-  }
 
-  // TODO améliorer
-  public getJson(): void {
-    let listOfDesignToString = this.fields.map(design => ({...design}));
-
-    let listOfImageTOString = listOfDesignToString
-      .filter(design => design.type == 'image' && (<ImageField>design).image != undefined)
-      .map(design => {
-        return {
-          indexOf: listOfDesignToString.indexOf(design),
-          image: (<ImageField>design).image
-        }
-      }).filter(image => image.image != undefined);
-
-    listOfImageTOString.forEach(image => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        let newDesign = <ImageFieldExportable>listOfDesignToString.at(image.indexOf);
-        newDesign.image = <string>reader.result
-        newDesign.imageName = image.image!.name;
-        listOfDesignToString[image.indexOf] = newDesign;
-        const index = listOfImageTOString.indexOf(image);
-        if (index > -1) {
-          listOfImageTOString.splice(index, 1);
-        }
-        if (listOfImageTOString.length == 0) {
-          navigator.clipboard.writeText(JSON.stringify(listOfDesignToString.map(design => {
-            design.linkedDirective = undefined;
-            return design;
-          }))).then();
-        }
-      };
-      reader.readAsDataURL(<Blob>image.image);
-    })
-
-    if (listOfImageTOString.length == 0) {
-      navigator.clipboard.writeText(JSON.stringify(listOfDesignToString.map(design => {
-        design.linkedDirective = undefined;
-        return design;
-      }))).then();
-    }
-
-
-  }
-
-  // TODO améliorer
-  public setJson(): void {
-    navigator.clipboard.readText().then((event) => {
-      let listOfDesignExported: CommonField[] = JSON.parse(event);
-      let listOfImages: {index: number, image: string, imageName: string}[] = [];
-      listOfDesignExported.forEach((design, index) => {
-        if (design.type == 'image' && (<ImageFieldExportable>design).image) {
-          listOfImages.push({
-            index: index,
-            image: <string>(<ImageFieldExportable>design).image,
-            imageName: <string>(<ImageFieldExportable>design).imageName
-          });
-        }
-      });
-
-      listOfImages.forEach((image) => {
-        from(
-          fetch(image.image)
-            .then(res => res.blob())
-            .then(blob => {
-              let newDesign = <ImageField>listOfDesignExported.at(image.index);
-              newDesign.image = new File([blob], image.imageName);
-              listOfDesignExported[image.index] = newDesign;
-              const index = listOfImages.indexOf(image);
-              if (index > -1) {
-                listOfImages.splice(index, 1);
-              }
-              if (listOfImages.length == 0) {
-                this.fields = listOfDesignExported;
-              }
-            })
-        );
-      });
-
-      if (listOfImages.length == 0) {
-        this.fields = listOfDesignExported;
-      }
-    })
+    this.calculatedFieldService.refreshCalculatedFields(this.getAll());
+    this.save().then();
   }
 
   /**
@@ -427,5 +357,153 @@ export class FieldService implements OnDestroy {
   public unSelectCurrent(): void {
     this.currentField?.linkedDirective?.changeSelection(false);
     this.currentField = undefined;
+  }
+
+  /**
+   * Transforme l'étiquette actuelle en JSON
+   */
+  public transformToJSON(): Promise<string> {
+    let fields: CommonField[] = this.getAll().map(field => ({...field}));
+    let promises: Promise<void>[] = [];
+    let listOfImages: {name: string, image: string, imageName: string}[] = [];
+
+    for (const field of fields) {
+      field.linkedDirective = undefined;
+
+      if (field.type == 'image' && (<ImageField>field).image) {
+        const reader: FileReader = new FileReader();
+
+        promises.push(new Promise((resolve): void => {
+          reader.onload = (): void => {
+            listOfImages.push({
+              name: field.name,
+              image: <string>reader.result,
+              imageName: (<ImageField>field).image!.name
+            })
+            resolve();
+          };
+          reader.readAsDataURL(<Blob>(<ImageField>field).image);
+        }));
+      }
+    }
+
+    return Promise.all(promises).then(() => {
+      for (const image of listOfImages) {
+        let oldImage = <ImageFieldExportable>fields.find(commonField => commonField.name == image.name)!;
+        let index = fields.findIndex(commonField => commonField.name == image.name);
+
+        oldImage.image = image.image;
+        oldImage.imageName = image.name;
+
+        fields[index] = oldImage;
+      }
+
+      return JSON.stringify(fields);
+    });
+  }
+
+  /**
+   * Transforme l'étiquette actuelle en objets
+   */
+  public transformToObjects(json: string): Promise<CommonField[]> {
+    let fields: CommonField[] = JSON.parse(json);
+    let promises: Promise<void>[] = [];
+    let listOfImages: {name: string, image: File}[] = [];
+
+    for (const field of fields) {
+      if (field.type == 'image' && (<ImageFieldExportable>field).image) {
+        let jsonImage: string = (<ImageFieldExportable>field).image!;
+
+        promises.push(
+          fetch(jsonImage)
+            .then(res => res.blob())
+            .then<void>(blob => {
+              listOfImages.push({
+                name: field.name,
+                image: new File([blob], (<ImageFieldExportable>field).imageName!)
+              });
+            })
+        );
+      }
+    }
+
+    return Promise.all(promises).then<CommonField[]>(() => {
+      for (const image of listOfImages) {
+        let oldImage = <ImageField>fields.find(commonField => commonField.name == image.name)!;
+        let index = fields.findIndex(commonField => commonField.name == image.name);
+
+        oldImage.image = image.image;
+
+        fields[index] = oldImage;
+      }
+
+      return fields;
+    });
+  }
+
+  /**
+   * Charge l'étiquette depuis le stockage
+   * @param formId ID de l'étiquette
+   */
+  public async load(formId: string): Promise<void> {
+    let informationsJSON = localStorage.getItem(formId);
+    this.currentFormID = formId;
+
+    if (informationsJSON == null) {
+      console.error("Impossible de charger : " + formId);
+      return Promise.resolve();
+    } else {
+      let informations: { name: string, fields: string, preferences: CalculatedField[] } = JSON.parse(informationsJSON);
+      this.currentName = informations.name;
+      this.calculatedFieldService.pushFromStorage(informations.preferences);
+      this.initCalculatedFieldValueChange();
+      this.fields = await this.transformToObjects(informations.fields);
+      this.versioningService.initFields(this.fields);
+    }
+  }
+
+  /**
+   * Initialise la souscription au changement de valeur des préférences
+   */
+  private initCalculatedFieldValueChange(): void {
+    if (this.calculatedFieldServiceValueChangesSouscription) {
+      this.calculatedFieldServiceValueChangesSouscription.unsubscribe();
+    }
+    this.calculatedFieldServiceValueChangesSouscription = this.calculatedFieldService.valueChanges.subscribe((): void => {
+      this.save().then();
+    });
+  }
+
+  /**
+   * Sauvegarde l'étiquette dans le stockage
+   */
+  public async save(): Promise<void> {
+    if (!this.currentFormID) {
+      console.error("Aucun ID de formulaire stocké");
+      return;
+    }
+
+    let informations: { name: string, fields: string, preferences: CalculatedField[] } = {
+      name: this.currentName!,
+      preferences: this.calculatedFieldService.getAllCalculatedFields(),
+      fields: await this.transformToJSON(),
+    };
+
+    localStorage.setItem(this.currentFormID, JSON.stringify(informations));
+  }
+
+  /**
+   * Récupère le nom de l'étiquette
+   */
+  public getName(): string {
+    return this.currentName!
+  }
+
+  /**
+   * Modifie le nom de l'étiquette
+   */
+  public setName(newName: string): void {
+    this.currentName = newName;
+    this.save().then();
   }
 }
