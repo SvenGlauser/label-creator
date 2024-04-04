@@ -1,4 +1,15 @@
-import {Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {CommonField} from "../../fields/common-field/common-field";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -35,7 +46,7 @@ import {Utils} from "../../utils";
   templateUrl: './common-field-personalization.component.html',
   styleUrl: './common-field-personalization.component.scss'
 })
-export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnDestroy {
+export class CommonFieldPersonalizationComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   @Input('field')
   public set setField(value: CommonField) {
@@ -101,6 +112,13 @@ export class CommonFieldPersonalizationComponent implements OnInit, DoCheck, OnD
       this.child.updateForm(this.field!);
       this.initializedChild = true;
     }
+  }
+
+  /**
+   * Réactualise l'enfant s'il a changé
+   */
+  public ngOnChanges(): void {
+    this.initializedChild = false;
   }
 
   /**

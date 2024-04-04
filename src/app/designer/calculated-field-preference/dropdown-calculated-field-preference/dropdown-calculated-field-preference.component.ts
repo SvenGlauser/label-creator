@@ -43,7 +43,9 @@ export class DropdownCalculatedFieldPreferenceComponent implements OnInit {
    * Initialise les options
    */
   public ngOnInit(): void {
-    this.calculatedField!.options = [];
+    if (!this.calculatedField!.options) {
+      this.calculatedField!.options = [];
+    }
   }
 
   /**
