@@ -40,6 +40,7 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
   public form?: AbstractControl;
 
   protected stylesSelection?: string[];
+  private ignoreNextStyleModification: boolean = false;
 
   constructor(private fontService: FontService) {}
 
@@ -128,14 +129,17 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
       underline: !!this.form!.get('underline')!.value,
     }
 
-    const arrayOfStyle: string[] = [];
-    for (const selectionKey in selection) {
-      if (selection[selectionKey]) {
-        arrayOfStyle.push(selectionKey);
-      }
+    if (!this.stylesSelection) {
+      this.stylesSelection = [];
+      this.ignoreNextStyleModification = true;
     }
 
-    this.stylesSelection = arrayOfStyle;
+    this.stylesSelection.length = 0
+    for (const selectionKey in selection) {
+      if (selection[selectionKey]) {
+        this.stylesSelection.push(selectionKey);
+      }
+    }
   }
 
   /**
@@ -143,6 +147,11 @@ export class LabelFieldPersonalizationComponent implements OnInit, FieldPersonal
    * @param styles Nouveaux styles
    */
   protected setStyleValues(styles: string[]): void {
+    if (this.ignoreNextStyleModification) {
+      this.ignoreNextStyleModification = false;
+      return;
+    }
+
     if (this.stylesSelection && styles != this.stylesSelection) {
       this.stylesSelection.length = 0
 
