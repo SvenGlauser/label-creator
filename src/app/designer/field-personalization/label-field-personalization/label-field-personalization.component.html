@@ -24,6 +24,18 @@
 <p>Couleur</p>
 <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('color')"></ngx-colors>
 <ngx-colors ngx-colors-trigger style="display: inline-block; margin:5px;" [formControl]="getForm('backgroundColor')"></ngx-colors>
+<p>Style du texte</p>
+<mat-button-toggle-group [hideMultipleSelectionIndicator]="true" [multiple]="true" [value]="stylesSelection" (valueChange)="setStyleValues($event)">
+  <mat-button-toggle value="bold">
+    <mat-icon>format_bold</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="italic">
+    <mat-icon>format_italic</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="underline">
+    <mat-icon>format_underline</mat-icon>
+  </mat-button-toggle>
+</mat-button-toggle-group>
 <p>Alignement</p>
 <mat-button-toggle-group [formControl]="getForm('textAlign')" [hideSingleSelectionIndicator]="true">
   <mat-button-toggle value="left">

@@ -1,7 +1,7 @@
 :host {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 30px 115px 70px 30px 30px 30px repeat(2, 70px);
+  grid-template-rows: 30px 115px 70px 30px 30px 30px 70px 30px repeat(2, 70px);
   align-items: center;
   grid-column-gap: 20px;
   grid-row-gap: 10px;

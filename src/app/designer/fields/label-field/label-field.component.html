@@ -5,6 +5,9 @@
      [style.color]="getField().color"
      [style.font-family]="getField().fontFamily"
      [style.text-align]="getField().textAlign"
+     [style.font-weight]="getField().bold ? 'bold' : undefined"
+     [style.font-style]="getField().italic ? 'italic' : undefined"
+     [style.text-decoration]="getField().underline ? 'underline' : undefined"
      [style.align-self]="getField().verticalTextAlign"
      [innerHTML]="getText()"></p>
 </div>
