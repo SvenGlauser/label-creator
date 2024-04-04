@@ -116,7 +116,7 @@ export class FieldService implements OnDestroy {
   public registerNew(commonFieldDirective: CommonFieldDirective, name: string): void {
     this.fields.find(field => field.name == name)!.linkedDirective = commonFieldDirective;
     if (this.currentField?.name == name) {
-      setTimeout(() => commonFieldDirective?.changeSelection(true));
+      commonFieldDirective?.changeSelection(true);
     }
   }
 

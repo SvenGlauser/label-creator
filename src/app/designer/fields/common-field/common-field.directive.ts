@@ -52,6 +52,8 @@ export class CommonFieldDirective implements OnInit, DoCheck, OnDestroy {
   private unsubscribeResizeButtonTopRight?: () => void;
   private unsubscribeResizeButtonTopLeft?: () => void;
 
+  private needToRegisterField: boolean = false;
+
   @Input('field') set setField(field: CommonField) {
     this.field = field;
     this.top = this.field.top;
@@ -60,8 +62,7 @@ export class CommonFieldDirective implements OnInit, DoCheck, OnDestroy {
     this.height = this.field.height;
     this.zIndex = this.field.index;
 
-    // Enregistre le composant dans le service
-    this.fieldService.registerNew(this, this.field.name)
+    this.needToRegisterField = true;
   }
   private field?: CommonField;
   @Output()
@@ -321,6 +322,12 @@ export class CommonFieldDirective implements OnInit, DoCheck, OnDestroy {
    * Vérifie si l'index du champ a été modifié
    */
   public ngDoCheck(): void {
+    if (this.needToRegisterField) {
+      // Enregistre le composant dans le service
+      this.fieldService.registerNew(this, this.field!.name)
+      this.needToRegisterField = false;
+    }
+
     if (this.field && this.field.index != this.zIndex) {
       this.zIndex = this.field.index;
     }
